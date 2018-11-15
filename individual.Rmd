@@ -18,6 +18,7 @@ require(kableExtra)
 require(dplyr)
 require(gridExtra)
 require(cowplot)
+require(plotly)
 source("sociograma_helpers.R")
 set.seed(1111)
 ```
@@ -196,7 +197,6 @@ caracter[,2] = -caracter[,2]
 caracter[,4] = -caracter[,4]
 caracter[,6] = -caracter[,6]
 caracter$noms = factor(noms, levels = as.character(noms))
-
 ```
 
 ```{r}
@@ -227,7 +227,6 @@ Prové de les pregunes:
 Disrupcio = Disrupcio[,c(5,2:4,1)]
 names(Disrupcio)[1] = "Noms"
 agr.m <- melt(Disrupcio[1,1:4], id.vars = "Noms")
-
 barres = grafic_barres_individual(agr.m, max(Disrupcio[2:4]), paleta)
 formatge = grafic_formatge(agr.m, "disruptives", paleta)
 ```
@@ -236,7 +235,6 @@ formatge = grafic_formatge(agr.m, "disruptives", paleta)
 title <- ggdraw() + draw_label(paste0(Disrupcio$Noms[1] ,"\nComportament disruptiu"), fontface='bold')
 pg = plot_grid(barres, formatge, scale = c(1, 0.75))
 plot_grid(title, pg, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
-
 ```
 
 El grup coincideix en que té un coportament de disrupció relacional cap als altres. 
@@ -263,7 +261,6 @@ Prové de les preguntes:
 Victimitzacio = Victimitzacio[,c(5,2:4,1)]
 names(Victimitzacio)[1] = "Noms"
 vic.m <- melt(Victimitzacio[1,1:4], id.vars = "Noms")
-
 barres = grafic_barres_individual(vic.m, max(Victimitzacio[2:4]), paleta)
 formatge = grafic_formatge(vic.m, "victimitzadores", paleta)
 ```
@@ -272,7 +269,6 @@ formatge = grafic_formatge(vic.m, "victimitzadores", paleta)
 title <- ggdraw() + draw_label(paste0(Disrupcio$Noms[1] ,"\nComportament victimització"), fontface='bold')
 pg = plot_grid(barres, formatge, scale = c(1, 0.75))
 plot_grid(title, pg, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
-
 ```
 
 El grup considera que el/la `r Victimitzacio$Noms[1]` rep agressions relacionals (com ara ser exclosa del grup).
@@ -296,7 +292,6 @@ academic = academic[,c(5,1:4)]
 names(academic)[1] = "Noms"
 academic[,4:5] = -1*academic[,4:5]
 aca.m <- melt(academic[1,], id.vars = "Noms")
-
 barres = grafic_barres_individual(aca.m, max(academic[2:5]), paleta)
 formatge = grafic_formatge(aca.m, "acadèmiques", paleta)
 ```
@@ -305,7 +300,6 @@ formatge = grafic_formatge(aca.m, "acadèmiques", paleta)
 title <- ggdraw() + draw_label(paste0(academic$Noms[1] ,"\nComportament acadèmic"), fontface='bold')
 pg = plot_grid(barres, formatge, scale = c(1, 0.75))
 plot_grid(title, pg, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
-
 ```
 
 fulanito està al pou bla bla
@@ -361,7 +355,6 @@ caracter = caracter[,c(7,1:6)]
 names(caracter)[1] = "Noms"
 caracter[,c(3,5,7)] = -1*caracter[,c(3,5,7)]
 car.m <- melt(caracter[1,], id.vars = "Noms")
-
 barres = grafic_barres_individual(car.m, max(caracter[2:7]), paleta)
 formatge = grafic_formatge(car.m, "de caràcter", paleta)
 ```
@@ -376,7 +369,6 @@ plot_grid(title, pg, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control
 
 En aquest apartat mesurem l'estatus social de cada alumne, tant directe (preguntant directament qui són els seus amics) com indirecte. Els resultats d'aquesta àrea s'obtenen a partir de les respostes dels alumnes a les següents preguntes:
 
-
 *Qui voldries al teu grup per jugar al pati?*
 
 *Qui NO voldries al teu grup per jugar al pati?*
@@ -389,14 +381,10 @@ En aquest apartat mesurem l'estatus social de cada alumne, tant directe (pregunt
 
 *Pocs companys volen estar amb ell*
 
-
 ```{r}
 estatus_bo = cbind.data.frame(noms, estatus[,c(1:6)])
 names(estatus_bo)[1] = "Noms"
-
-
 est.m <- melt(estatus_bo[1,], id.vars = "Noms")
-
 barres = grafic_barres_individual(est.m, max(caracter[2:7]), paleta)
 formatge = grafic_formatge(est.m, "de caràcter", paleta)
 ```
@@ -405,7 +393,43 @@ formatge = grafic_formatge(est.m, "de caràcter", paleta)
 title <- ggdraw() + draw_label(paste0(estatus_bo$Noms[1] ,"\nCaràcter percebut"), fontface='bold')
 pg = plot_grid(barres, formatge, scale = c(1, 0.75))
 plot_grid(title, pg, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
+
 ```
 
 # Resum
+
+```{r}
+#dades:
+agr.m["Noms"] = rep("Disrupció", nrow(agr.m))
+vic.m["Noms"] = rep("Victimització", nrow(vic.m) )
+aca.m["Noms"] = rep("Acadèmic", nrow(aca.m))
+ea.m["Noms"] = rep("Estat d'ànim", nrow(ea.m))
+est.m["Noms"] = rep("Estatus sociomètric", nrow(est.m))
+
+names(agr.m)[1] = "Ambit"
+names(vic.m)[1] = "Ambit"
+names(aca.m)[1] = "Ambit"
+names(ea.m)[1] = "Ambit"
+names(est.m)[1] = "Ambit"
+```
+
+```{r}
+vic.m$value = -1*vic.m$value
+aca.m$value[3:4] = -1*aca.m$value[3:4]
+ea.m$value[-1] = -1*ea.m$value[-1]
+est.m$value[c(2,4,6)] = -1*est.m$value[c(2,4,6)] 
+tot = rbind.data.frame(agr.m, vic.m, aca.m, ea.m, est.m)
+```
+
+```{r, fig.width=12}
+gg = ggplot(tot, aes(x = factor(Ambit, levels = unique(tot$Ambit)), y = value, fill=variable)) +
+  geom_bar(stat='identity') + 
+  theme_bw() + 
+  labs(title = "Nom1") + 
+  ylab("") +
+  xlab("Àmbit") +
+  coord_flip() +
+  theme(legend.title=element_blank())
+ggplotly(gg)  
+```
 

@@ -68,7 +68,7 @@ grafic_barres_individual = function(dades, numero_maxim, paleta = paleta){
              width = .5) + 
     ylim(c(0,numero_maxim)) +
     theme_bw() + 
-    ylab("Número de tries") + 
+    ylab("NÃºmero de tries") + 
     xlab("") 
   return(barres)
 }

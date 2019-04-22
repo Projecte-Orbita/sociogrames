@@ -20,7 +20,7 @@ source('calculs_arees.R', encoding = 'UTF8')
 
 path_fitxer = 'dades/Preguntes sociograma - Sociograma_CMS.csv'
 
-calculs = function(path_fitxer, numero_respostes=3){
+calculs_collectiu = function(path_fitxer, numero_respostes=3){
   
   dades = importar_i_manipular(path_fitxer, numero_respostes)
   mat = dades[[1]]

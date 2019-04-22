@@ -199,4 +199,3 @@ grafic_xarxa = function(gg, colors, label.color, paraules){
 }
 
 
-

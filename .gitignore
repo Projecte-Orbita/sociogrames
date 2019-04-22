@@ -20,5 +20,6 @@ figures
 taules
 informes
 proves.*
-dadesversio2\proves_individual.Rmd  
-versio2\individual.Rmd  
+dades
+versio2/proves_individual.Rmd  
+versio2/individual.Rmd  

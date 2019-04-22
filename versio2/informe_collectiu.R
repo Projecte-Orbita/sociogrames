@@ -2,12 +2,13 @@
 # WIP
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
-source('texts.R', encoding = "UTF-8")
-source('calculs_previs.R', encoding = "UTF-8")
+source('texts_collectiu.R', encoding = "UTF-8")
+source('calculs_previs_collectiu.R', encoding = "UTF-8")
 
 print("> Creant gràfics i taules...")
+
 path_fitxer = 'dades/Preguntes sociograma - Sociograma_CMS.csv'
-calculs(path_fitxer)
+calculs_collectiu(path_fitxer)
 
 print("> Imprimint latex...")
 

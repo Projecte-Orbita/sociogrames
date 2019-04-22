@@ -1,4 +1,5 @@
 # Informe col·lectiu
+# WIP
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
 source('texts.R', encoding = "UTF-8")

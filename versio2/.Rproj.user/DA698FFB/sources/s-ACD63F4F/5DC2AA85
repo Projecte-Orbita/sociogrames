@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1555780718706.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "0|5|6|0|\n7|5|9|21|\n11|5|16|0|\n",
+    "hash" : "975335479",
+    "id" : "5DC2AA85",
+    "lastKnownWriteTime" : 1555952475,
+    "last_content_update" : 1555952475549,
+    "path" : "C:/Users/eudald/Desktop/PO/Sociograma/versio2/calculs_previs.R",
+    "project_path" : "calculs_previs.R",
+    "properties" : {
+        "cursorPosition" : "20,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 3,
+    "source_on_save" : true,
+    "source_window" : "",
+    "type" : "r_source"
+}

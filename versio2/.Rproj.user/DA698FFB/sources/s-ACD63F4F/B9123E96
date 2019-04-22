@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1555950539327.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2106463281",
+    "id" : "B9123E96",
+    "lastKnownWriteTime" : 1555954284,
+    "last_content_update" : 1555954284582,
+    "path" : "C:/Users/eudald/Desktop/PO/Sociograma/versio2/informe_collectiu.R",
+    "project_path" : "informe_collectiu.R",
+    "properties" : {
+        "cursorPosition" : "23,26",
+        "scrollLine" : "15",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 7,
+    "source_on_save" : true,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -5,8 +5,10 @@ output:
   html_document: default
 ---
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F)
+Sys.setlocale("LC_ALL","Catalan") 
 require(ggplot2)
 require(reshape2)
 require(igraph)
@@ -30,7 +32,7 @@ Si trobeu errors o conceptes o gràfics que no s'entenen si us plau feu-nos-ho s
 ######## Manipulacions inicials ###########
 
 # importem
-soc = read.csv('Preguntes sociograma - Sociograma_CMS.csv', fileEncoding = "UTF-8")
+soc = read.csv('dades/Preguntes sociograma - Sociograma_CMS.csv', fileEncoding = "UTF-8")
 colnames(soc)[1:2] = c("noms", "num")
 
 
@@ -64,7 +66,9 @@ mat_est = scale(mat)
 
 ```{r}
 
-# Calculem l'impacte total i la preferència total i les seves estandaritzacions:
+# Calculem l'impacte total i la preferència total i les seves estandaritzacions
+# 
+# ### Ara mateix no s'està utilitzant. S'ha de pensar on i com posar-ho.
 
 impacte = as.data.frame(cbind(mat[,1], mat[,2], mat[,3], mat[,4]))
 impacte_est = scale(impacte)
@@ -120,6 +124,17 @@ Disrupcio_sino = as.data.frame(ifelse(scale(Disrupcio[,-ncol(Disrupcio)])>1, 1, 
 
 rownames(Disrupcio_sino) = noms
 Disrupcio_sino$noms = rownames(Disrupcio_sino)
+Disrupcio = Disrupcio[,c(5,2:4,1)]
+names(Disrupcio)[1] = "Noms"
+#taula_classe(Disrupcio, Disrupcio_sino[,1])
+negretes = Disrupcio_sino[,1]
+bones=NULL
+dades = Disrupcio
+
+
+   cols = seq(2,ncol(dades))
+  
+  dolentes = cols[!cols %in% (bones+1)]
 ```
 
 
@@ -133,11 +148,38 @@ grafic_barres_classe(Disrupcio[,2:5],Disrupcio_sino[,1], noms, "Disrupció")
 I a continuació presentem una taula amb els mateixos resultats:
 
 ```{r}
-Disrupcio = Disrupcio[,c(5,2:4,1)]
-names(Disrupcio)[1] = "Noms"
-taula_classe(Disrupcio, Disrupcio_sino[,1])
-  
+
+  con <- file("taules/proves.tex", open = "wt", encoding = "UTF-8")
+  sink(con, type='output', split = F)
+  titol="proves"
+  dades %>% 
+    mutate(Noms = cell_spec(Noms, bold = ifelse(negretes==0,FALSE,TRUE), format = "latex")) %>%
+    mutate_at((.vars = vars(dolentes)), 
+              funs(cell_spec(., "latex", 
+                             color = ifelse(. > mean(.) + sd(.), "red", "blue")) )) %>%
+    mutate_at(.vars = vars(bones+1), 
+              funs(cell_spec(., "latex", 
+                             color = ifelse(. > mean(.) + sd(.), "green", "blue")) )) %>%
+    kable(format = "latex", escape = F, row.names = F, align = "c") %>%
+    kable_styling(bootstrap_options = c( "striped"),
+                  latex_options="scale_down",
+                  protect_latex = T,
+                  full_width =F, position = "center")
+    #save_kable(paste0("taules/", titol, ".pdf"), keep_tex = T, expand = 100)
+sink()
 ```
+
+```{r}
+dades %>% 
+  mutate(Noms = cell_spec(Noms, bold = ifelse(negretes==0,FALSE,TRUE), format = "latex")) %>%
+  kable(format = "latex", escape = F, row.names = F, align = "c")
+```
+
+
+```{r}
+kableExtra::kable(Disrupcio, format = "latex")
+```
+
 
 # Prosocialitat/coopearció:
 
@@ -159,7 +201,7 @@ prosocialitat_total = rowSums(prosocialitat)
 prosocialitat_total_est = scale(rowSums(prosocialitat))
 
 Prosocialitat = prosocialitat_total
-Pro_sino = prosocialitat_est > 1
+Pro_sino = prosocialitat_total_est < -1
 Pro_sino = ifelse(Pro_sino, 1, 0)
 Prosocialitat = as.data.frame(Prosocialitat)
 Pro_sino = as.data.frame(Pro_sino)
@@ -184,11 +226,11 @@ ggplot(Prosocialitat, aes(x = as.factor(noms), y = Prosocialitat)) +
 ```
 
 ```{r}
-Prosocialitat$noms = NULL
-Prosocialitat$lletra = NULL
-knitr::kable(Prosocialitat, booktabs = TRUE, align = "c")
+names(Prosocialitat)[2] = "Noms"
+Prosocialitat = Prosocialitat[, c(2,1)]
 
-
+#knitr::kable(Prosocialitat, booktabs = TRUE, align = "c")
+taula_classe_negativa(Prosocialitat, Pro_sino[,1])
 ```
 
 # Víctimes: 
@@ -214,7 +256,7 @@ victima_relacional_total = rowSums(victima_relacional)
 victima = as.data.frame(cbind(victima_directe, victima_relacional))
 
 victima_total = victima_directe_total + victima_relacional_total
-victima_est = scale(victima)
+victima_est = scale(victima_total)
 
 Victimitzacio = cbind(victima_total, victima_directe[,4], rowSums(victima_directe[,1:3]), victima_relacional_total)
 colnames(Victimitzacio) = c("Total víctima", 

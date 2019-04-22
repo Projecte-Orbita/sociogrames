@@ -1,5 +1,6 @@
 .DS_Store
 .Rhistory
+.Rproj.user
 B CESC 12.xls - Sheet1.csv
 CESC/
 Preguntes sociograma - Sociograma_CMS.csv
@@ -14,3 +15,9 @@ sociograma_CI.log
 sociograma_CI.pdf
 sociograma_CMS.html
 sociograma_CMS.pdf
+versio2/.Rproj.user/
+figures
+taules
+informes
+proves.*
+dades

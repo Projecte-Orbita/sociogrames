@@ -450,15 +450,16 @@ label.color = ifelse(content_est > 1, "chartreuse3",
 ```
 
 ```{r fig1, fig.width=12, fig.height=12}
+xarxa$relacions = as.factor(xarxa$relacions)
 plot(gg,
      layout=layout_with_lgl, # altres opcions són: layout_with_gem layout_with_fr, layout_with_mds, layout_with_lgl
      frame = T,
      vertex.label.color = label.color,
      vertex.color = as.character(colors),
      width = 1.5,
-     vertex.frame.color = NA,
+     vertex.frame.color = ifelse(xarxa$relacions==1, 'orange', 'red'),
      vertex.alpha = 0.5,
-#     edge.color = ifelse(xarxa$relacions, "darkblue", "black") , !!! no funciona !!!
+     edge.color = ifelse(xarxa$relacions==0, "darkblue", "black"), 
      edge.curved = .2,
      edge.arrow.size = 0.55, 
      label.cex = 0.5, 

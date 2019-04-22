@@ -93,7 +93,7 @@ introduccio = "
 		
 		Aquesta és una versió beta de l'informe resultat del Sociograma Àtom als cicles mitjà is superior, tant a nivell estètic com de continguts. Aquest informe està realitzat sobre dades simulades, i per tant els perfils sociomètrics dels nens i nenes poden no tenir sentit. Trobareu el document complet de preguntes en un fitxer que acompanya aquest informe. En totes les preguntes els nens i nenes han de triar els *tres* companys que s'adeqüin millor al que es demana.
 		
-		Si trobeu errors o conceptes o gràfics que no s'entenen si us plau feu-nos-ho saber a info@projecteorbita.cat. 
+		Aquesta és una versió beta, si trobeu errors o conceptes o gràfics que no s'entenen si us plau feu-nos-ho saber a info\\@projecteorbita.cat. 
 		
 		Presentem cada una de les àrees estudiades per separat, presentant primer un gràfic global i després un desglossament de cada puntuació i en forma de taula.
 "

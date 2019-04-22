@@ -91,7 +91,7 @@ grafic_barres_individual = function(dades, numero_maxim, paleta = paleta){
 taula_classe = function(dades, negretes, bones = NULL, titol = "proves"){
   
   con <- file(paste0("taules/", titol, ".txt"), open = "wt", encoding = "UTF-8")
-  sink(con, split = T)
+  sink(con)
   
   cols = seq(2,ncol(dades))
   dolentes = cols[!cols %in% (bones+1)]
@@ -120,7 +120,7 @@ taula_classe = function(dades, negretes, bones = NULL, titol = "proves"){
 taula_classe_negativa = function(dades, negretes, bones = NULL, titol="Proves"){
   
   con <- file(paste0("taules/", titol, ".txt"), open = "wt", encoding = "UTF-8")
-  sink(con, split = T, type='output')
+  sink(con)
   
   cols = seq(2,ncol(dades))
   dolentes = cols[!cols %in% (bones+1)]
@@ -145,7 +145,7 @@ taula_classe_negativa = function(dades, negretes, bones = NULL, titol="Proves"){
 taula_classe_positiva_negativa = function(dades, negretes, bones = NULL, mixtes = NULL, titol="Proves"){
   
   con <- file(paste0("taules/", titol, ".txt"), open = "wt", encoding = "UTF-8")
-  sink(con, split = T, type='output')
+  sink(con)
   
   cols = seq(2,ncol(dades))
   dolentes = c(bones+1,mixtes)

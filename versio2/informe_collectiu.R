@@ -12,7 +12,7 @@ calculs(path_fitxer)
 print("> Imprimint latex...")
 
 con <- file(paste0("informes/proves.tex"), open = "wt", encoding = "UTF-8")
-sink(con, split = T)
+sink(con)
 
 cat(coses_latex)
 pagina_titol("Nom escola")
@@ -92,4 +92,4 @@ cat(final_latex)
 sink()
 close(con)
 
-print("Finalitzat correctament.")
+print("> Finalitzat correctament.")

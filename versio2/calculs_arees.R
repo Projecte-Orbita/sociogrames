@@ -124,6 +124,13 @@ calcs_caracter = function(mat, noms){
   return(list(caracter, caracter_sino))
 }
 
+calcs_estatus = function(mat){
+  estatus = cbind.data.frame(mat[,1:6],mat[,19], mat[,26], mat[,27])
+  estatus_est = scale(estatus)
+  
+  return(list(estatus, estatus_est))
+}
+
 calcs_xarxa_academica = function(soc, mat){
   xarxa = soc[,c(1:3)] # estem agafant només els que sí, els que no els obviem per ara
   noms = as.character(xarxa$noms[seq(1,nrow(xarxa),3)])

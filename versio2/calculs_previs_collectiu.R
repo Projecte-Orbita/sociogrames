@@ -12,7 +12,8 @@
 #####
 # Imports
 source('funcions_ajuda.R', encoding = 'UTF8')
-source('grafics_i_taules.R', encoding = 'UTF8')
+source('grafics.R', encoding = 'UTF8')
+source('taules.R', encoding = 'UTF8')
 source('calculs_arees.R', encoding = 'UTF8')
 
 

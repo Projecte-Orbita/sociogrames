@@ -1,8 +1,6 @@
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
 require(ggplot2)
-require(kableExtra)
-require(dplyr)
 
 paleta <- c("#32CD32", "#CD3278", "#1E90FF", "#009E73", "#56B4E9", "#E69F00")
 
@@ -90,90 +88,6 @@ grafic_barres_individual = function(dades, numero_maxim, nom_plot, i, paleta = p
     ggsave(file = paste("figures/individuals/", nom_plot, "-barres-", i, ".pdf", sep = ""), 
            dpi = 600, width = 8, height = 6, units = "in") 
   return(barres)
-}
-
-taula_classe = function(dades, negretes, bones = NULL, titol = "proves"){
-  
-  con <- file(paste0("taules/", titol, ".txt"), open = "wt", encoding = "UTF-8")
-  sink(con)
-  
-  cols = seq(2,ncol(dades))
-  dolentes = cols[!cols %in% (bones+1)]
-
-  print(
-    dades %>% 
-    mutate(Noms = cell_spec(Noms, bold = ifelse(negretes==0,FALSE,TRUE), format = "latex")) %>%
-    mutate_at((.vars = vars(dolentes)), 
-              funs(cell_spec(., "latex", 
-                             color = ifelse(. > mean(.) + sd(.), "red", "blue")) )) %>%
-    mutate_at(.vars = vars(bones+1), 
-              funs(cell_spec(., "latex", 
-                             color = ifelse(. > mean(.) + sd(.), "green", "blue")) )) %>%
-    kable(format = "latex", escape = F, row.names = F, align = "c") %>%
-    kable_styling(#latex_options = c("striped", "hover", "condensed", "responsive"),  # no es veuen bé
-                  full_width =F, 
-                  position = "center")
-    #save_kable(paste0("taules/", titol, ".pdf"), keep_tex = T)  # If we want to store the image file
-  )
-    
-  
-  sink()
-  close(con)
-}
-
-taula_classe_negativa = function(dades, negretes, bones = NULL, titol="Proves"){
-  
-  con <- file(paste0("taules/", titol, ".txt"), open = "wt", encoding = "UTF-8")
-  sink(con)
-  
-  cols = seq(2,ncol(dades))
-  dolentes = cols[!cols %in% (bones+1)]
-  
-  print(dades %>% 
-    mutate(Noms = cell_spec(Noms, bold = ifelse(negretes==0,FALSE,TRUE), format = "latex")) %>%
-    mutate_at((.vars = vars(dolentes)), 
-              funs(cell_spec(., "latex", 
-                             color = ifelse(. < mean(.) - sd(.), "red", "blue")) )) %>%
-    mutate_at(.vars = vars(bones+1), 
-              funs(cell_spec(., "latex", 
-                             color = ifelse(. < mean(.) - sd(.), "green", "blue")) )) %>%
-    kable(format = "latex", escape = F, row.names = F, align = "c") %>%
-    kable_styling(#latex_options = c("striped", "hover", "condensed", "responsive"),
-                  full_width =F, position = "center")
-    # save_kable(paste0("taules/", titol, ".pdf"), keep_tex = F)
-  )
-  sink()
-  close(con)
-}
-
-taula_classe_positiva_negativa = function(dades, negretes, bones = NULL, mixtes = NULL, titol="Proves"){
-  
-  con <- file(paste0("taules/", titol, ".txt"), open = "wt", encoding = "UTF-8")
-  sink(con)
-  
-  cols = seq(2,ncol(dades))
-  dolentes = c(bones+1,mixtes)
-  dolentes = cols[!cols %in% dolentes]
-  
-  print(dades %>% 
-    mutate(Noms = cell_spec(Noms, bold = ifelse(negretes==0,FALSE,TRUE), format="latex")) %>%
-    mutate_at((.vars = vars(dolentes)), 
-              funs(cell_spec(., "latex", 
-                             color = ifelse(. < mean(.) - sd(.), "red", "blue")) )) %>%
-    mutate_at(.vars = vars(bones+1), 
-              funs(cell_spec(., "latex", 
-                             color = ifelse(. > mean(.) + sd(.), "green", "blue")) )) %>%
-    mutate_at(.vars = vars(mixtes), 
-              funs(cell_spec(., "latex", 
-                             color = ifelse(. < mean(.) - sd(.), "red",
-                                            ifelse(. > mean(.) + sd(.), "green", "blue"))))) %>%
-    kable(format = "latex", escape = F, row.names = F, align = "c") %>%
-    kable_styling(#latex_options = c("striped", "hover", "condensed", "responsive"),
-                  full_width =F, position = "center")
-    # save_kable(paste0("taules/", titol, ".txt"), keep_tex = F)
-  )
-  sink()
-  close(con)
 }
 
 grafic_xarxa = function(gg, colors, label.color, paraules){

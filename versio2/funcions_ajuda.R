@@ -3,7 +3,7 @@
 
 importar_i_manipular = function(path_fitxer, numero_respostes){
   # importem
-  soc = read.csv(path_fitxer, fileEncoding = "UTF-8")
+  soc = read.csv(path_fitxer, fileEncoding = "UTF-8", header = F)
   colnames(soc)[1:2] = c("noms", "num")
   
   ## En cas que sigui necessari, si hi ha missingns en els números i noms de nens (de cada tres només n'han posat un)

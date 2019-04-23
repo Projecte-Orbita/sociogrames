@@ -50,7 +50,9 @@ pagina_titol = function(nom_escola){
   cat(
     paste0(
       "
-      \\begin{document}\\begin{titlepage}
+      \\begin{document}
+
+  \\begin{titlepage}
   \\newcommand{\\HRule}{\\rule{\\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
   \\center % Center everything on the page
   
@@ -79,7 +81,7 @@ afegeix_grafic = function(nom_grafic){
     "
     \\begin{figure}[H]
 			\\centering
-			\\includegraphics[width=13cm]{../figures/", nom_grafic, ".pdf}
+			\\includegraphics[width=13cm]{../../figures/", nom_grafic, ".pdf}
 		\\end{figure}
     "
   )

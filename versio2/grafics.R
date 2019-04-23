@@ -26,7 +26,7 @@ ffill <- function(vector, type){
   return (vector)
 }
 
-grafic_barres_classe = function(columnes, color, noms = noms, titol){
+grafic_barres_classe = function(columnes, color, noms = noms, escola, titol){
   agr.m <- melt(columnes, id.vars = "noms")
   agr.m$color = rep(color,nrow(agr.m)/length(noms))
   agr.m$color[agr.m$color==0] = "plain"
@@ -41,11 +41,11 @@ grafic_barres_classe = function(columnes, color, noms = noms, titol){
     labs(title = titol) + 
     ylab("") + 
     xlab("Alumnes") + 
-    ggsave(file = paste("figures/", titol, ".pdf", sep = ""), 
+    ggsave(file = paste("figures/", escola, "/", titol, ".pdf", sep = ""), 
            dpi = 600, width = 8, height = 6, units = "in") 
 }
 
-grafic_barres_prosocialitat = function(Prosocialitat, noms){
+grafic_barres_prosocialitat = function(Prosocialitat, noms, escola){
   ggplot(Prosocialitat, aes(x = as.factor(noms), y = Prosocialitat)) +
     geom_bar(stat='identity', fill = "blue") + 
     theme_bw() + 
@@ -54,7 +54,7 @@ grafic_barres_prosocialitat = function(Prosocialitat, noms){
     labs(title = "Prosocialitat/Cooperació") + 
     ylab("") + 
     xlab("Alumnes") + 
-    ggsave(file = paste("figures/prosocialitat.pdf", sep = ""), 
+    ggsave(file = paste("figures/", escola, "/prosocialitat.pdf", sep = ""), 
            dpi = 600, width = 8, height = 6, units = "in") 
 }
 
@@ -70,7 +70,7 @@ grafic_formatge = function(dades, tipus, nom_plot, i, paleta = paleta){
     theme(legend.position="none") +
     labs(title = paste0(sum(dades$value)," tries\n", tipus)) +
     theme(plot.title = element_text(hjust = 0.5)) +
-    ggsave(file = paste("figures/individuals/", nom_plot, "-formatges-", i, ".pdf", sep = ""), 
+    ggsave(file = paste0("figures/individuals/", nom_plot, "-formatges-", i, ".pdf"), 
            dpi = 600, width = 8, height = 6, units = "in") 
   
   return(formatge)
@@ -85,12 +85,13 @@ grafic_barres_individual = function(dades, numero_maxim, nom_plot, i, paleta = p
     theme_bw() + 
     ylab("Número de tries") + 
     xlab("") +
-    ggsave(file = paste("figures/individuals/", nom_plot, "-barres-", i, ".pdf", sep = ""), 
+    ggsave(file = paste0("figures/individuals/", nom_plot, "-barres-", i, ".pdf"), 
            dpi = 600, width = 8, height = 6, units = "in") 
   return(barres)
 }
 
-grafic_xarxa = function(gg, colors, label.color, paraules){
+grafic_xarxa = function(gg, colors, label.color, paraules, escola, tipus){
+  pdf(paste0("figures/", escola, "/", tipus, ".pdf"), width = 12, height = 16)
   plot(gg,
        layout=layout_with_lgl, # altres opcions són: layout_with_gem layout_with_fr, layout_with_mds, layout_with_lgl
        frame = T,
@@ -112,6 +113,7 @@ grafic_xarxa = function(gg, colors, label.color, paraules){
   legend(x=-1.2, y=-0.9, c(paraules[5],paraules[6], paraules[7]),
          pch=21, col="#777777", pt.bg="gray",
          pt.cex=c(4,5,6), cex=1.5, bty="n", ncol=1)
+  dev.off()
   
   return(TRUE)
 }

@@ -5,9 +5,9 @@ Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 require(kableExtra)
 require(dplyr)
 
-taula_classe = function(dades, negretes, bones = NULL, titol = "proves"){
+taula_classe = function(dades, negretes, bones = NULL, escola, titol = "proves"){
   
-  con <- file(paste0("taules/", titol, ".txt"), open = "wt", encoding = "UTF-8")
+  con <- file(paste0("taules/", escola, "/", titol, ".txt"), open = "wt", encoding = "UTF-8")
   sink(con)
   
   cols = seq(2,ncol(dades))
@@ -34,9 +34,9 @@ taula_classe = function(dades, negretes, bones = NULL, titol = "proves"){
   close(con)
 }
 
-taula_classe_negativa = function(dades, negretes, bones = NULL, titol="Proves"){
+taula_classe_negativa = function(dades, negretes, bones = NULL, escola, titol="Proves"){
   
-  con <- file(paste0("taules/", titol, ".txt"), open = "wt", encoding = "UTF-8")
+  con <- file(paste0("taules/", escola, "/", titol, ".txt"), open = "wt", encoding = "UTF-8")
   sink(con)
   
   cols = seq(2,ncol(dades))
@@ -59,9 +59,9 @@ taula_classe_negativa = function(dades, negretes, bones = NULL, titol="Proves"){
   close(con)
 }
 
-taula_classe_positiva_negativa = function(dades, negretes, bones = NULL, mixtes = NULL, titol="Proves"){
+taula_classe_positiva_negativa = function(dades, negretes, bones = NULL, mixtes = NULL, escola, titol="Proves"){
   
-  con <- file(paste0("taules/", titol, ".txt"), open = "wt", encoding = "UTF-8")
+  con <- file(paste0("taules/", escola, "/", titol, ".txt"), open = "wt", encoding = "UTF-8")
   sink(con)
   
   cols = seq(2,ncol(dades))

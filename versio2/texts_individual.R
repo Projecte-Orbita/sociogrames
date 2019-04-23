@@ -2,6 +2,8 @@
 
 # per ara són els mateixos que els col·lectius; aquí, per ara, només hi ha el text per agafar els gràfics, que és lleugermanet diferent
 
+Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
+
 afegeix_grafic_individual = function(nom_grafic, i){
   cat(
     paste0(
@@ -28,6 +30,19 @@ afegeix_grafic_individual = function(nom_grafic, i){
     )
 }
 
+afegeix_grafic_resum = function(i){
+  cat(
+    paste0(
+      "
+    \\begin{figure}[H]
+			\\centering
+			\\includegraphics[width=13cm]{../../figures/individuals/resum-", i, ".pdf}
+		\\end{figure}
+    "
+    )
+  )
+}
+
 estatus_sociometric = "
 
 \\section*{Estatus sociomètric}
@@ -45,4 +60,10 @@ En aquest apartat mesurem l'estatus social de cada alumne, tant directe (pregunt
 \\textbf{Els altres volen estar al seu costat}
 
 \\textbf{Pocs companys volen estar amb ell}
+"
+
+resum = "
+\\section*{Resum}
+
+A continuació presentem de forma condensada un gràfic amb totes les dimensions mesurades en el sociograma:
 "

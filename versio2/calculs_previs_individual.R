@@ -12,6 +12,8 @@
 # l'informe en latex.
 
 #####
+Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
+
 # Imports
 source('funcions_ajuda.R', encoding = 'UTF8')
 source('grafics_i_taules.R', encoding = 'UTF8')
@@ -41,13 +43,9 @@ calculs_individual = function(path_fitxer, numero_respostes=3){
   nom_plot = "disrupcio"
   
   for (i in 1:nrow(Disrupcio)){
-    agr.m <- melt(Disrupcio[i,1:4], id.vars = "Noms")
-    grafic_barres_individual(agr.m, max(Disrupcio[2:4]), paleta) +
-      ggsave(file = paste("figures/individuals/", nom_plot, "-barres-", i, ".pdf", sep = ""), 
-             dpi = 600, width = 8, height = 6, units = "in") 
-    grafic_formatge(agr.m, "disruptives", paleta) +
-      ggsave(file = paste("figures/individuals/", nom_plot, "-formatges-", i, ".pdf", sep = ""), 
-             dpi = 600, width = 8, height = 6, units = "in") 
+    vic.m <- melt(Disrupcio[i,1:4], id.vars = "Noms")
+    grafic_barres_individual(vic.m, max(Disrupcio[2:4]), nom_plot, i, paleta)
+    grafic_formatge(vic.m, "disruptives", nom_plot, i, paleta)
   }
   
   # Cooperació
@@ -72,12 +70,8 @@ calculs_individual = function(path_fitxer, numero_respostes=3){
   
   for (i in 1:nrow(Victimitzacio)){
     vic.m <- melt(Victimitzacio[i,1:4], id.vars = "Noms")
-    grafic_barres_individual(vic.m, max(Victimitzacio[2:4]), paleta) +
-      ggsave(file = paste("figures/individuals/", nom_plot, "-barres-", i, ".pdf", sep = ""), 
-             dpi = 600, width = 8, height = 6, units = "in") 
-    grafic_formatge(agr.m, "victimitzadores", paleta) +
-      ggsave(file = paste("figures/individuals/", nom_plot, "-formatges-", i, ".pdf", sep = ""), 
-             dpi = 600, width = 8, height = 6, units = "in") 
+    grafic_barres_individual(vic.m, max(Victimitzacio[2:4]), nom_plot, i, paleta)
+    grafic_formatge(vic.m, "victimitzadores", nom_plot, i, paleta) 
   }
 
   
@@ -93,12 +87,8 @@ calculs_individual = function(path_fitxer, numero_respostes=3){
   
   for (i in 1:nrow(Academic)){
     vic.m <- melt(Academic[i,], id.vars = "Noms")
-    grafic_barres_individual(vic.m, max(Academic[2:5]), paleta) +
-      ggsave(file = paste("figures/individuals/", nom_plot, "-barres-", i, ".pdf", sep = ""), 
-             dpi = 600, width = 8, height = 6, units = "in") 
-    grafic_formatge(agr.m, "acadèmiques", paleta) +
-      ggsave(file = paste("figures/individuals/", nom_plot, "-formatges-", i, ".pdf", sep = ""), 
-             dpi = 600, width = 8, height = 6, units = "in") 
+    grafic_barres_individual(vic.m, max(Academic[2:5]), nom_plot, i, paleta)
+    grafic_formatge(vic.m, "acadèmiques", nom_plot, i, paleta) 
   }
   
   # Estat d'ànim
@@ -113,12 +103,8 @@ calculs_individual = function(path_fitxer, numero_respostes=3){
   
   for (i in 1:nrow(Estat_anim)){
     vic.m <- melt(Estat_anim[i,], id.vars = "Noms")
-    grafic_barres_individual(vic.m, max(Estat_anim[2:5]), paleta) +
-      ggsave(file = paste("figures/individuals/", nom_plot, "-barres-", i, ".pdf", sep = ""), 
-             dpi = 600, width = 8, height = 6, units = "in") 
-    grafic_formatge(agr.m, "d'estat d'ànim", paleta) +
-      ggsave(file = paste("figures/individuals/", nom_plot, "-formatges-", i, ".pdf", sep = ""), 
-             dpi = 600, width = 8, height = 6, units = "in") 
+    grafic_barres_individual(vic.m, max(Estat_anim[2:5]), nom_plot, i, paleta) 
+    grafic_formatge(vic.m, "d'estat d'ànim", nom_plot, i, paleta) 
   }
 
   
@@ -134,12 +120,8 @@ calculs_individual = function(path_fitxer, numero_respostes=3){
   
   for (i in 1:nrow(Caracter)){
     vic.m <- melt(Caracter[i,], id.vars = "Noms")
-    grafic_barres_individual(vic.m, max(Caracter[2:7]), paleta) +
-      ggsave(file = paste("figures/individuals/", nom_plot, "-barres-", i, ".pdf", sep = ""), 
-             dpi = 600, width = 8, height = 6, units = "in") 
-    grafic_formatge(agr.m, "de caràcter", paleta) +
-      ggsave(file = paste("figures/individuals/", nom_plot, "-formatges-", i, ".pdf", sep = ""), 
-             dpi = 600, width = 8, height = 6, units = "in") 
+    grafic_barres_individual(vic.m, max(Caracter[2:7]), nom_plot, i, paleta)
+    grafic_formatge(vic.m, "de caràcter", nom_plot, i, paleta) 
   }
   
   # Estatus sociomètric
@@ -153,15 +135,44 @@ calculs_individual = function(path_fitxer, numero_respostes=3){
   
   for (i in 1:nrow(Estatus_bo)){
     vic.m <- melt(Estatus_bo[i,], id.vars = "Noms")
-    grafic_barres_individual(vic.m, max(Estatus_bo[2:7]), paleta) +
-      ggsave(file = paste("figures/individuals/", nom_plot, "-barres-", i, ".pdf", sep = ""), 
-             dpi = 600, width = 8, height = 6, units = "in") 
-    grafic_formatge(agr.m, "d'estatus", paleta) +
-      ggsave(file = paste("figures/individuals/", nom_plot, "-formatges-", i, ".pdf", sep = ""), 
-             dpi = 600, width = 8, height = 6, units = "in") 
+    grafic_barres_individual(vic.m, max(Estatus_bo[2:7]), nom_plot, i, paleta)
+    grafic_formatge(vic.m, "d'estatus", nom_plot, i, paleta)
   }
 
-  return(list(Disrupcio, Victimitzacio, Academic, Estat_anim, Estatus))
+  # Resum
+  
+  for (i in 1:nrow(Estatus_bo)){
+    
+    nom = noms[i]
+    
+    agr.m <- melt(Disrupcio[i,1:4], id.vars = "Noms")
+    vic.m <- melt(Victimitzacio[i,1:4], id.vars = "Noms")
+    aca.m <- melt(Academic[i,], id.vars = "Noms")
+    ea.m <- melt(Estat_anim[i,], id.vars = "Noms")
+    est.m <- melt(Estatus_bo[i,], id.vars = "Noms")
+   
+    agr.m["Noms"] = enc2utf8(rep("Disrupció", nrow(agr.m)))
+    vic.m["Noms"] = enc2utf8(rep("Victimització", nrow(vic.m)))
+    aca.m["Noms"] = enc2utf8(rep("Acadèmic", nrow(aca.m)))
+    ea.m["Noms"] = enc2utf8(rep("Estat d'ànim", nrow(ea.m)))
+    est.m["Noms"] = enc2utf8(rep("Estatus sociomètric", nrow(est.m)))
+    
+    names(agr.m)[1] = "ambit"
+    names(vic.m)[1] = "ambit"
+    names(aca.m)[1] = "ambit"
+    names(ea.m)[1] = "ambit"
+    names(est.m)[1] = "ambit"
+    vic.m$value = -1*vic.m$value
+    aca.m$value[3:4] = -1*aca.m$value[3:4]
+    ea.m$value[-1] = -1*ea.m$value[-1]
+    est.m$value[c(2,4,6)] = -1*est.m$value[c(2,4,6)] 
+    tot = rbind.data.frame(agr.m, vic.m, aca.m, ea.m, est.m)
+    tot$ambit = factor(tot$ambit, levels = unique(tot$ambit))
+    names(tot) = c("ambit", "dimensio", "tries")
+    
+    grafic_resum(tot, i)
+  }
+  
 }
 
-#calculs(path_fitxer, 3)
+#calculs_individual(path_fitxer, 3)

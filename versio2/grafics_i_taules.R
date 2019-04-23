@@ -60,7 +60,7 @@ grafic_barres_prosocialitat = function(Prosocialitat, noms){
            dpi = 600, width = 8, height = 6, units = "in") 
 }
 
-grafic_formatge = function(dades, tipus, paleta = paleta){
+grafic_formatge = function(dades, tipus, nom_plot, i, paleta = paleta){
   dades$label = paste0(round(dades$value/sum(dades$value)*100),"%")
   formatge = ggplot(dades, aes(x = "", y = value, fill = as.factor(dades$variable))) +
     geom_bar(stat='identity', width = .5) +
@@ -71,12 +71,14 @@ grafic_formatge = function(dades, tipus, paleta = paleta){
     xlab("") +
     theme(legend.position="none") +
     labs(title = paste0(sum(dades$value)," tries\n", tipus)) +
-    theme(plot.title = element_text(hjust = 0.5))
+    theme(plot.title = element_text(hjust = 0.5)) +
+    ggsave(file = paste("figures/individuals/", nom_plot, "-formatges-", i, ".pdf", sep = ""), 
+           dpi = 600, width = 8, height = 6, units = "in") 
   
   return(formatge)
 }
 
-grafic_barres_individual = function(dades, numero_maxim, paleta = paleta){
+grafic_barres_individual = function(dades, numero_maxim, nom_plot, i, paleta = paleta){
   barres = ggplot(dades, aes(x = as.factor(variable), y = value)) +
     geom_bar(stat='identity', 
              fill = paleta[1:length(dades$variable)],
@@ -84,7 +86,9 @@ grafic_barres_individual = function(dades, numero_maxim, paleta = paleta){
     ylim(c(0,numero_maxim)) +
     theme_bw() + 
     ylab("Número de tries") + 
-    xlab("") 
+    xlab("") +
+    ggsave(file = paste("figures/individuals/", nom_plot, "-barres-", i, ".pdf", sep = ""), 
+           dpi = 600, width = 8, height = 6, units = "in") 
   return(barres)
 }
 
@@ -198,4 +202,17 @@ grafic_xarxa = function(gg, colors, label.color, paraules){
   return(TRUE)
 }
 
+grafic_resum = function(tot, i){
+  options(encoding="UTF-8")
+  gp = ggplot(tot, aes(x = ambit, y = tries, fill=dimensio)) +
+    geom_bar(stat='identity') + 
+    theme_bw() + 
+    labs(title = "Gràfic resum") + 
+    ylab("") +
+    xlab("Àmbit") +
+    coord_flip() +
+    theme(legend.title=element_blank()) +
+    ggsave(file = paste0("figures/individuals/resum-", i, ".pdf"), 
+           dpi = 600, width = 8, height = 6, units = "in") 
+}
 

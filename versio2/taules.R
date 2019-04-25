@@ -5,9 +5,9 @@ Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 require(kableExtra)
 require(dplyr)
 
-taula_classe = function(dades, negretes, bones = NULL, escola, titol = "proves"){
+taula_classe = function(dades, negretes, bones = NULL, path_, titol = "proves"){
   
-  con <- file(paste0("taules/", escola, "/", titol, ".txt"), open = "wt", encoding = "UTF-8")
+  con <- file(file.path(path_, paste0(titol, '.txt')), open = "wt", encoding = "UTF-8")
   sink(con)
   
   cols = seq(2,ncol(dades))
@@ -34,9 +34,9 @@ taula_classe = function(dades, negretes, bones = NULL, escola, titol = "proves")
   close(con)
 }
 
-taula_classe_negativa = function(dades, negretes, bones = NULL, escola, titol="Proves"){
+taula_classe_negativa = function(dades, negretes, bones = NULL, path_, titol="Proves"){
   
-  con <- file(paste0("taules/", escola, "/", titol, ".txt"), open = "wt", encoding = "UTF-8")
+  con <- file(file.path(path_, paste0(titol, '.txt')), open = "wt", encoding = "UTF-8")
   sink(con)
   
   cols = seq(2,ncol(dades))
@@ -53,15 +53,15 @@ taula_classe_negativa = function(dades, negretes, bones = NULL, escola, titol="P
           kable(format = "latex", escape = F, row.names = F, align = "c") %>%
           kable_styling(#latex_options = c("striped", "hover", "condensed", "responsive"),
             full_width =F, position = "center")
-        # save_kable(paste0("taules/", titol, ".pdf"), keep_tex = F)
+        
   )
   sink()
   close(con)
 }
 
-taula_classe_positiva_negativa = function(dades, negretes, bones = NULL, mixtes = NULL, escola, titol="Proves"){
+taula_classe_positiva_negativa = function(dades, negretes, bones = NULL, mixtes = NULL, path_, titol="Proves"){
   
-  con <- file(paste0("taules/", escola, "/", titol, ".txt"), open = "wt", encoding = "UTF-8")
+  con <- file(file.path(path_, paste0(titol, '.txt')), open = "wt", encoding = "UTF-8")
   sink(con)
   
   cols = seq(2,ncol(dades))

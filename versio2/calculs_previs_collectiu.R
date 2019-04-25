@@ -10,6 +10,10 @@
 # l'informe en latex.
 
 #####
+
+Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
+
+
 # Imports
 source('funcions_ajuda.R', encoding = 'UTF8')
 source('grafics.R', encoding = 'UTF8')
@@ -21,11 +25,9 @@ source('calculs_arees.R', encoding = 'UTF8')
 
 # path_fitxer = 'dades/Preguntes sociograma - Sociograma_CMS.csv'
 
-calculs_collectiu = function(escola, nom_fitxer, numero_respostes=3){
+calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   
-  path_fitxer = paste0('dades/', escola, "/", nom_fitxer)
-  
-  dades = importar_i_manipular(path_fitxer, numero_respostes)
+  dades = importar_i_manipular(file.path(path_llista$dades, nom_fitxer), numero_respostes)
   mat = dades[[1]]
   mat_est = dades[[2]]
   noms = dades[[3]]
@@ -36,60 +38,125 @@ calculs_collectiu = function(escola, nom_fitxer, numero_respostes=3){
   disrupcio_ = calcs_disrupcio(mat, noms)
   Disrupcio = disrupcio_[[1]]
   Disrupcio_sino = disrupcio_[[2]]
-  grafic_barres_classe(Disrupcio[,2:5],Disrupcio_sino[,1], noms, escola = escola, titol =  "disrupcio")  # Gràfic
+  
+  grafic_barres_classe(columnes = Disrupcio[,2:5], 
+                       color = Disrupcio_sino[,1], 
+                       noms = noms, 
+                       path_ = path_llista$figures, 
+                       nom_grafic =  "disrupcio")  # Gràfic
+  
   Disrupcio = Disrupcio[,c(5,2:4,1)]
   names(Disrupcio)[1] = "Noms"
-  taula_classe(Disrupcio, Disrupcio_sino[,1], escola = escola, titol = "disrupcio")  # Taula
+  
+  taula_classe(dades = Disrupcio, 
+               negretes = Disrupcio_sino[,1],
+               bones = NULL,
+               path_ = path_llista$taules, 
+               titol = "disrupcio")  # Taula
   
   # Cooperació
   prosocialitat_ = calcs_prosocialitat(mat, noms)
   Prosocialitat = prosocialitat_[[1]]
   Prosocialitat_sino = prosocialitat_[[2]]
-  grafic_barres_prosocialitat(Prosocialitat, noms, escola = escola)
+  
+  grafic_barres_prosocialitat(columnes = Prosocialitat, 
+                              noms = noms, 
+                              path_ = path_llista$figures)
+  
   # TODO: Potser en aquest apartat podríem fer un diagrama 2D amb notorietat?
   names(Prosocialitat)[2] = "Noms"
   Prosocialitat = Prosocialitat[, c(2,1)]
-  taula_classe_negativa(Prosocialitat, Prosocialitat_sino[,1], escola = escola, titol = "prosocialitat")
+  
+  taula_classe_negativa(dades = Prosocialitat, 
+                        negretes = Prosocialitat_sino[,1], 
+                        bones = NULL,
+                        path_ = path_llista$taules, 
+                        titol = "prosocialitat")
   
   # Victimisme
   Victimitzacio_ = calcs_victimitzacio(mat, noms)
   Victimitzacio = Victimitzacio_[[1]]
   Vict_sino = Victimitzacio_[[2]]
-  grafic_barres_classe(Victimitzacio[,2:5], Vict_sino[,1], noms, escola = escola, titol = "victimes")
+  
+  grafic_barres_classe(columnes = Victimitzacio[,2:5], 
+                       color = Vict_sino[,1],
+                       noms = noms, 
+                       path_ = path_llista$figures, 
+                       nom_grafic = "victimes")
+  
   Victimitzacio = Victimitzacio[,c(5,2:4,1)]
   names(Victimitzacio)[1] = "Noms"
-  taula_classe(Victimitzacio, Vict_sino[,1], escola = escola, titol = "victimes")
+  
+  taula_classe(dades = Victimitzacio, 
+               negretes = Vict_sino[,1],
+               bones = NULL,
+               path_ = path_llista$taules, 
+               titol = "victimes")
   
   # Acadèmic
   Academic_ = calcs_academic(mat, noms)
   Academic = Academic_[[1]]
   Academic_sino = Academic_[[2]]
-  grafic_barres_classe(Academic[,-5], Academic_sino, noms, escola = escola, titol = "academic")
+  
+  grafic_barres_classe( columnes = Academic[,-5], 
+                        color = Academic_sino, 
+                        noms = noms, 
+                        path_ = path_llista$figures, 
+                        nom_grafic = "academic")
+  
   Academic[,3] = - Academic[,3]
   Academic[,4] = - Academic[,4]
   Academic = Academic[,c(6,1:5)]
   names(Academic)[1] = "Noms"
-  taula_classe_positiva_negativa(Academic, Academic_sino[,1], c(1:2), 5, escola = escola, titol = "academic")
+  
+  taula_classe_positiva_negativa(dades= Academic, 
+                                 negretes = Academic_sino[,1], 
+                                 bones = c(1:2), 
+                                 mixtes = 5, 
+                                 path_ = path_llista$taules, 
+                                 titol = "academic")
   
   # Estat d'ànim
   Estat_anim_ = calcs_estat_anim(mat, noms)
   Estat_anim = Estat_anim_[[1]]
   Estat_anim_sino = Estat_anim_[[2]]
-  grafic_barres_classe(Estat_anim, Estat_anim_sino, noms, escola = escola, titol = "estat_anim")
+  
+  grafic_barres_classe(columnes = Estat_anim, 
+                       color = Estat_anim_sino, 
+                       noms = noms, 
+                       path_ = path_llista$figures, 
+                       nom_grafic = "estat_anim")
+  
   Estat_anim = Estat_anim[,c(6,3,1,2,4, 5)]
   Estat_anim[,3:5] = -1*Estat_anim[,3:5]
   names(Estat_anim)[1] = "Noms"
-  taula_classe(Estat_anim, Estat_anim_sino[,1],1, escola = escola, titol = "estat_anim")
+  taula_classe(dades = Estat_anim, 
+               negretes = Estat_anim_sino[,1],
+               bones = 1, 
+               path_ = path_llista$taules, 
+               titol = "estat_anim")
   
   # Caràcter
   Caracter_ = calcs_caracter(mat, noms)
   Caracter = Caracter_[[1]]
   Caracter_sino = Caracter_[[2]]
-  grafic_barres_classe(Caracter, Caracter_sino, noms, escola = escola, titol = "caracter")
+  
+  grafic_barres_classe(columnes = Caracter[,-7], 
+                       color = Caracter_sino, 
+                       noms = noms, 
+                       path_ = path_llista$figures, 
+                       nom_grafic = "caracter")
+  
   Caracter = Caracter[,c(8,1:7)]
   names(Caracter)[1] = "Noms"
+  
   Caracter[,c(3,5,7)] = - Caracter[,c(3,5,7)]
-  taula_classe_positiva_negativa(Caracter, Caracter_sino[,1], c(1,3,5), 8, escola = escola, titol = "caracter")
+  taula_classe_positiva_negativa(dades = Caracter, 
+                                 negretes = Caracter_sino[,1], 
+                                 bones = c(1,3,5), 
+                                 mixtes = 8, 
+                                 path_ = path_llista$taules, 
+                                 titol = "caracter")
   
   # Xarxes
   soc = dades[[4]]
@@ -101,7 +168,13 @@ calculs_collectiu = function(escola, nom_fitxer, numero_respostes=3){
   label.color = X_Academic_[[3]]
   paraules = c("Classe X escola Y", "Males notes","Notes mitjanes", "Bones notes",
                "Poc popular","Normal", "Molt popular")
-  grafic_xarxa(gg, colors, label.color, paraules, escola, "xarxa_academica")
+  
+  grafic_xarxa(gg = gg, 
+               colors = colors, 
+               label.color = label.color, 
+               paraules = paraules, 
+               path_ = path_llista$figures, 
+               tipus = "xarxa_academica")
 
   
   # xarxa relacional
@@ -111,7 +184,13 @@ calculs_collectiu = function(escola, nom_fitxer, numero_respostes=3){
   label.color = X_Academic_[[3]]
   paraules = c("Classe X escola Y", "Poc disruptiu","Disrupcio mitjana", "Molt disruptiu",
                "Poc popular","Normal", "Molt popular")
-  grafic_xarxa(gg, colors, label.color, paraules, escola, "xarxa_relacional")
+  
+  grafic_xarxa(gg = gg, 
+               colors = colors, 
+               label.color = label.color, 
+               paraules = paraules, 
+               path_ = path_llista$figures, 
+               tipus = "xarxa_relacional")
 
 }
 

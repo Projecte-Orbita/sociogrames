@@ -7,97 +7,74 @@ source('calculs_previs_collectiu.R', encoding = "UTF-8")
 
 path_fitxer = 'dades/Preguntes sociograma - Sociograma_CMS.csv'
 
-informe_collectiu = function(escola, nom_fitxer){
-  
-  #print("> Creant gràfics i taules...")
-  
-  calculs_collectiu(escola, nom_fitxer)
-  
-  #print("> Imprimint latex...")
-  
-  #con <- file(paste0("informes/", escola, "/", nom_fitxer, ".tex"), open = "wt", encoding = "UTF-8")
-  #sink(con)
-  
-  cat(coses_latex)
-  pagina_titol(escola[1])
-  
-  
-  cat(introduccio)
+informe_classe = function(escola, nom_fitxer){
   
   # Disrupció
   cat(disrupcio)
   
-  afegeix_grafic(paste0(escola, "/disrupcio"))
+  afegeix_grafic("disrupcio")
   
   cat(abans_taula)
   
-  importar_i_imprimir_taula(paste0("taules/", escola, "/disrupcio.txt"))
+  importar_i_imprimir_taula("disrupcio")
   
   # Prosocialitat
   cat(prosocialitat)
   
-  afegeix_grafic(paste0(escola, "/prosocialitat"))
+  afegeix_grafic("prosocialitat")
   
   cat(abans_taula)
   
-  importar_i_imprimir_taula(paste0("taules/", escola, "/prosocialitat.txt"))
+  importar_i_imprimir_taula("prosocialitat")
   
   # Víctima
   cat(victimes)
   
-  afegeix_grafic(paste0(escola, "/victimes"))
+  afegeix_grafic("victimes")
   
   cat(abans_taula)
   
-  importar_i_imprimir_taula(paste0("taules/", escola, "/victimes.txt"))
+  importar_i_imprimir_taula("victimes")
   
   # Acadèmic
   cat(academic)
   
-  afegeix_grafic(paste0(escola, "/academic"))
+  afegeix_grafic( "academic")
   
   cat(abans_taula)
   
-  importar_i_imprimir_taula(paste0("taules/", escola, "/academic.txt"))
+  importar_i_imprimir_taula("academic")
   
   # Estat d'ànim
   cat(estat_anim)
   
-  afegeix_grafic(paste0(escola, "/estat_anim"))
+  afegeix_grafic( "estat_anim")
   
   cat(abans_taula)
   
-  importar_i_imprimir_taula(paste0("taules/", escola, "/estat_anim.txt"))
+  importar_i_imprimir_taula("estat_anim")
   
   # Caràcter
   cat(caracter)
   
-  afegeix_grafic(paste0(escola, "/caracter"))
+  afegeix_grafic("caracter")
   
   cat(abans_taula)
   
-  importar_i_imprimir_taula(paste0("taules/", escola, "/caracter.txt"))
+  importar_i_imprimir_taula("caracter")
   
   # Xarxa acadèmica
   
   cat(xarxa_academica)
   
-  afegeix_grafic(paste0(escola, "/xarxa_academica"))
+  afegeix_grafic("xarxa_academica")
   
   # Xarxa relacional
   
   cat(xarxa_relacional)
   
-  afegeix_grafic(paste0(escola, "/xarxa_relacional"))
+  afegeix_grafic("xarxa_relacional")
   
-  # Final
-  
-  cat(final_latex)
-  
-  #sink()
-  #close(con)
-  
-  #print("> Finalitzat correctament.")
 }
 
 if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R

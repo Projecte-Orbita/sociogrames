@@ -1,22 +1,38 @@
 # Informe escola
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 # 
-source('informe_collectiu.R')
-source('texts_escola.R')
+source('informe_collectiu.R', encoding = "UTF-8")
+source('texts_escola.R', encoding = "UTF-8")
+source('utils.R', encoding = "UTF-8")
 # Aquest fitxer crea els informes per tota l'escola, primer el col·leciu i després els individuals, un fitxer .tex per cada classe
 
-informe_escola = function(path_dades, nom_escola){
-  escola = c(nom_escola, gsub(" ", "_", nom_escola))
+informe_escola = function(nom_escola){
+
+  nom_escola_arreglat = make.names(nom_escola)  # és el que farem servir per coses internes i traiem accents i espais
   
-  #####
-  # agafem la info de la carpeta d'on treurem les dades (i que abans es passava dins la funció)
-  #####
+  wd <- getwd();
   
-  noms_fitxers = as.vector(list.files(paste0('dades/', escola[2])))
+  # Creem ara els paths que anirem fent servir:
+  path_dades = file.path(getwd(), 'temp/dades')
+  path_figures = file.path(getwd(), "temp/figures/")
+  path_taules = file.path(getwd(), "temp/taules/")
+  path_informes = file.path(getwd(), "temp/informes/")
+  
+  # Ajuntem tots els paths en un "diccionari" per tenir-los una mica ordenats i poder-hi accedir fàcilment.
+  path_llista = list('dades' = path_dades, 
+                     'figures' = path_figures, 
+                     'taules' = path_taules, 
+                     'informes' = path_informes)
+  
+  
+  # I creem els directoris sobreescrivint si ja existeixen:
+  netejar_directoris(c(path_figures, path_taules, path_informes))  # Alerta de no netejar el de dades!
+  
+  noms_fitxers = as.vector(list.files(path_llista$dades))
   num_curs = substr(noms_fitxers, 1, 1)
   curs_classe = substr(noms_fitxers, 1, 2)
   noms_classes = substr(noms_fitxers, 2, 2)
-  escola_curs_classe = paste0(escola[2], "-", curs_classe)
+  escola_curs_classe = paste0(nom_escola_arreglat, "-", curs_classe)
   
   cursos = list()
   for (i in 1:length(noms_fitxers)){
@@ -33,30 +49,45 @@ informe_escola = function(path_dades, nom_escola){
   for (i in 1:length(noms_fitxers)){
     classes[i] = paste(noms_cursos[num_curs[i]], noms_classes[i])
   }
-  wd <- getwd();
-  dir.create(paste(getwd(), "/figures/", escola[2], sep ="" ))
-  dir.create(paste(getwd(), "/taules/", escola[2], sep ="" ))
-  dir.create(paste(getwd(), "/informes/", escola[2], sep ="" ))
-  print(curs_classe)
   
   for (cl in 1:length(curs_classe)){
     print(paste0("> Creant els informes per la classe ", classes[cl]))
-    sink(file(paste(getwd(), "/informes/", escola[2],"/sociograma_", curs_classe[cl], ".tex", sep =""), 
-              open = "wt", encoding = "latin1"));#-", #escola[2], sep = ""));
     
-    cat(coses_latex);
-    cat("\\begin{document}")
-    titol_classes(escola, classes[cl])
+    print("> Creant gràfics i taules...")
     
     # Cridem l'informe col·lectiu:
     nom_fitxer = noms_fitxers[cl]
+    calculs_collectiu(path_llista = path_llista, nom_fitxer = nom_fitxer, numero_respostes = 3)
     
-    informe_collectiu(escola[2], nom_fitxer)
+    print("> Imprimint fitxers .tex...")
+    
+    path_ = file.path(path_llista$informes, paste0("sociograma_", curs_classe[cl], ".tex"))
+    con = file(path_, open = "wt", encoding = "UTF-8")
+    sink(con)
+    
+    cat(coses_latex);
+    
+    cat("\\begin{document}")
+    
+    #pagina_titol(escola[1])
+    
+    titol_classes(nom_escola, classes[cl])
+    cat(introduccio)
+    
+    informe_classe(nom_escola, nom_fitxer)
+    
+    cat(final_latex)
     sink()
+    close(con)
+    closeAllConnections()
   }
-  
-  
   
 }
 
-informe_escola('dades/proves_excel_sociograma.xlsx', 'proves')
+if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R
+  
+  nom_escola = 'Escola Súper Important'
+  informe_escola(nom_escola)
+}
+
+# informe_escola('dades/proves_excel_sociograma.xlsx', 'proves')

@@ -1,5 +1,6 @@
 # Text
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
+require(readr)
 
 coses_latex = "
 \\documentclass[a4paper, 12pt, oneside]{book}%{article}
@@ -81,7 +82,7 @@ afegeix_grafic = function(nom_grafic){
     "
     \\begin{figure}[H]
 			\\centering
-			\\includegraphics[width=13cm]{../../figures/", nom_grafic, ".pdf}
+			\\includegraphics[width=13cm]{../../temp/figures/", nom_grafic, ".pdf}
 		\\end{figure}
     "
   )
@@ -233,9 +234,9 @@ abans_taula = "
 I a continuació presentem una taula amb els mateixos resultats:
 "
 
-importar_i_imprimir_taula = function(path_fitxer){
+importar_i_imprimir_taula = function(nom_fitxer){
 
-  taula = read_file(path_fitxer)
+  taula = read_file(file.path('temp/taules', paste0(nom_fitxer, '.txt')))
   cat(taula)
 
 }

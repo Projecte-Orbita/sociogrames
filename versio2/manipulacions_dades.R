@@ -1,4 +1,6 @@
 # Manipulacions de dades de sociogrames
+Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
+
 require(stringr)
 require(readr)
 # Aquest fitxer s'haurà de reorganitzar, per ara hi ha coses de manipulacions de noms i com transformar els excels en 

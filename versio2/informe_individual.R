@@ -3,68 +3,51 @@
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
 source('texts_collectiu.R', encoding = "UTF-8")
-source('calculs_previs_individual.R')
+source('calculs_previs_individual.R', encoding = "UTF-8")
 
 path_fitxer = 'dades/Preguntes sociograma - Sociograma_CMS.csv'
 
-main = function(path_fitxer){
-  print("> Creant gràfics i taules...")
-  soc = read.csv(path_fitxer, encoding = "UTF-8")
-  num_anomenats = 3
-  noms = as.character(soc$Nom[seq(1, nrow(soc), num_anomenats)])
-  
-  calculs_individual(path_fitxer)
-  
-  print("> Imprimint els fitxers .tex...")
+informe_individual = function(path_llista, nom_fitxer, noms){
   
   for (i in 1:length(noms)){
     
     nom = noms[i]
-    con <- file(paste0("informes/individuals/", nom, ".tex"), open = "wt", encoding = "UTF-8")
-    sink(con)
     
-    heading_alumnes(nom)
-    cat(introduccio)
+    titol_alumne(nom)
+    # cat(introduccio)
     
     # Disrupció
     cat(disrupcio)
-    afegeix_grafic_individual("disrupcio", i)
+    afegeix_grafic_individual(path_llista, "disrupcio", i)
     
     # Víctima
     cat(victimes)
-    afegeix_grafic_individual("victimes", i)
+    afegeix_grafic_individual(path_llista, "victimes", i)
     
     # Acadèmic
     cat(academic)
-    afegeix_grafic_individual("academic", i)
+    afegeix_grafic_individual(path_llista, "academic", i)
     
     # Estat d'ànim
     cat(estat_anim)
-    afegeix_grafic_individual("estat_anim", i)
+    afegeix_grafic_individual(path_llista, "estat_anim", i)
     
     # Caràcter
     cat(caracter)
-    afegeix_grafic_individual("caracter", i)
+    afegeix_grafic_individual(path_llista, "caracter", i)
     
     # Estatus sociomètric
     cat(estatus_sociometric)
-    afegeix_grafic_individual("estatus", i)
+    afegeix_grafic_individual(path_llista, "estatus", i)
     
     # Resum
     cat(resum)
-    afegeix_grafic_resum(i)
+    afegeix_grafic_resum(path_llista, i)
     
-    # Final
-    cat(final_latex)
-    
-    sink()
-    close(con)
   }
-  
-  print("> Finalitzat correctament.")
   
 }
 
 if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R
-  main(path_fitxer)
+  informe_individual(path_llista, nom_fitxer, noms)
 }

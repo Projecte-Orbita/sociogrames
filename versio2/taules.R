@@ -5,8 +5,8 @@ Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 require(kableExtra)
 require(dplyr)
 
-taula_classe = function(dades, negretes, bones = NULL, path_, titol = "proves"){
-  
+taula_classe = function(dades, negretes, bones = NULL, path_, titol, titol_peu, peu_taula){
+  options(encoding="UTF-8")
   con <- file(file.path(path_, paste0(titol, '.txt')), open = "wt", encoding = "UTF-8")
   sink(con)
   
@@ -23,6 +23,8 @@ taula_classe = function(dades, negretes, bones = NULL, path_, titol = "proves"){
                 funs(cell_spec(., "latex", 
                                color = ifelse(. > mean(.) + sd(.), "green", "blue")) )) %>%
       kable(format = "latex", escape = F, row.names = F, align = "c") %>%
+      footnote(general = peu_taula, general_title = titol_peu, 
+               footnote_as_chunk = T, title_format = c("bold", "italic")) %>%
       kable_styling(#latex_options = c("striped", "hover", "condensed", "responsive"),  # no es veuen bé
         full_width =F, 
         position = "center")
@@ -34,8 +36,8 @@ taula_classe = function(dades, negretes, bones = NULL, path_, titol = "proves"){
   close(con)
 }
 
-taula_classe_negativa = function(dades, negretes, bones = NULL, path_, titol="Proves"){
-  
+taula_classe_negativa = function(dades, negretes, bones = NULL, path_, titol, titol_peu, peu_taula){
+  options(encoding="UTF-8")
   con <- file(file.path(path_, paste0(titol, '.txt')), open = "wt", encoding = "UTF-8")
   sink(con)
   
@@ -51,6 +53,8 @@ taula_classe_negativa = function(dades, negretes, bones = NULL, path_, titol="Pr
                     funs(cell_spec(., "latex", 
                                    color = ifelse(. < mean(.) - sd(.), "green", "blue")) )) %>%
           kable(format = "latex", escape = F, row.names = F, align = "c") %>%
+          footnote(general = peu_taula, general_title = titol_peu, 
+                   footnote_as_chunk = T, title_format = c("bold", "italic")) %>%
           kable_styling(#latex_options = c("striped", "hover", "condensed", "responsive"),
             full_width =F, position = "center")
         
@@ -59,8 +63,10 @@ taula_classe_negativa = function(dades, negretes, bones = NULL, path_, titol="Pr
   close(con)
 }
 
-taula_classe_positiva_negativa = function(dades, negretes, bones = NULL, mixtes = NULL, path_, titol="Proves"){
-  
+taula_classe_positiva_negativa = function(dades, negretes, bones = NULL, mixtes = NULL, path_, 
+                                          titol, titol_peu, peu_taula)
+  {
+  options(encoding="UTF-8")
   con <- file(file.path(path_, paste0(titol, '.txt')), open = "wt", encoding = "UTF-8")
   sink(con)
   
@@ -81,6 +87,8 @@ taula_classe_positiva_negativa = function(dades, negretes, bones = NULL, mixtes 
                                    color = ifelse(. < mean(.) - sd(.), "red",
                                                   ifelse(. > mean(.) + sd(.), "green", "blue"))))) %>%
           kable(format = "latex", escape = F, row.names = F, align = "c") %>%
+          footnote(general = peu_taula, general_title = titol_peu, 
+                   footnote_as_chunk = T, title_format = c("bold", "italic")) %>%
           kable_styling(#latex_options = c("striped", "hover", "condensed", "responsive"),
             full_width =F, position = "center")
         # save_kable(paste0("taules/", titol, ".txt"), keep_tex = F)

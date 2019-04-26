@@ -1,10 +1,15 @@
 # Informe escola
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
-# 
+options(endoding="UTF-8")
 source('informe_collectiu.R', encoding = "UTF-8")
+source('informe_individual.R', encoding = "UTF-8")
 source('texts_escola.R', encoding = "UTF-8")
+source('texts_collectiu.R', encoding = "UTF-8")
+source('texts_individual.R', encoding = "UTF-8")
 source('utils.R', encoding = "UTF-8")
 # Aquest fitxer crea els informes per tota l'escola, primer el col·leciu i després els individuals, un fitxer .tex per cada classe
+
+individuals = F
 
 informe_escola = function(nom_escola){
 
@@ -26,7 +31,8 @@ informe_escola = function(nom_escola){
   
   
   # I creem els directoris sobreescrivint si ja existeixen:
-  netejar_directoris(c(path_figures, path_taules, path_informes))  # Alerta de no netejar el de dades!
+  directoris_ = c(path_figures, path_taules, path_informes)  # Alerta de no netejar el de dades!
+  netejar_directoris(c(directoris_, file.path(directoris_, "individuals")))
   
   noms_fitxers = as.vector(list.files(path_llista$dades))
   num_curs = substr(noms_fitxers, 1, 1)
@@ -51,15 +57,14 @@ informe_escola = function(nom_escola){
   }
   
   for (cl in 1:length(curs_classe)){
-    print(paste0("> Creant els informes per la classe ", classes[cl]))
     
+    print(paste0("> Creant els informes per la classe ", classes[cl]))
     print("> Creant gràfics i taules...")
     
-    # Cridem l'informe col·lectiu:
     nom_fitxer = noms_fitxers[cl]
-    calculs_collectiu(path_llista = path_llista, nom_fitxer = nom_fitxer, numero_respostes = 3)
     
-    print("> Imprimint fitxers .tex...")
+    # Informe col·lectiu
+    calculs_collectiu(path_llista = path_llista, nom_fitxer = nom_fitxer, numero_respostes = 3)
     
     path_ = file.path(path_llista$informes, paste0("sociograma_", curs_classe[cl], ".tex"))
     con = file(path_, open = "wt", encoding = "UTF-8")
@@ -67,14 +72,26 @@ informe_escola = function(nom_escola){
     
     cat(coses_latex);
     
-    cat("\\begin{document}")
-    
-    #pagina_titol(escola[1])
+    cat("\\begin{document}\n")
     
     titol_classes(nom_escola, classes[cl])
-    cat(introduccio)
     
-    informe_classe(nom_escola, nom_fitxer)
+    # Intro
+    cat(introduccio_escola)
+    
+    cat(titol_collectiu)
+    #cat(introduccio)
+    
+    informe_classe(path_llista = path_llista, nom_fitxer = nom_fitxer)
+    
+    # Informes individuals (en el mateix fitxer)
+    
+    if (individuals){
+    noms = calculs_individual(path_llista, nom_fitxer, numero_respostes=3)
+    
+    cat(titol_individual)
+    informe_individual(path_llista = path_llista, nom_fitxer = nom_fitxer, noms)
+    }
     
     cat(final_latex)
     sink()

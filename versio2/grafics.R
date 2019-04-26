@@ -11,7 +11,7 @@ llista_titols = list("disrupcio" = "Disrupció",
 ##### Gràfics col·lectius
 
 grafic_barres_classe = function(columnes, color, noms = noms, path_, nom_grafic){
-  
+  options(encoding="UTF-8")
   titol = unlist(llista_titols[nom_grafic], use.names = F)
   agr.m <- melt(columnes, id.vars = "noms")
   agr.m$color = rep(color,nrow(agr.m)/length(noms))
@@ -28,10 +28,11 @@ grafic_barres_classe = function(columnes, color, noms = noms, path_, nom_grafic)
     ylab("") + 
     xlab("Alumnes") + 
     ggsave(file = file.path(path_, paste0(nom_grafic, '.pdf')), 
-           dpi = 600, width = 8, height = 6, units = "in") 
+           dpi = 600, width = 15, height = 10, units = "cm") 
 }
 
 grafic_barres_prosocialitat = function(columnes, noms, path_){
+  options(encoding="UTF-8")
   ggplot(columnes, aes(x = as.factor(noms), y = Prosocialitat)) +
     geom_bar(stat='identity', fill = "blue") + 
     theme_bw() + 
@@ -41,19 +42,21 @@ grafic_barres_prosocialitat = function(columnes, noms, path_){
     ylab("") + 
     xlab("Alumnes") + 
     ggsave(file = file.path(path_, "prosocialitat.pdf"), 
-           dpi = 600, width = 8, height = 6, units = "in") 
+           dpi = 600, width = 15, height = 10, units = "cm") 
 }
 
-grafic_xarxa = function(gg, colors, label.color, paraules, path_, tipus){
-  pdf(file.path(path_, paste0(tipus, ".pdf")), width = 12, height = 16)
+grafic_xarxa = function(gg, colors, label.color, vertex.shape, paraules, path_, tipus){
+  options(encoding="UTF-8")
+  pdf(file.path(path_, paste0(tipus, ".pdf")), width = 10, height = 16)
   plot(gg,
        layout=layout_with_lgl, # altres opcions són: layout_with_gem layout_with_fr, layout_with_mds, layout_with_lgl
-       frame = T,
+       frame = F,
        vertex.label.color = label.color, 
        vertex.color = as.character(colors),
        width = 1.5,
        vertex.frame.color = NA,
        vertex.alpha = 0.5,
+       vertex.shape = vertex.shape,
        #     edge.color = edge.color , !!! no funciona !!!
        edge.curved = .2,
        edge.arrow.size = 0.55, 
@@ -69,13 +72,16 @@ grafic_xarxa = function(gg, colors, label.color, paraules, path_, tipus){
          pt.cex=c(4,5,6), cex=1.5, bty="n", ncol=1)
   dev.off()
   
-  return(TRUE)
 }
 
-
 ##### Gràfics individuals
-grafic_formatge = function(dades, tipus, nom_plot, i, paleta = paleta){
+
+grafic_formatge = function(dades, tipus, path_, nom_plot, i, paleta = paleta){
+  
+  options(encoding="UTF-8")
   dades$label = paste0(round(dades$value/sum(dades$value)*100),"%")
+  nom_output = paste0(nom_plot, "-formatges-", i, ".pdf")
+    
   formatge = ggplot(dades, aes(x = "", y = value, fill = as.factor(dades$variable))) +
     geom_bar(stat='identity', width = .5) +
     coord_polar("y", start=0, direction = - 1) +
@@ -86,13 +92,17 @@ grafic_formatge = function(dades, tipus, nom_plot, i, paleta = paleta){
     theme(legend.position="none") +
     labs(title = paste0(sum(dades$value)," tries\n", tipus)) +
     theme(plot.title = element_text(hjust = 0.5)) +
-    ggsave(file = paste0("figures/individuals/", nom_plot, "-formatges-", i, ".pdf"), 
+    ggsave(file = file.path(path_, "individuals", nom_output), 
            dpi = 600, width = 8, height = 6, units = "in") 
   
-  return(formatge)
+  #return(formatge)
 }
 
-grafic_barres_individual = function(dades, numero_maxim, nom_plot, i, paleta = paleta){
+grafic_barres_individual = function(dades, numero_maxim, path_, nom_plot, i, paleta = paleta){
+  
+  options(encoding="UTF-8")
+  nom_output = paste0(nom_plot, "-barres-", i, ".pdf")
+  
   barres = ggplot(dades, aes(x = as.factor(variable), y = value)) +
     geom_bar(stat='identity', 
              fill = paleta[1:length(dades$variable)],
@@ -101,13 +111,16 @@ grafic_barres_individual = function(dades, numero_maxim, nom_plot, i, paleta = p
     theme_bw() + 
     ylab("Número de tries") + 
     xlab("") +
-    ggsave(file = paste0("figures/individuals/", nom_plot, "-barres-", i, ".pdf"), 
+    ggsave(file = file.path(path_, "individuals", nom_output), 
            dpi = 600, width = 8, height = 6, units = "in") 
-  return(barres)
+  #return(barres)
 }
 
-grafic_resum = function(tot, i){
+grafic_resum = function(tot, path_, i){
+  
   options(encoding="UTF-8")
+  nom_output = paste0("resum-", i, ".pdf")
+  
   gp = ggplot(tot, aes(x = ambit, y = tries, fill=dimensio)) +
     geom_bar(stat='identity') + 
     theme_bw() + 
@@ -116,7 +129,6 @@ grafic_resum = function(tot, i){
     xlab("Àmbit") +
     coord_flip() +
     theme(legend.title=element_blank()) +
-    ggsave(file = paste0("figures/individuals/resum-", i, ".pdf"), 
+    ggsave(file = file.path(path_, "individuals", nom_output), 
            dpi = 600, width = 8, height = 6, units = "in") 
 }
-

@@ -15,7 +15,7 @@
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
 # Imports
-source('funcions_ajuda.R', encoding = 'UTF8')
+source('utils.R', encoding = 'UTF8')
 source('grafics.R', encoding = 'UTF8')
 source('taules.R', encoding = 'UTF8')
 source('calculs_arees.R', encoding = 'UTF8')
@@ -25,9 +25,9 @@ source('calculs_arees.R', encoding = 'UTF8')
 
 path_fitxer = 'dades/Preguntes sociograma - Sociograma_CMS.csv'
 
-calculs_individual = function(path_fitxer, numero_respostes=3){
+calculs_individual = function(path_llista, nom_fitxer, numero_respostes=3){
   
-  dades = importar_i_manipular(path_fitxer, numero_respostes)
+  dades = importar_i_manipular(file.path(path_llista$dades, nom_fitxer), numero_respostes)
   mat = dades[[1]]
   mat_est = dades[[2]]
   noms = dades[[3]]
@@ -45,8 +45,8 @@ calculs_individual = function(path_fitxer, numero_respostes=3){
   
   for (i in 1:nrow(Disrupcio)){
     vic.m <- melt(Disrupcio[i,1:4], id.vars = "Noms")
-    grafic_barres_individual(vic.m, max(Disrupcio[2:4]), nom_plot, i, paleta)
-    grafic_formatge(vic.m, "disruptives", nom_plot, i, paleta)
+    grafic_barres_individual(vic.m, max(Disrupcio[2:4]), path_llista$figures, nom_plot, i, paleta)
+    grafic_formatge(vic.m, "disruptives", path_llista$figures, nom_plot, i, paleta)
   }
   
   # Cooperació
@@ -71,8 +71,8 @@ calculs_individual = function(path_fitxer, numero_respostes=3){
   
   for (i in 1:nrow(Victimitzacio)){
     vic.m <- melt(Victimitzacio[i,1:4], id.vars = "Noms")
-    grafic_barres_individual(vic.m, max(Victimitzacio[2:4]), nom_plot, i, paleta)
-    grafic_formatge(vic.m, "victimitzadores", nom_plot, i, paleta) 
+    grafic_barres_individual(vic.m, max(Victimitzacio[2:4]), path_llista$figures, nom_plot, i, paleta)
+    grafic_formatge(vic.m, "victimitzadores", path_llista$figures, nom_plot, i, paleta) 
   }
 
   
@@ -88,8 +88,8 @@ calculs_individual = function(path_fitxer, numero_respostes=3){
   
   for (i in 1:nrow(Academic)){
     vic.m <- melt(Academic[i,], id.vars = "Noms")
-    grafic_barres_individual(vic.m, max(Academic[2:5]), nom_plot, i, paleta)
-    grafic_formatge(vic.m, "acadèmiques", nom_plot, i, paleta) 
+    grafic_barres_individual(vic.m, max(Academic[2:5]), path_llista$figures, nom_plot, i, paleta)
+    grafic_formatge(vic.m, "acadèmiques", path_llista$figures, nom_plot, i, paleta) 
   }
   
   # Estat d'ànim
@@ -104,8 +104,8 @@ calculs_individual = function(path_fitxer, numero_respostes=3){
   
   for (i in 1:nrow(Estat_anim)){
     vic.m <- melt(Estat_anim[i,], id.vars = "Noms")
-    grafic_barres_individual(vic.m, max(Estat_anim[2:5]), nom_plot, i, paleta) 
-    grafic_formatge(vic.m, "d'estat d'ànim", nom_plot, i, paleta) 
+    grafic_barres_individual(vic.m, max(Estat_anim[2:5]), path_llista$figures, nom_plot, i, paleta) 
+    grafic_formatge(vic.m, "d'estat d'ànim", path_llista$figures, nom_plot, i, paleta) 
   }
 
   
@@ -121,8 +121,8 @@ calculs_individual = function(path_fitxer, numero_respostes=3){
   
   for (i in 1:nrow(Caracter)){
     vic.m <- melt(Caracter[i,], id.vars = "Noms")
-    grafic_barres_individual(vic.m, max(Caracter[2:7]), nom_plot, i, paleta)
-    grafic_formatge(vic.m, "de caràcter", nom_plot, i, paleta) 
+    grafic_barres_individual(vic.m, max(Caracter[2:7]), path_llista$figures, nom_plot, i, paleta)
+    grafic_formatge(vic.m, "de caràcter", path_llista$figures, nom_plot, i, paleta) 
   }
   
   # Estatus sociomètric
@@ -136,8 +136,8 @@ calculs_individual = function(path_fitxer, numero_respostes=3){
   
   for (i in 1:nrow(Estatus_bo)){
     vic.m <- melt(Estatus_bo[i,], id.vars = "Noms")
-    grafic_barres_individual(vic.m, max(Estatus_bo[2:7]), nom_plot, i, paleta)
-    grafic_formatge(vic.m, "d'estatus", nom_plot, i, paleta)
+    grafic_barres_individual(vic.m, max(Estatus_bo[2:7]), path_llista$figures, nom_plot, i, paleta)
+    grafic_formatge(vic.m, "d'estatus", path_llista$figures, nom_plot, i, paleta)
   }
 
   # Resum
@@ -171,9 +171,9 @@ calculs_individual = function(path_fitxer, numero_respostes=3){
     tot$ambit = factor(tot$ambit, levels = unique(tot$ambit))
     names(tot) = c("ambit", "dimensio", "tries")
     
-    grafic_resum(tot, i)
+    grafic_resum(tot, path_llista$figures, i)
   }
-  
+  return(noms)
 }
 
 #calculs_individual(path_fitxer, 3)

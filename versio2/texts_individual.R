@@ -4,7 +4,11 @@
 
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
-afegeix_grafic_individual = function(nom_grafic, i){
+afegeix_grafic_individual = function(path_llista, nom_grafic, i){
+  nom_grafic_barres = file.path(path_llista$figures, "individuals", 
+                                paste0(nom_grafic, "-barres-", i, ".pdf"))
+  nom_grafic_formatges = file.path(path_llista$figures, "individuals", 
+                                  paste0(nom_grafic, "-formatges-", i, ".pdf"))
   cat(
     paste0(
       "
@@ -12,13 +16,13 @@ afegeix_grafic_individual = function(nom_grafic, i){
       \\centering
       \\begin{subfigure}{.65\\textwidth}
       \\centering
-      \\includegraphics[width=1\\linewidth]{../../figures/individuals/", nom_grafic, "-barres-", i, ".pdf}
+      \\includegraphics[width=1\\linewidth]{", nom_grafic_barres, "}
       %\\caption{Diagrama de barres}
       \\label{fig:sub1}
       \\end{subfigure}%
       \\begin{subfigure}{.35\\textwidth}
       \\centering
-      \\includegraphics[width=1\\linewidth]{../../figures/individuals/", nom_grafic, "-formatges-", i, ".pdf}
+      \\includegraphics[width=1\\linewidth]{", nom_grafic_formatges, "}
       %\\caption{Diagrama de formatges}
       \\label{fig:sub2}
       \\end{subfigure}
@@ -30,13 +34,14 @@ afegeix_grafic_individual = function(nom_grafic, i){
     )
 }
 
-afegeix_grafic_resum = function(i){
+afegeix_grafic_resum = function(path_llista, i){
+  nom_grafic = file.path(path_llista$figures, "individuals", paste0("resum-", i, ".pdf"))
   cat(
     paste0(
       "
     \\begin{figure}[H]
 			\\centering
-			\\includegraphics[width=16cm]{../../figures/individuals/resum-", i, ".pdf}
+			\\includegraphics[width=16cm]{", nom_grafic, "}
 		\\end{figure}
     "
     )
@@ -91,26 +96,27 @@ heading_alumnes <- function(nom){ cat("
 \\begin{document}
 \\includepdf[pages=-,pagecommand={\\begin{tikzpicture}[remember picture,overlay]\\node [xshift = 0cm, yshift = 4.5cm] at (current page.center)  {\\textbf{\\huge{",nom,"}}};\\end{tikzpicture}}]{../../Portada-resultats}
 
-\\maketitle")}
+"
+)
+  }
 
+titol_alumne = function(nom){
+  cat("
+      \\newpage
+      
+      \\begin{framed}
+      \\textbf{", nom, "}
+      \\end{framed}
+      
+      ", sep = "")}
 
 estatus_sociometric = "
 
 \\section*{Estatus sociomètric}
 
-En aquest apartat mesurem l'estatus social de cada alumne, tant directe (preguntant directament qui són els seus amics) com indirecte. Els resultats d'aquesta àrea s'obtenen a partir de les respostes dels alumnes a les següents preguntes:
-
-\\textbf{Qui voldries al teu grup per jugar al pati?}
-
-\\textbf{Qui NO voldries al teu grup per jugar al pati?}
-
-\\textbf{Marca/tria/escull els teus millors amics}
-
-\\textbf{Marca/tria/escull els companys que et triarien com a millor amic}
-
-\\textbf{Els altres volen estar al seu costat}
-
-\\textbf{Pocs companys volen estar amb ell}
+En aquest apartat mesurem l'estatus social de cada alumne, tant directe (preguntant directament qui 
+són els seus amics) com indirecte. Els resultats d'aquesta àrea s'obtenen a partir de les respostes 
+dels alumnes a les següents preguntes:
 "
 
 resum = "

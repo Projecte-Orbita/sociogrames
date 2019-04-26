@@ -79,7 +79,7 @@ calcs_victimitzacio = function(mat, noms){
 calcs_academic = function(mat, noms){
   academic_total = mat[,38] + mat[,40] - mat[,39] - mat[,41]
   academic = as.data.frame(cbind(mat[,38], mat[,40], mat[,39], mat[,41], academic_total))
-  colnames(academic) = c("Bones notes", "Participa", "Males notes", "No participa", "Puntuació acadèmica")
+  colnames(academic) = c("Bones notes", "Participa", "Males notes", "No participa", "Puntuació global")
   academic_est = scale(academic)
   
   academic_total_est = scale(academic_total)
@@ -132,7 +132,7 @@ calcs_estatus = function(mat){
 }
 
 calcs_xarxa_academica = function(soc, mat){
-  xarxa = soc[,c(1:3)] # estem agafant només els que sí, els que no els obviem per ara
+  xarxa = soc[,c(1, 3, 4)] # estem agafant només els que sí, els que no els obviem per ara
   noms = as.character(xarxa$noms[seq(1,nrow(xarxa),3)])
   gg <- graph.data.frame(xarxa[,c(2,3)], directed=T)
   gg <- simplify(gg, remove.multiple = F, remove.loops = T) 
@@ -180,13 +180,17 @@ calcs_xarxa_academica = function(soc, mat){
   
   label.color = ifelse(participa_est > 1, "chartreuse3", ifelse(participa_est< -1, "firebrick", "black"))
   edge.color = ifelse(xarxa$relacions==1, "darkblue", "black")
+  #vertex.shape = as.factor(soc$genere)
+  vertex.shape = ifelse(as.character(soc$genere)=="nen", "square",
+                        ifelse(as.character(soc$genere)=="nena", "circle", 
+                               ifelse(as.character(soc$genere)=="altres", "raster", "crectangle")))
   
-  return(list(gg, colors, label.color))
+  return(list(gg, colors, label.color, vertex.shape))
   
 }
 
 calcs_xarxa_relacional = function(soc, mat){
-  xarxa = soc[,c(1,2,7)]
+  xarxa = soc[,c(1,3,8)]
   noms = as.character(xarxa$noms[seq(1,nrow(xarxa),3)])
   gg <- graph.data.frame(xarxa[,c(2,3)], directed=T)
   gg <- simplify(gg, remove.multiple = F, remove.loops = T) 
@@ -234,6 +238,10 @@ calcs_xarxa_relacional = function(soc, mat){
 
   label.color = ifelse(estat_anim_est > 1, "chartreuse3", ifelse(estat_anim_est< -1, "firebrick", "black"))
   edge.color = ifelse(xarxa$relacions==1, "darkblue", "black")
+  #vertex.shape = as.factor(soc$genere)
+  vertex.shape = ifelse(as.character(soc$genere)=="nen", "square",
+                        ifelse(as.character(soc$genere)=="nena", "circle", 
+                               ifelse(as.character(soc$genere)=="altres", "raster", "crectangle")))
   
-  return(list(gg, colors, label.color))
+  return(list(gg, colors, label.color, vertex.shape))
 }

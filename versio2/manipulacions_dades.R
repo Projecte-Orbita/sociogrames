@@ -87,12 +87,12 @@ pretractar_excels <-function(path, nom_carpeta,limit=10){
   # s'han de triar les columnes, que no són les mateixes per tots els cursos
   
   
-  columnes = list(NULL,NULL,c(7:48),c(7:48),NULL,NULL)
+  columnes = list(NULL,NULL,c(7:49),c(7:49),NULL,NULL)
   names(columnes) = c(1,2,3,4,5,6)
   
   directori = getwd()
   
-  dir.create(file.path(directori, "dades/", nom_carpeta), showWarnings = FALSE)
+  dir.create(file.path(directori, nom_carpeta), showWarnings = T)
   # s'han de crear els fitxers
   
   for (i in classes_bones){
@@ -101,7 +101,7 @@ pretractar_excels <-function(path, nom_carpeta,limit=10){
     cols = unlist(columnes[cursos[i]], use.names = F)
     #cols = c(cols, 8) # afegim els comentaris, que els posem al final
     df = cbind.data.frame(tractar_i_ajuntar_noms(as.data.frame(fitxer[,4:6])), fitxer[,cols])
-    write.table(df, paste0("dades/", nom_carpeta, "/", noms_fitxers[i],".csv"), 
+    write.table(df, file.path(nom_carpeta, paste0(noms_fitxers[i],".csv")), 
                 sep = ",",
                 row.names=F, 
                 col.names = F,
@@ -110,4 +110,4 @@ pretractar_excels <-function(path, nom_carpeta,limit=10){
   
 }
 
-# pretractar_excels('dades/proves_excel_sociograma.xlsx', 'proves')
+pretractar_excels('dades/proves_excel_sociograma.xlsx', 'temp/dades')

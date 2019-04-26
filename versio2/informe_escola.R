@@ -9,7 +9,7 @@ source('texts_individual.R', encoding = "UTF-8")
 source('utils.R', encoding = "UTF-8")
 # Aquest fitxer crea els informes per tota l'escola, primer el col·leciu i després els individuals, un fitxer .tex per cada classe
 
-individuals = F
+individuals = T
 
 informe_escola = function(nom_escola){
 

@@ -19,11 +19,9 @@ source('utils.R', encoding = 'UTF8')
 source('grafics.R', encoding = 'UTF8')
 source('taules.R', encoding = 'UTF8')
 source('calculs_arees.R', encoding = 'UTF8')
-
+require(jsonlite)
 
 ######## Manipulacions inicials ###########
-
-path_fitxer = 'dades/Preguntes sociograma - Sociograma_CMS.csv'
 
 calculs_individual = function(path_llista, nom_fitxer, numero_respostes=3){
   
@@ -31,6 +29,7 @@ calculs_individual = function(path_llista, nom_fitxer, numero_respostes=3){
   mat = dades[[1]]
   mat_est = dades[[2]]
   noms = dades[[3]]
+  soc = dades[[4]]
   
   # Ara anem fent els gràfics i els objectes amb els quals escriurem les taules:
   
@@ -174,6 +173,12 @@ calculs_individual = function(path_llista, nom_fitxer, numero_respostes=3){
     grafic_resum(tot, path_llista$figures, i)
   }
   return(noms)
+  
+  # Per acabar, fem un diccionari on guardem les preferències de cada nen i nena:
+  
+  crear_dict_preferencies(soc, numero_respostes, path_llista$taules)
+  preferencies_inverses(soc, numero_respostes)
 }
 
 #calculs_individual(path_fitxer, 3)
+

@@ -1,11 +1,11 @@
 # Informes individuals
 
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
+options(encoding = "UTF-8")
 
 source('texts_collectiu.R', encoding = "UTF-8")
 source('calculs_previs_individual.R', encoding = "UTF-8")
 
-path_fitxer = 'dades/Preguntes sociograma - Sociograma_CMS.csv'
 
 informe_individual = function(path_llista, nom_fitxer, noms){
   
@@ -45,7 +45,6 @@ informe_individual = function(path_llista, nom_fitxer, noms){
     afegeix_grafic_resum(path_llista, i)
     
   }
-  
 }
 
 if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R

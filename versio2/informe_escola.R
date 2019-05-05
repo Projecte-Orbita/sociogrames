@@ -9,7 +9,9 @@ source('texts_individual.R', encoding = "UTF-8")
 source('utils.R', encoding = "UTF-8")
 # Aquest fitxer crea els informes per tota l'escola, primer el col·leciu i després els individuals, un fitxer .tex per cada classe
 
-individuals = T
+# Coses per debuguejar més ràpid:
+individuals = F
+aprofitar = F
 
 informe_escola = function(nom_escola){
 
@@ -30,9 +32,11 @@ informe_escola = function(nom_escola){
                      'informes' = path_informes)
   
   
-  # I creem els directoris sobreescrivint si ja existeixen:
-  directoris_ = c(path_figures, path_taules, path_informes)  # Alerta de no netejar el de dades!
-  netejar_directoris(c(directoris_, file.path(directoris_, "individuals")))
+  if (!aprofitar){
+    # I creem els directoris sobreescrivint si ja existeixen:
+    directoris_ = c(path_figures, path_taules, path_informes)  # Alerta de no netejar el de dades!
+    netejar_directoris(c(directoris_, file.path(directoris_, "individuals")))
+  }
   
   noms_fitxers = as.vector(list.files(path_llista$dades))
   num_curs = substr(noms_fitxers, 1, 1)
@@ -64,8 +68,10 @@ informe_escola = function(nom_escola){
     nom_fitxer = noms_fitxers[cl]
     
     # Informe col·lectiu
-    calculs_collectiu(path_llista = path_llista, nom_fitxer = nom_fitxer, numero_respostes = 3)
     
+    if (!aprofitar){
+      calculs_collectiu(path_llista = path_llista, nom_fitxer = nom_fitxer, numero_respostes = 3)
+    }
     path_ = file.path(path_llista$informes, paste0("sociograma_", curs_classe[cl], ".tex"))
     con = file(path_, open = "wt", encoding = "UTF-8")
     sink(con)
@@ -87,10 +93,15 @@ informe_escola = function(nom_escola){
     # Informes individuals (en el mateix fitxer)
     
     if (individuals){
-    noms = calculs_individual(path_llista, nom_fitxer, numero_respostes=3)
-    
-    cat(titol_individual)
-    informe_individual(path_llista = path_llista, nom_fitxer = nom_fitxer, noms)
+      if (!aprofitar){
+        noms = calculs_individual(path_llista, nom_fitxer, numero_respostes=3)
+      }
+      else {
+        dades = importar_i_manipular(file.path(path_llista$dades, nom_fitxer), 3)
+        noms = dades[[3]]
+      }
+      cat(titol_individual)
+      informe_individual(path_llista = path_llista, nom_fitxer = nom_fitxer, noms)
     }
     
     cat(final_latex)

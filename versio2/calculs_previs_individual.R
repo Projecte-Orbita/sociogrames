@@ -172,12 +172,12 @@ calculs_individual = function(path_llista, nom_fitxer, numero_respostes=3){
     
     grafic_resum(tot, path_llista$figures, i)
   }
+  
+  # Per acabar, fem un dataframe on guardem les preferències de cada nen i nena:
+  calcular_preferencies(soc = soc, path_ = path_llista$taules, numero_respostes = 3)
+  
   return(noms)
-  
-  # Per acabar, fem un diccionari on guardem les preferències de cada nen i nena:
-  
-  crear_dict_preferencies(soc, numero_respostes, path_llista$taules)
-  preferencies_inverses(soc, numero_respostes)
+
 }
 
 #calculs_individual(path_fitxer, 3)

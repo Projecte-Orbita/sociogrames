@@ -132,9 +132,9 @@ calcs_estatus = function(mat){
   return(list(estatus, estatus_est))
 }
 
-calcs_xarxa_academica = function(soc, mat){
+calcs_xarxa_academica = function(soc, mat, num_respostes){
   xarxa = soc[,c(1, 3, 4)] # estem agafant només els que sí, els que no els obviem per ara
-  noms = as.character(xarxa$noms[seq(1,nrow(xarxa),3)])
+  noms = as.character(xarxa$noms[seq(1,nrow(xarxa),num_respostes)])
   gg <- graph.data.frame(xarxa[,c(2,3)], directed=T)
   gg <- simplify(gg, remove.multiple = F, remove.loops = T) 
   deg <- degree(gg, mode="all")
@@ -185,14 +185,15 @@ calcs_xarxa_academica = function(soc, mat){
   vertex.shape = ifelse(as.character(soc$genere)=="nen", "square",
                         ifelse(as.character(soc$genere)=="nena", "circle", 
                                ifelse(as.character(soc$genere)=="altres", "raster", "crectangle")))
+  vertex.shape = vertex.shape[seq(1, length(vertex.shape), num_respostes)]
   
   return(list(gg, colors, label.color, vertex.shape))
   
 }
 
-calcs_xarxa_relacional = function(soc, mat){
+calcs_xarxa_relacional = function(soc, mat, num_respostes){
   xarxa = soc[,c(1,3,6)]
-  noms = as.character(xarxa$noms[seq(1,nrow(xarxa),3)])
+  noms = as.character(xarxa$noms[seq(1,nrow(xarxa),num_respostes)])
   gg <- graph.data.frame(xarxa[,c(2,3)], directed=T)
   gg <- simplify(gg, remove.multiple = F, remove.loops = T) 
   deg <- degree(gg, mode="all")
@@ -243,12 +244,16 @@ calcs_xarxa_relacional = function(soc, mat){
   vertex.shape = ifelse(as.character(soc$genere)=="nen", "square",
                         ifelse(as.character(soc$genere)=="nena", "circle", 
                                ifelse(as.character(soc$genere)=="altres", "raster", "crectangle")))
+  vertex.shape = vertex.shape[seq(1, length(vertex.shape), num_respostes)]
   
   return(list(gg, colors, label.color, vertex.shape))
 }
 
 
 crear_dict_preferencies = function(soc, numero_respostes, path_){
+  
+  # Obsolet, vegeu "calcular_preferencies"
+  
   prefs_dict = list()
   
   # A qui escull
@@ -273,6 +278,9 @@ crear_dict_preferencies = function(soc, numero_respostes, path_){
 
 
 preferencies = function(soc, nen, area, numero_respostes){
+  
+  # Obsolet, vegeu "calcular_preferencies"
+  
   if (area == "academic"){
     area_col = 4
   }
@@ -289,6 +297,8 @@ preferencies = function(soc, nen, area, numero_respostes){
 }
 
 preferencies_inverses = function(soc, numero_respostes){
+  
+  # Obsolet, vegeu "calcular_preferencies"
   
   prefs_dict = list()
   for (i in 1:round(nrow(soc)/numero_respostes)){
@@ -317,4 +327,41 @@ preferencies_inverses = function(soc, numero_respostes){
   print(prefs_json)
   sink()
   close(con)
+}
+
+calcular_reciproc = function(xarxa, numero_respostes){
+  len = round(nrow(xarxa)/numero_respostes)
+  gg <- graph.data.frame(xarxa, directed=T)
+  gg <- simplify(gg, remove.multiple = F, remove.loops = T) 
+  
+  adj = as_adjacency_matrix(gg, sparse = TRUE)
+  reci = rep(0, nrow(xarxa))
+  
+  for (i in 1:len){
+    for (j in 1:len){
+      if (adj[i,j] == 1 & adj[j,i] == 1){
+        reci[which(xarxa$num==i & xarxa$Amics==j)] = 1
+      }
+    }
+  }
+  
+  return(reci)
+}
+
+
+calcular_preferencies = function(soc, path_, numero_respostes){
+  
+  # Creem un dataframe on guardarem totes les relacions:
+  
+  relacions = soc[, 3:9]
+  
+  # Acadèmic positiu
+  relacions$aca_pos = calcular_reciproc(relacions[, 1:2], numero_respostes)
+  relacions$aca_neg = calcular_reciproc(relacions[, 1:3], numero_respostes)
+  relacions$rel_pos = calcular_reciproc(relacions[, 1:4], numero_respostes)
+  relacions$rel_neg = calcular_reciproc(relacions[, 1:5], numero_respostes)
+  relacions$amic_pos = calcular_reciproc(relacions[, 1:6], numero_respostes)
+  relacions$amic_rec = calcular_reciproc(relacions[, 1:7], numero_respostes)
+  
+  write.csv(relacions, file.path(path_, "relacions.csv"), row.names = F)
 }

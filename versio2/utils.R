@@ -4,7 +4,8 @@ require(stringr)
 
 importar_i_manipular = function(path_fitxer, numero_respostes){
   # importem
-  soc = read.csv(path_fitxer, fileEncoding = "UTF-8", header = F)
+  soc = read_csv(path_fitxer, col_names = F)
+  soc = as.data.frame(soc)
   colnames(soc)[1:3] = c("noms", "genere", "num")
   
   # Netegem els gèneres per si la gent posa coses rares:
@@ -26,7 +27,7 @@ importar_i_manipular = function(path_fitxer, numero_respostes){
   
   for (j in 1:ncol(mat)){
     for (i in 1:nrow(mat)){
-      mat[i,j] = sum(soc[,j+3]==i)
+      mat[i,j] = sum(soc[,j+3]==i, na.rm = T)
     }
   }
   colnames(mat) = colnames(soc[,4:ncol(soc)])

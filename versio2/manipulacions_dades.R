@@ -93,6 +93,7 @@ pretractar_excels <-function(path, nom_carpeta,limit=10){
   directori = getwd()
   
   dir.create(file.path(directori, nom_carpeta), showWarnings = T)
+  options(encoding = "UTF-8")
   # s'han de crear els fitxers
   
   for (i in classes_bones){
@@ -100,12 +101,13 @@ pretractar_excels <-function(path, nom_carpeta,limit=10){
     #fitxer = fitxer[-1,]
     cols = unlist(columnes[cursos[i]], use.names = F)
     #cols = c(cols, 8) # afegim els comentaris, que els posem al final
-    df = cbind.data.frame(tractar_i_ajuntar_noms(as.data.frame(fitxer[,4:6])), fitxer[,cols])
-    write.table(df, file.path(nom_carpeta, paste0(noms_fitxers[i],".csv")), 
-                sep = ",",
-                row.names=F, 
-                col.names = F,
-                quote = 1)
+    df = cbind.data.frame(tractar_i_ajuntar_noms(as.data.frame(fitxer[,4:6], 
+                                                               stringsAsFactors =F)), 
+                          fitxer[,cols])
+    df[,1] = as.character(df[,1])
+    #Encoding(df) = "UTF-8"
+    con = file(file.path(nom_carpeta, paste0(noms_fitxers[i],".csv")), encoding= "UTF-8")
+    write_excel_csv(df, file.path(nom_carpeta, paste0(noms_fitxers[i],".csv")), col_names = F)
   }
   
 }

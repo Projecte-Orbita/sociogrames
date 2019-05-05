@@ -199,7 +199,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   soc$noms = unlist(lapply(noms, function(x) rep(x, numero_respostes)), use.names = F)
   
   # Xarxa acadèmica
-  X_Academic_ = calcs_xarxa_academica(soc, mat)
+  X_Academic_ = calcs_xarxa_academica(soc, mat, numero_respostes)
   gg = X_Academic_[[1]]
   colors = X_Academic_[[2]]
   label.color = X_Academic_[[3]]
@@ -217,7 +217,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
                tipus = "xarxa_academica")
   
   # xarxa relacional
-  X_relacional_ = calcs_xarxa_relacional(soc, mat)
+  X_relacional_ = calcs_xarxa_relacional(soc, mat, numero_respostes)
   gg = X_relacional_[[1]]
   colors = X_relacional_[[2]]
   label.color = X_relacional_[[3]]

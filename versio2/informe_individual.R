@@ -3,11 +3,13 @@
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 options(encoding = "UTF-8")
 
-source('texts_collectiu.R', encoding = "UTF-8")
+source('texts_individual.R', encoding = "UTF-8")
 source('calculs_previs_individual.R', encoding = "UTF-8")
 
 
 informe_individual = function(path_llista, nom_fitxer, noms){
+  
+  rels = read.csv(file.path(path_llista$taules, "relacions.csv"))
   
   for (i in 1:length(noms)){
     
@@ -15,6 +17,9 @@ informe_individual = function(path_llista, nom_fitxer, noms){
     
     titol_alumne(nom)
     # cat(introduccio)
+    
+    cat("\\section*{Preferències relacionals}")
+    afegeix_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3)
     
     # Disrupció
     cat(disrupcio)

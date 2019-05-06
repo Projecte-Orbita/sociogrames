@@ -168,7 +168,7 @@ dels alumnes a les següents preguntes:
 "
 
 resum = "
-\\subsection*{Resum}
+\\section*{Resum}
 
 A continuació presentem de forma condensada un gràfic amb totes les dimensions mesurades en el sociograma:
 "
@@ -206,11 +206,18 @@ afegeix_preferencies = function(rels, noms, i, numero_respostes, tipus){
   k = pos
   for (j in 1:numero_respostes){
     
+    nom = noms[rels[k, col]]
+    if (is.na(nom)){
+      k = k + 1
+    }
+    
+    else {
     cat(ifelse(rels[k, col_rel], 
-               paste0("\\item   \\textbf{", noms[rels[k, col]], "}"),  
-               paste0("\\item  ", noms[rels[k, col]])))
+               paste0("\\item   \\textbf{", nom, "}"),  
+               paste0("\\item  ", nom)))
     k = k + 1 
     }
+  }
   cat("\\end{itemize}")
   
   quins_triat = which(rels[, col]==i)
@@ -237,10 +244,17 @@ afegeix_preferencies = function(rels, noms, i, numero_respostes, tipus){
   k = pos
   for (j in 1:numero_respostes){
     
-    cat(ifelse(rels[k, col_rel + 1], 
-               paste0("\\item   \\textbf{", noms[rels[k, col + 1]], "}"), 
-               paste0("\\item   ", noms[rels[k, col + 1]])))
-    k = k + 1
+    nom = noms[rels[k, col]]
+    if (is.na(nom)){
+      k = k + 1
+    }
+    
+    else {
+      cat(ifelse(rels[k, col_rel], 
+                 paste0("\\item   \\textbf{", nom, "}"),  
+                 paste0("\\item  ", nom)))
+      k = k + 1 
+    }
   }
   cat("\\end{itemize}")
   

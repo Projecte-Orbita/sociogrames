@@ -11,7 +11,7 @@ source('utils.R', encoding = "UTF-8")
 
 # Coses per debuguejar més ràpid:
 individuals = T
-aprofitar = T
+aprofitar = F
 
 informe_escola = function(nom_escola){
 

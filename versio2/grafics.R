@@ -2,7 +2,7 @@ Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
 require(ggplot2)
 
-paleta <- c("#32CD32", "#CD3278", "#1E90FF", "#009E73", "#56B4E9", "#E69F00")
+paleta <- c("#74ec9c", "#ec445c", "#5bade9", "#ecd044", "#347c7c", "#3c3048", "70f4a8", "94b0a8")
 llista_titols = list("disrupcio" = "Disrupció",
                      "victimes" = "Víctimes",
                      "academic" = "Acadèmic",
@@ -21,6 +21,7 @@ grafic_barres_classe = function(columnes, color, noms = noms, path_, nom_grafic)
   agr.m$noms = factor(agr.m$noms, levels = unique(as.character(agr.m$noms)))
   ggplot(agr.m, aes(x = as.factor(noms), y = value, fill=variable)) +
     geom_bar(stat='identity') + 
+    scale_fill_manual(values = paleta) + 
     theme_bw() + 
     theme(axis.text.x = element_text(angle = 45, hjust = 1,
                                      face = as.character(agr.m$color)),
@@ -35,7 +36,8 @@ grafic_barres_classe = function(columnes, color, noms = noms, path_, nom_grafic)
 grafic_barres_prosocialitat = function(columnes, noms, path_){
   options(encoding="UTF-8")
   ggplot(columnes, aes(x = as.factor(noms), y = Prosocialitat)) +
-    geom_bar(stat='identity', fill = "blue") + 
+    geom_bar(stat='identity', fill = "blue") +  
+    scale_fill_manual(values = paleta) +
     theme_bw() + 
     theme(axis.text.x = element_text(angle = 45, hjust = 1,
                                      face = columnes$lletra),

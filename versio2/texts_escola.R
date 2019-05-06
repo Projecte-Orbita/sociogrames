@@ -23,17 +23,31 @@ titol_classes <- function(escola, classe){
 }
 
 titol_collectiu = "
-      \\title{Informes col·lectius}
-      \\date{}
-      \\maketitle
-      "
+\\newpage
+\\vspace*{\\fill}
+
+\\begin{center}
+{\\huge
+\\textbf{Informes col·lectius}
+}
+\\end{center}
+
+\\vspace*{\\fill}
+\\newpage
+"
 
 titol_individual = "
-\\center
-\\Large
-      \\title{Informes individuals}
-      \\date{}
-      \\maketitle
+\\newpage
+\\vspace*{\\fill}
+
+\\begin{center}
+{\\huge
+\\textbf{Informes individuals}
+}
+\\end{center}
+
+\\vspace*{\\fill}
+\\newpage
       "
 
 introduccio_escola = "

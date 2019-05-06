@@ -1,6 +1,8 @@
 # Manipulacions de dades de sociogrames
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
+source('utils.R', encoding = "UTF-8")
+
 require(stringr)
 require(readr)
 # Aquest fitxer s'haurà de reorganitzar, per ara hi ha coses de manipulacions de noms i com transformar els excels en 
@@ -92,7 +94,7 @@ pretractar_excels <-function(path, nom_carpeta,limit=10){
   
   directori = getwd()
   
-  dir.create(file.path(directori, nom_carpeta), showWarnings = T)
+  netejar_directoris(file.path(directori, nom_carpeta))
   options(encoding = "UTF-8")
   # s'han de crear els fitxers
   
@@ -112,4 +114,9 @@ pretractar_excels <-function(path, nom_carpeta,limit=10){
   
 }
 
-pretractar_excels('dades/proves_excel_sociograma.xlsx', 'temp/dades')
+
+if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R
+  path_ = 'dades/proves_excel_sociograma.xlsx'
+  carpeta = 'temp/dades'
+  pretractar_excels(path_, carpeta)
+}

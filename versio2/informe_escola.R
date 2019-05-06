@@ -10,8 +10,8 @@ source('utils.R', encoding = "UTF-8")
 # Aquest fitxer crea els informes per tota l'escola, primer el col·leciu i després els individuals, un fitxer .tex per cada classe
 
 # Coses per debuguejar més ràpid:
-individuals = F
-aprofitar = F
+individuals = T
+aprofitar = T
 
 informe_escola = function(nom_escola){
 
@@ -114,8 +114,7 @@ informe_escola = function(nom_escola){
 
 if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R
   
-  nom_escola = 'Escola Súper Important'
+  nom_escola = 'Hogwarts'
   informe_escola(nom_escola)
 }
 
-# informe_escola('dades/proves_excel_sociograma.xlsx', 'proves')

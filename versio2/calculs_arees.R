@@ -1,3 +1,5 @@
+Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
+
 # Aquí hi afegeixo els càlculs per cada una de les àrees. Per ara els poso per separat però segurament en un 
 # futur proper s'hauran d'ajuntar en una sola funció. A causa de les diferències entre tots els grups no està
 # clar com es faria això, i per tant ho començo fent separat
@@ -62,7 +64,11 @@ calcs_victimitzacio = function(mat, noms){
   victima_total = victima_directe_total + victima_relacional_total
   victima_est = scale(victima_total)
   
-  Victimitzacio = cbind(victima_total, victima_directe[,4], rowSums(victima_directe[,1:3]), victima_relacional_total)
+  Victimitzacio = cbind(victima_total, 
+                        victima_directe[,4], 
+                        rowSums(victima_directe[,c(1:3, 5)]), 
+                        victima_relacional_total)
+  
   colnames(Victimitzacio) = c("Total víctima", 
                               "Víctima física", 
                               "Víctima verbal",
@@ -95,7 +101,7 @@ calcs_academic = function(mat, noms){
 }
 
 calcs_estat_anim = function(mat, noms){
-  estat_anim_total = - mat[,28] - mat[,29] + mat[,30] - mat[,31]
+  estat_anim_total = -1 * (- mat[,28] - mat[,29] + mat[,30] - mat[,31])
   estat_anim = as.data.frame(cbind(mat[,28], mat[,29], mat[,30], mat[,31], estat_anim_total))
   colnames(estat_anim) = c("Dissatisfacció", "Enuig", "Alegria", "Tristor", "Puntuació global")
   estat_anim_est = scale(estat_anim)
@@ -133,6 +139,7 @@ calcs_estatus = function(mat){
 }
 
 calcs_xarxa_academica = function(soc, mat, num_respostes){
+  options(encoding="UTF-8")
   xarxa = soc[,c(1, 3, 4)] # estem agafant només els que sí, els que no els obviem per ara
   noms = as.character(xarxa$noms[seq(1,nrow(xarxa),num_respostes)])
   gg <- graph.data.frame(xarxa[,c(2,3)], directed=T)
@@ -156,7 +163,12 @@ calcs_xarxa_academica = function(soc, mat, num_respostes){
   V(gg)$label <- as.character(noms)
   V(gg)$label.cex = 1
   V(gg)$label.font = 2
-  V(gg)$size <- deg*3 + 1 
+  V(gg)$size = deg*3 + 1
+  vertex.shape = ifelse(as.character(soc$genere)=="nen", "square",
+                        ifelse(as.character(soc$genere)=="nena", "circle", 
+                               ifelse(as.character(soc$genere)=="altres", "vrectangle", "crectangle")))
+  vertex.shape = vertex.shape[seq(1, length(vertex.shape), num_respostes)]
+  #V(gg)$shape = vertex.shape
   
   # faig una paleta manual perquè l'igraph es lia amb la normal:
   color_academic = as.data.frame(mat[,38] - mat[,39])
@@ -181,17 +193,15 @@ calcs_xarxa_academica = function(soc, mat, num_respostes){
   
   label.color = ifelse(participa_est > 1, "chartreuse3", ifelse(participa_est< -1, "firebrick", "black"))
   edge.color = ifelse(xarxa$relacions==1, "darkblue", "black")
-  #vertex.shape = as.factor(soc$genere)
-  vertex.shape = ifelse(as.character(soc$genere)=="nen", "square",
-                        ifelse(as.character(soc$genere)=="nena", "circle", 
-                               ifelse(as.character(soc$genere)=="altres", "raster", "crectangle")))
-  vertex.shape = vertex.shape[seq(1, length(vertex.shape), num_respostes)]
+
+  #vertex.shape = vertex.shape[seq(1, length(vertex.shape), num_respostes)]
   
   return(list(gg, colors, label.color, vertex.shape))
   
 }
 
 calcs_xarxa_relacional = function(soc, mat, num_respostes){
+  options(encoding="UTF-8")
   xarxa = soc[,c(1,3,6)]
   noms = as.character(xarxa$noms[seq(1,nrow(xarxa),num_respostes)])
   gg <- graph.data.frame(xarxa[,c(2,3)], directed=T)
@@ -214,6 +224,11 @@ calcs_xarxa_relacional = function(soc, mat, num_respostes){
   V(gg)$label.cex = 1
   V(gg)$label.font = 2
   V(gg)$size <- deg*3 + 1
+  vertex.shape = ifelse(as.character(soc$genere)=="nen", "square",
+                        ifelse(as.character(soc$genere)=="nena", "circle", 
+                               ifelse(as.character(soc$genere)=="altres", "vrectangle", "crectangle")))
+  vertex.shape = vertex.shape[seq(1, length(vertex.shape), num_respostes)]
+  #V(gg)$shape = vertex.shape
   
   dis_directe = cbind( mat[,10], mat[,12], mat[,14], mat[,16])
   dis_relacional = cbind( mat[,22], mat[,24], mat[,25], mat[,26])
@@ -240,11 +255,6 @@ calcs_xarxa_relacional = function(soc, mat, num_respostes){
 
   label.color = ifelse(estat_anim_est > 1, "chartreuse3", ifelse(estat_anim_est< -1, "firebrick", "black"))
   edge.color = ifelse(xarxa$relacions==1, "darkblue", "black")
-  #vertex.shape = as.factor(soc$genere)
-  vertex.shape = ifelse(as.character(soc$genere)=="nen", "square",
-                        ifelse(as.character(soc$genere)=="nena", "circle", 
-                               ifelse(as.character(soc$genere)=="altres", "raster", "crectangle")))
-  vertex.shape = vertex.shape[seq(1, length(vertex.shape), num_respostes)]
   
   return(list(gg, colors, label.color, vertex.shape))
 }

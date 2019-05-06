@@ -29,6 +29,8 @@ titol_collectiu = "
       "
 
 titol_individual = "
+\\center
+\\Large
       \\title{Informes individuals}
       \\date{}
       \\maketitle

@@ -31,6 +31,8 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   mat = dades[[1]]
   mat_est = dades[[2]]
   noms = dades[[3]]
+  soc = dades[[4]]
+  curs = dades[[5]]
   
   # Escurcem els noms perquè es vegin millor:
   
@@ -102,7 +104,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   names(Victimitzacio)[1] = "Noms"
   
   titol_victimitzacio = "Taula 3."
-  peu_vicimitzacio = "Victimització (física, verbal i relacional) observada pel grup."
+  peu_vicimitzacio = "Victimització observada pel grup."
   
   taula_classe(dades = Victimitzacio, 
                negretes = Vict_sino[,1],
@@ -134,7 +136,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   taula_classe_positiva_negativa(dades= Academic, 
                                  negretes = Academic_sino[,1], 
                                  bones = c(1:2), 
-                                 mixtes = 5, 
+                                 mixtes = 6, 
                                  path_ = path_llista$taules, 
                                  titol = "academic", 
                                  titol_peu = titol_academic,
@@ -145,7 +147,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   Estat_anim = Estat_anim_[[1]]
   Estat_anim_sino = Estat_anim_[[2]]
   
-  grafic_barres_classe(columnes = Estat_anim, 
+  grafic_barres_classe(columnes = Estat_anim[, -5],  # traiem la puntuació global.
                        color = Estat_anim_sino, 
                        noms = noms, 
                        path_ = path_llista$figures, 
@@ -158,9 +160,10 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   titol_estat_anim = "Taula 5."
   peu_estat_anim = "Estat d’ànim observat pel grup."
   
-  taula_classe(dades = Estat_anim, 
+  taula_classe_positiva_negativa(dades = Estat_anim, 
                negretes = Estat_anim_sino[,1],
-               bones = 1, 
+               bones = 1,
+               mixtes = 5,
                path_ = path_llista$taules, 
                titol = "estat_anim",
                titol_peu = titol_estat_anim,
@@ -195,9 +198,17 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
                                  peu_taula = peu_caracter)
   
   # Xarxes
-  soc = dades[[4]]
   soc$noms = unlist(lapply(noms, function(x) rep(x, numero_respostes)), use.names = F)
   
+  cursos = list("1" = "1r de primària",
+                "2" = "2n de primària",
+                "3" = "3r de primària",
+                "4" = "4rt de primària",
+                "5" = "5è de primària",
+                "6" = "6è de primària"
+                )
+
+  nom_curs = paste(cursos[[substr(curs, 1, 1)]], substr(curs, 2, 2), sep = " ")
   # Xarxa acadèmica
   X_Academic_ = calcs_xarxa_academica(soc, mat, numero_respostes)
   gg = X_Academic_[[1]]
@@ -205,13 +216,13 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   label.color = X_Academic_[[3]]
   vertex.shape = X_Academic_[[4]]
   
-  paraules = c("Classe X escola Y", "Males notes","Notes mitjanes", "Bones notes",
+  paraules = c(nom_curs, "Males notes","Notes mitjanes", "Bones notes",
                "Poc popular","Normal", "Molt popular")
-  
+  Encoding(paraules) = "UTF-8-BOM"
   grafic_xarxa(gg = gg, 
                colors = colors, 
                label.color = label.color,
-               vertex.shape = vertex.shape,
+               vertex.shape =  vertex.shape,
                paraules = paraules, 
                path_ = path_llista$figures, 
                tipus = "xarxa_academica")
@@ -223,13 +234,13 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   label.color = X_relacional_[[3]]
   vertex.shape = X_relacional_[[4]]
   
-  paraules = c("Classe X escola Y", "Poc disruptiu","Disrupcio mitjana", "Molt disruptiu",
+  paraules = c(nom_curs, "Poc disruptiu","Disrupcio mitjana", "Molt disruptiu",
                "Poc popular","Normal", "Molt popular")
-  
+  Encoding(paraules) = "UTF-8-BOM"
   grafic_xarxa(gg = gg, 
                colors = colors, 
                label.color = label.color,
-               vertex.shape = vertex.shape,
+               vertex.shape =  vertex.shape,
                paraules = paraules, 
                path_ = path_llista$figures, 
                tipus = "xarxa_relacional")

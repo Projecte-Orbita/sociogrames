@@ -6,6 +6,9 @@ require(kableExtra)
 require(dplyr)
 
 taula_classe = function(dades, negretes, bones = NULL, path_, titol, titol_peu, peu_taula){
+  
+  # TODO: ajuntar aquesta i les dues següents
+  
   options(encoding="UTF-8")
   con <- file(file.path(path_, paste0(titol, '.txt')), open = "wt", encoding = "UTF-8")
   sink(con)
@@ -13,7 +16,7 @@ taula_classe = function(dades, negretes, bones = NULL, path_, titol, titol_peu, 
   cols = seq(2,ncol(dades))
   dolentes = cols[!cols %in% (bones+1)]
   
-  print(
+  cat(
     dades %>% 
       mutate(Noms = cell_spec(Noms, bold = ifelse(negretes==0,FALSE,TRUE), format = "latex")) %>%
       mutate_at((.vars = vars(dolentes)), 
@@ -44,7 +47,7 @@ taula_classe_negativa = function(dades, negretes, bones = NULL, path_, titol, ti
   cols = seq(2,ncol(dades))
   dolentes = cols[!cols %in% (bones+1)]
   
-  print(dades %>% 
+  cat(dades %>% 
           mutate(Noms = cell_spec(Noms, bold = ifelse(negretes==0,FALSE,TRUE), format = "latex")) %>%
           mutate_at((.vars = vars(dolentes)), 
                     funs(cell_spec(., "latex", 
@@ -63,8 +66,8 @@ taula_classe_negativa = function(dades, negretes, bones = NULL, path_, titol, ti
   close(con)
 }
 
-taula_classe_positiva_negativa = function(dades, negretes, bones = NULL, mixtes = NULL, path_, 
-                                          titol, titol_peu, peu_taula)
+taula_classe_positiva_negativa = function(dades, negretes, bones = NULL, mixtes = NULL, 
+                                          path_,titol, titol_peu, peu_taula)
   {
   options(encoding="UTF-8")
   con <- file(file.path(path_, paste0(titol, '.txt')), open = "wt", encoding = "UTF-8")
@@ -74,7 +77,7 @@ taula_classe_positiva_negativa = function(dades, negretes, bones = NULL, mixtes 
   dolentes = c(bones+1,mixtes)
   dolentes = cols[!cols %in% dolentes]
   
-  print(dades %>% 
+  cat(dades %>% 
           mutate(Noms = cell_spec(Noms, bold = ifelse(negretes==0,FALSE,TRUE), format="latex")) %>%
           mutate_at((.vars = vars(dolentes)), 
                     funs(cell_spec(., "latex", 

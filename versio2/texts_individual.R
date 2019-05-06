@@ -110,9 +110,57 @@ titol_alumne = function(nom){
       
       ", sep = "")}
 
-estatus_sociometric = "
+disrupcio_ind = "
+\\subsection*{Escala de Disrupció} 
 
-\\section*{Estatus sociomètric}
+Mesura el grau de disrupció que cada alumne causa a l’aula, segons la percepció dels companys, causat per 
+l’\\textbf{agressivitat} física (agressions), verbal (comentaris negatius o insults) i relacional (evitar, ignorar o 
+dir rumors sobre altres). 
+
+"
+prosocialitat_ind = "
+\\subsection*{Escala de Prosocialitat o Cooperació}
+Mesura el grau de prosocialitat de cada alumne, és a dir, la percepció dels companys de quin grau l’alumne 
+\\textbf{ajuda} als seus companys i crea un bon clima social i escolar.
+		
+"
+victimes_ind = "
+\\subsection*{Escala de victimització}
+		
+Mesura el grau de victimització de cada alumne, és a dir, qui rep o \textbf{pateix conductes agressives} dels 
+altres i en quin grau, segons la percepció dels companys. Considera la victimització física (rebre agressions), 
+verbal (rebre comentaris negatius o insults) i relacional (ser evitat, ignorat o ser el centre de rumors). 
+
+"
+academic_ind = "
+\\subsection*{Escala de valoració acadèmica}
+		
+Mesura la \\textbf{participació i implicació} dels alumnes a l’aula, així com els resultats de rendiment 
+acadèmic, percebut pels companys de l’aula. Considera les variables: bones notes (alt rendiment acadèmic), 
+males notes (baix rendiment acadèmic), participa (s’implica a la classe) i no participa (no s’implica a la 
+classe).
+"
+
+estat_anim_ind = "
+\\subsection*{Escala d'estat d'ànim percebut}
+
+Mesura l’estat d’ànim dels alumnes segons la percepció dels companys de l’aula. Aquesta escala ens pot 
+mostrar indicadors d’un entorn social no satisfactori, tant a nivell personal com escolar. Considera les 
+variables: dissatisfacció (queixes), enuig (ràbia), alegria (content) i tristor (desànim).
+
+"
+
+caracter_ind = "
+\\subsection*{Escala d’Actitud}
+		
+Mesura la percepció del grup del \\textbf{caràcter}, forma de ser o capacitat de resoldre els problemes de 
+dels alumnes de l’aula. Considera les variables: lideratge (rol de líder o seguidor), autonomia (capacitat de 
+gestionar els problemes o demanar ajuda) i socialització (es comunica sovint amb els altres o no).
+"
+
+estatus_sociometric_ind = "
+
+\\subsection*{Estatus sociomètric}
 
 En aquest apartat mesurem l'estatus social de cada alumne, tant directe (preguntant directament qui 
 són els seus amics) com indirecte. Els resultats d'aquesta àrea s'obtenen a partir de les respostes 
@@ -120,200 +168,98 @@ dels alumnes a les següents preguntes:
 "
 
 resum = "
-\\section*{Resum}
+\\subsection*{Resum}
 
 A continuació presentem de forma condensada un gràfic amb totes les dimensions mesurades en el sociograma:
 "
 
 
-afegeix_preferencies = function(rels, noms, i, numero_respostes){
+
+
+afegeix_preferencies = function(rels, noms, i, numero_respostes, tipus){
+  
+  if (tipus == "academic"){
+    titol = "Acadèmic"
+    col_rel = 8
+    col = 2
+  }
+  
+  else if (tipus == "relacional"){
+    titol = "Relacional"
+    col_rel = 10
+    col = 4
+  }
+  
+  else if (tipus == "amical") {
+    titol = "Amical"
+    col_rel = 12
+    col=6
+  }
   
   noms = as.character(noms)
   pos = 1 + numero_respostes*(i-1)
   
-  cat("\\subsubsection*{Acadèmic} ")
+  cat(paste0("\\subsubsection*{", titol, "}"))
   cat(paste0("En/na ", noms[i]), " ha triat positivament a:")
   
   cat("\\begin{itemize}")
+  k = pos
   for (j in 1:numero_respostes){
-    k = pos
-    cat(ifelse(rels[k, 8], 
-               paste0("\\item   \\textbf{", noms[rels[k, 2]], "}"),  
-               paste0("\\item  ", noms[rels[k, 2]])))
+    
+    cat(ifelse(rels[k, col_rel], 
+               paste0("\\item   \\textbf{", noms[rels[k, col]], "}"),  
+               paste0("\\item  ", noms[rels[k, col]])))
     k = k + 1 
     }
   cat("\\end{itemize}")
   
-  quins_triat = which(rels[, 2]==i)
+  quins_triat = which(rels[, col]==i)
   
   if (length(quins_triat)==0){
-    "I no ha estat triat/da per ningú. \\\\ "
+    cat("I no ha estat triat/da per ningú. \\\\ ")
   }
   
   else {
     cat("Ha estat triat/da per:  ")
     cat("\\begin{itemize}")
-    for (j in 1:length(quins_triat)){
-      k = pos
-      cat(ifelse(rels[k, 8], 
-                 paste0("\\item   \\textbf{", noms[rels[k, 1]], "}"),  
-                 paste0("\\item  ", noms[rels[k, 1]])))
-    k = k + 1
+    
+    for (element in quins_triat){
+
+      cat(ifelse(rels[i, col_rel], 
+                 paste0("\\item   \\textbf{", noms[rels[element, 1]], "}"),  
+                 paste0("\\item  ", noms[rels[element, 1]])))
       }
     cat("\\end{itemize}")
   }
   
-  cat(paste0(" I negativament a:"))
-  cat("\\begin{itemize}")
-  
-  for (j in 1:numero_respostes){
-    k = pos
-    cat(ifelse(rels[k, 9], 
-               paste0("\\item   \\textbf{", noms[rels[k, 3]], "}"), 
-               paste0("\\item   ", noms[rels[k, 3]])))
-    k = k + 1
-  }
-  cat("\\end{itemize}")
-  
-  quins_triat = which(rels[, 3]==i)
-  if (length(quins_triat)==0){
-    "I no ha estat triat/da per ningú. \\\\ "
-  }
-  
-  else {
-    cat("Ha estat triat/da per:  ")
-    cat("\\begin{itemize}")
-    for (j in 1:length(quins_triat)){
-      k = pos
-      cat(ifelse(rels[k, 9], 
-                 paste0("\\item   \\textbf{", noms[rels[k, 1]], "}"),  
-                 paste0("\\item  ", noms[rels[k, 1]])))
-      k = k + 1
-    }
-    cat("\\end{itemize}")
-  }
-  
-      
-  cat("\\subsubsection*{Relacional} ")
-  cat(paste0("En/na ", noms[i]), " ha triat positivament a:")
-  
-  cat("\\begin{itemize}")
-  for (j in 1:numero_respostes){
-    k = pos
-    cat(ifelse(rels[k, 10], 
-               paste0("\\item   \\textbf{", noms[rels[k, 3]], "}"),  
-               paste0("\\item  ", noms[rels[k, 3]])))
-    k = k + 1
-    }
-  cat("\\end{itemize}")
-  
-  quins_triat = which(rels[, 4]==i)
-  
-  if (length(quins_triat)==0){
-    "I no ha estat triat/da per ningú. \\\\ "
-  }
-  
-  else {
-    cat("Ha estat triat/da per:  ")
-    cat("\\begin{itemize}")
-    for (j in 1:length(quins_triat)){
-      k = pos
-      cat(ifelse(rels[k, 10], 
-                 paste0("\\item   \\textbf{", noms[rels[k, 1]], "}"),  
-                 paste0("\\item  ", noms[rels[k, 1]])))
-      k = k + 1
-    }
-    cat("\\end{itemize}")
-  }
-  
   cat(paste0("I negativament a:"))
   cat("\\begin{itemize}")
+  k = pos
   for (j in 1:numero_respostes){
-    k = pos
-    cat(ifelse(rels[k, 11], 
-               paste0("\\item   \\textbf{", noms[rels[k, 5]], "}"), 
-               paste0("\\item   ", noms[rels[k, 5]])))
+    
+    cat(ifelse(rels[k, col_rel + 1], 
+               paste0("\\item   \\textbf{", noms[rels[k, col + 1]], "}"), 
+               paste0("\\item   ", noms[rels[k, col + 1]])))
     k = k + 1
   }
   cat("\\end{itemize}")
   
-  quins_triat = which(rels[, 5]==i)
+  quins_triat = which(rels[, col + 1]==i)
   if (length(quins_triat)==0){
-    "I no ha estat triat/da per ningú. \\\\ "
+    cat("I no ha estat triat/da negativament per ningú. \\\\ ")
   }
   
   else {
     cat("Ha estat triat/da per:  ")
     cat("\\begin{itemize}")
-    for (j in 1:length(quins_triat)){
-      k = pos
-      cat(ifelse(rels[i, 11], 
-                 paste0("\\item   \\textbf{", noms[rels[k, 1]], "}"),  
-                 paste0("\\item  ", noms[rels[k, 1]])))
-      k = k + 1
+    for (element in quins_triat){
+
+      cat(ifelse(rels[i, col_rel + 1], 
+                 paste0("\\item   \\textbf{", noms[rels[element, 1]], "}"),  
+                 paste0("\\item  ", noms[rels[element, 1]])))
     }
     cat("\\end{itemize}")
   }
-  
-  cat("\\subsubsection*{Amical}")
-  cat(paste0("En/na ", noms[i]), " ha triat positivament a:")
-  
-  cat("\\begin{itemize}")
-  for (j in 1:numero_respostes){
-    k = pos
-    cat(ifelse(rels[i, 12], 
-               paste0("\\item   \\textbf{", noms[rels[k, 6]], "}"),  
-               paste0("\\item  ", noms[rels[k, 6]])))
-    k = k + 1
-  }
-  cat("\\end{itemize}")
-  
-  quins_triat = which(rels[, 6]==i)
-  
-  if (length(quins_triat)==0){
-    "I no ha estat triat/da per ningú. \\\\ "
-  }
-  
-  else {
-    cat("Ha estat triat/da per:  ")
-    cat("\\begin{itemize}")
-    for (j in 1:length(quins_triat)){
-      k = pos
-      cat(ifelse(rels[k, 12], 
-                 paste0("\\item   \\textbf{", noms[rels[k, 1]], "}"),  
-                 paste0("\\item  ", noms[rels[k, 1]])))
-      k = k + 1
-    }
-    cat("\\end{itemize}")
-  }
-  
-  cat(paste0("I negativament a:"))
-  cat("\\begin{itemize}")
-  for (j in 1:numero_respostes){
-    k = pos
-    cat(ifelse(rels[k, 13], 
-               paste0("\\item   \\textbf{", noms[rels[k, 7]], "}"), 
-               paste0("\\item   ", noms[rels[k, 7]])))
-    k = k + 1
-  }    
-  cat("\\end{itemize}")
-  quins_triat = which(rels[, 7]==i)
-  if (length(quins_triat)==0){
-    "I no ha estat triat/da per ningú. \\\\ "
-  }
-  
-  else {
-    cat("Ha estat triat/da per:  ")
-    cat("\\begin{itemize}")
-    for (j in 1:length(quins_triat)){
-      k = pos
-      cat(ifelse(rels[k, 13], 
-                 paste0("\\item   \\textbf{", noms[rels[k, 1]], "}"),  
-                 paste0("\\item  ", noms[rels[k, 1]])))
-      k = k + 1
-    }
-    cat("\\end{itemize}")
-  }   
   
 }
 

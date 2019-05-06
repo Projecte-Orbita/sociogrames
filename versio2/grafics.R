@@ -23,7 +23,8 @@ grafic_barres_classe = function(columnes, color, noms = noms, path_, nom_grafic)
     geom_bar(stat='identity') + 
     theme_bw() + 
     theme(axis.text.x = element_text(angle = 45, hjust = 1,
-                                     face = as.character(agr.m$color))) +
+                                     face = as.character(agr.m$color)),
+          legend.title=element_blank()) +
     labs(title = titol) + 
     ylab("") + 
     xlab("Alumnes") + 
@@ -37,7 +38,8 @@ grafic_barres_prosocialitat = function(columnes, noms, path_){
     geom_bar(stat='identity', fill = "blue") + 
     theme_bw() + 
     theme(axis.text.x = element_text(angle = 45, hjust = 1,
-                                     face = columnes$lletra)) +
+                                     face = columnes$lletra),
+          legend.title=element_blank()) +
     labs(title = "Prosocialitat/Cooperació") + 
     ylab("") + 
     xlab("Alumnes") + 
@@ -46,8 +48,9 @@ grafic_barres_prosocialitat = function(columnes, noms, path_){
 }
 
 grafic_xarxa = function(gg, colors, label.color, vertex.shape, paraules, path_, tipus){
+
   options(encoding="UTF-8")
-  pdf(file.path(path_, paste0(tipus, ".pdf")), width = 10, height = 16)
+  pdf(file.path(path_, paste0(tipus, ".pdf")), width = 10, height = 15)
   plot(gg,
        layout=layout_with_lgl, # altres opcions són: layout_with_gem layout_with_fr, layout_with_mds, layout_with_lgl
        frame = F,
@@ -55,13 +58,14 @@ grafic_xarxa = function(gg, colors, label.color, vertex.shape, paraules, path_, 
        vertex.color = as.character(colors),
        width = 1.5,
        vertex.frame.color = NA,
-       vertex.alpha = 0.5,
-       vertex.shape = vertex.shape,
-       #     edge.color = edge.color , !!! no funciona !!!
+       vertex.alpha = 0.75,
+       vertex.shape =  vertex.shape,
+       #edge.color = edge.color , !!! no funciona !!!
        edge.curved = .2,
        edge.arrow.size = 0.55, 
-       label.cex = 0.5
-       #main = paraules[1]
+       label.cex = 0.5,
+       #main = ifelse(tipus=="xarxa_academica", "Xarxa Acadèmica", "Xarxa Relacional"),
+       main = paraules[1]
   )
   
   legend(x=0.7, y=-0.9, c(paraules[2],paraules[3], paraules[4]),

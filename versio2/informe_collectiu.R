@@ -12,8 +12,9 @@ informe_classe = function(path_llista, nom_fitxer){
   # Disrupció
   cat(disrupcio)
   
-  peu_disrupcio = "Grau de de disrupció (física, verbal i relacional) de cada alumne."
+  peu_disrupcio = "Grau de de disrupció de cada alumne."
   afegeix_grafic(path_llista, "disrupcio", peu_disrupcio)
+  cat(disrupcio_post)
   
   cat(abans_taula)
   
@@ -24,6 +25,7 @@ informe_classe = function(path_llista, nom_fitxer){
   
   peu_prosocialitat = "Grau de de prosocialitat de cada alumne."
   afegeix_grafic(path_llista, "prosocialitat", peu_prosocialitat)
+  cat(prosocialitat_post)
   
   cat(abans_taula)
   
@@ -32,8 +34,9 @@ informe_classe = function(path_llista, nom_fitxer){
   # Víctima
   cat(victimes)
   
-  peu_victimes = "Grau de de victimització (física, verbal i relacional) de cada alumne."
+  peu_victimes = "Grau de de victimització de cada alumne."
   afegeix_grafic(path_llista, "victimes", peu_victimes)
+  cat(victimes_post)
   
   cat(abans_taula)
   
@@ -42,8 +45,9 @@ informe_classe = function(path_llista, nom_fitxer){
   # Acadèmic
   cat(academic)
   
-  peu_academic = "Grau de valoració acadèmica (rendiment acadèmic i participació) de cada alumne."
+  peu_academic = "Grau de valoració acadèmica de cada alumne."
   afegeix_grafic(path_llista, "academic", peu_academic)
+  cat(academic_post)
   
   cat(abans_taula)
   
@@ -52,8 +56,9 @@ informe_classe = function(path_llista, nom_fitxer){
   # Estat d'ànim
   cat(estat_anim)
   
-  peu_estat_anim = "Grau d’estat d’ànim percebut (insatisfacció, enuig, alegria i tristor) de cada alumne."
+  peu_estat_anim = "Grau d’estat d’ànim percebut de cada alumne."
   afegeix_grafic(path_llista, "estat_anim", peu_estat_anim)
+  cat(estat_anim_post)
   
   cat(abans_taula)
   
@@ -62,8 +67,9 @@ informe_classe = function(path_llista, nom_fitxer){
   # Caràcter
   cat(caracter)
   
-  peu_caracter = "Actitud percebuda (lideratge, autonomia i socialització) de cada alumne."
+  peu_caracter = "Actitud percebuda de cada alumne."
   afegeix_grafic(path_llista, "caracter", peu_caracter)
+  cat(caracter_post)
   
   cat(abans_taula)
   

@@ -19,6 +19,7 @@ coses_latex = "
 \\usepackage{subcaption}
 \\usepackage{enumitem}
 \\usepackage{titlesec}
+\\newcommand{\\sectionbreak}{\\clearpage}  % per començar una pàgina en cada secció
 \\usepackage[final]{pdfpages}
 \\usepackage[T1]{fontenc}
 % \\usepackage[latin1]{inputenc}   %paquet que serveix per poder escriure
@@ -111,6 +112,17 @@ l’\\textbf{agressivitat} física (agressions), verbal (comentaris negatius o i
 dir rumors sobre altres). 
 
 "
+disrupcio_post = "
+Aquestes respostes provenen de les preguntes:
+
+\\begin{itemize}
+\\item \\emph{Molesta als altres.}
+\\item \\emph{No deixa participar als altres.}
+\\item \\emph{Insulta als altres.}
+\\item \\emph{Empenta o pega als altres.}
+\\end{itemize}
+\\newpage
+"
 
 prosocialitat = "
 \\section*{Escala de Prosocialitat o Cooperació}
@@ -119,14 +131,37 @@ Mesura el grau de prosocialitat de cada alumne, és a dir, la percepció dels co
 		
 "
 
+prosocialitat_post = "
+Aquestes respostes provenen de les preguntes:
+\\begin{itemize}
+\\item \\emph{Ajuda als altres quan tenen un problema.}
+\\item \\emph{Col·labora amb els altres.}
+\\item \\emph{Defensa als altres.}
+\\end{itemize}
+\\newpage
+"
+
 victimes = "
 		\\section*{Escala de victimització}
 		
-Mesura el grau de victimització de cada alumne, és a dir, qui rep o \texbf{pateix conductes agressives} dels 
+Mesura el grau de victimització de cada alumne, és a dir, qui rep o \textbf{pateix conductes agressives} dels 
 altres i en quin grau, segons la percepció dels companys. Considera la victimització física (rebre agressions), 
-verbal (rebre comentaris negatius o insults) i relacional (ser evitar, ignorat o ser el centre de rumors). 
+verbal (rebre comentaris negatius o insults) i relacional (ser evitat, ignorat o ser el centre de rumors). 
 
 "
+
+victimes_post = "
+Aquestes respostes provenen de les preguntes:
+\\begin{itemize}
+\\item \\emph{El molesten.}
+\\item \\emph{No el deixen participar.}
+\\item \\emph{L'insulten.}
+\\item \\emph{El peguen o empenten.}
+\\item \\emph{No es defensa del que li fan els altres.}
+\\end{itemize}
+\\newpage
+"
+
 
 academic = "
 		\\section*{Escala de valoració acadèmica}
@@ -137,8 +172,17 @@ males notes (baix rendiment acadèmic), participa (s’implica a la classe) i no
 classe).
 
 "
-
-
+academic_post = "
+Aquestes respostes provenen de les preguntes:
+\\begin{itemize}
+\\item \\emph{Treu bones notes.}
+\\item \\emph{No treu bones notes.}
+\\item \\emph{Participa a classe.}
+\\item \\emph{No participa a classe.}
+\\end{itemize}
+\\newpage
+"
+	
 estat_anim = "
 		\\section*{Escala d'estat d'ànim percebut}
 
@@ -148,12 +192,36 @@ variables: dissatisfacció (queixes), enuig (ràbia), alegria (content) i tristo
 
 "
 
+estat_anim_post = "
+Aquestes respostes provenen de les preguntes:
+\\begin{itemize}
+\\item \\emph{Acostuma a estar content.}
+\\item \\emph{Acostuma a estar trist.}
+\\item \\emph{Es queixa sovint.}
+\\item \\emph{S'enfada amb facilitat.}
+\\end{itemize}
+\\newpage
+"
+
 caracter = "
-		\\section*{Escala de d’Actitud}
+		\\section*{Escala d’Actitud}
 		
 Mesura la percepció del grup del \\textbf{caràcter}, forma de ser o capacitat de resoldre els problemes de 
 dels alumnes de l’aula. Considera les variables: lideratge (rol de líder o seguidor), autonomia (capacitat de 
 gestionar els problemes o demanar ajuda) i socialització (es comunica sovint amb els altres o no).
+"
+
+caracter_post = "
+Aquestes respostes provenen de les preguntes:
+\\begin{itemize}
+\\item \\emph{Lidera els altres.}
+\\item \\emph{Fa el que li diuen els altres.}
+\\item \\emph{Soluciona els problemes sol.}
+\\item \\emph{Acostuma a demanar ajuda.}
+\\item \\emph{Parla molt amb els altres companys de classe.}
+\\item \\emph{No parla gaire amb els companys de classe.}
+\\end{itemize}
+\\newpage
 "
 
 xarxa_academica = "
@@ -170,32 +238,32 @@ La xarxa consta dels següents elements:
 \\begin{enumerate}
 \\item \\textbf{Vèrtex}: cada vèrtex és un alumne.
 \\begin{itemize} 
-\\item \\underline{Forma} (categoria en que es situa l’alumne)
+\\item \\underline{Forma}: categoria en que es situa l’alumne
 \\begin{itemize}
 \\item \\emph{Quadrat}: l’alumne es categoritza com a nen
 \\item \\emph{Rodona}: l’alumne es categoritza com a nena
 \\item \\emph{Rombe}: l’alumne es categoritza com a altres
 \\item \\emph{Triangle}: no respon
 \\end{itemize}
-\\item \\underline{Mida} (número de tries positives rebudes per fer un treball)
+\\item \\underline{Mida}: número de tries positives rebudes per fer un treball
 \\begin{itemize}
 \\item \\emph{Petita}: poc popular
 \\item \\emph{Mitjana}: normal
 \\item \\emph{Gran}: molt popular
 \\end{itemize}
+\\item \\underline{Color}: resultats de rendiment acadèmic de l’alumne segons la percepció dels companys
 \\begin{itemize}
-\\item \\underline{Color} (resultats de rendiment acadèmic de l’alumne segons la percepció dels companys)
 \\item \\emph{Verd}: bones notes
 \\item \\emph{Groc}: notes mitjanes
 \\item Vermell: males notes
 \\end{itemize}
 \\end{itemize}
-\\item \\textbf{Fletxes:} es refereix a la relació existent entre els alumnes de l’aula.
+\\item \\textbf{Fletxes}: es refereix a la relació existent entre els alumnes de l’aula.
 \\begin{itemize}
 \\item \\underline{Normal}: la direcció indica la tria des d’un alumne a l’altre
 \\item \\underline{Blava}: indica que els dos alumnes s’han triat de forma recíproca
 \\end{itemize}
-\\item \\textbf{Noms:} mostra el nom de l’alumne i indica amb el color el grau de participació a l’aula.
+\\item \\textbf{Noms}: mostra el nom de l’alumne i indica amb el color el grau de participació a l’aula.
 \\end{enumerate}
 "
 
@@ -212,21 +280,21 @@ La xarxa consta dels següents elements:
 \\begin{enumerate}
 \\item \\textbf{Vèrtex}: cada vèrtex és un alumne.
 \\begin{itemize} 
-\\item \\underline{Forma} (categoria en que es situa l’alumne)
+\\item \\underline{Forma}: categoria en que es situa l’alumne
 \\begin{itemize}
 \\item \\emph{Quadrat}: l’alumne es categoritza com a nen
 \\item \\emph{Rodona}: l’alumne es categoritza com a nena
 \\item \\emph{Rombe}: l’alumne es categoritza com a altres
 \\item \\emph{Triangle}: no respon
 \\end{itemize}
-\\item \\underline{Mida} (número de tries positives rebudes per fer un treball)
+\\item \\underline{Mida}: número de tries positives rebudes per fer un treball
 \\begin{itemize}
 \\item \\emph{Petita}: poc popular
 \\item \\emph{Mitjana}: normal
 \\item \\emph{Gran}: molt popular
 \\end{itemize}
+\\item \\underline{Color}: resultats de rendiment acadèmic de l’alumne segons la percepció dels companys
 \\begin{itemize}
-\\item \\underline{Color} (resultats de rendiment acadèmic de l’alumne segons la percepció dels companys)
 \\item \\emph{Verd}: bones notes
 \\item \\emph{Groc}: notes mitjanes
 \\item Vermell: males notes
@@ -247,7 +315,7 @@ nota_final = "
 final_latex = "\\end{document}"
 
 abans_taula = "
-I a continuació presentem una taula amb els mateixos resultats:
+A continuació presentem els mateixos resultats en format de taula:
 "
 
 importar_i_imprimir_taula = function(path_llista, nom_fitxer){

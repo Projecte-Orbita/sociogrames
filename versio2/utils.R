@@ -4,6 +4,7 @@ require(stringr)
 
 importar_i_manipular = function(path_fitxer, numero_respostes){
   # importem
+  options(readr.num_columns = 0)  # per treure uns comentaris que emprenyen bastant
   soc = read_csv(path_fitxer, col_names = F)
   soc = as.data.frame(soc)
   colnames(soc)[1:3] = c("noms", "genere", "num")
@@ -36,8 +37,8 @@ importar_i_manipular = function(path_fitxer, numero_respostes){
   
   # Estandaritzem tots els resultats:
   mat_est = scale(mat)
-  
-  return(list(mat, mat_est, noms, soc))
+  curs = substr(path_fitxer, nchar(path_fitxer)-5,nchar(path_fitxer)-4)
+  return(list(mat, mat_est, noms, soc, curs))
 }
 
 formatejar_noms = function(columna_noms){

@@ -36,7 +36,7 @@ grafic_barres_classe = function(columnes, color, noms = noms, path_, nom_grafic)
 grafic_barres_prosocialitat = function(columnes, noms, path_){
   options(encoding="UTF-8")
   ggplot(columnes, aes(x = as.factor(noms), y = Prosocialitat)) +
-    geom_bar(stat='identity', fill = "blue") +  
+    geom_bar(stat='identity', fill = "#5bade9") +  
     scale_fill_manual(values = paleta) +
     theme_bw() + 
     theme(axis.text.x = element_text(angle = 45, hjust = 1,
@@ -99,7 +99,7 @@ grafic_formatge = function(dades, tipus, path_, nom_plot, i, paleta = paleta){
     labs(title = paste0(sum(dades$value)," tries\n", tipus)) +
     theme(plot.title = element_text(hjust = 0.5)) +
     ggsave(file = file.path(path_, "individuals", nom_output), 
-           dpi = 600, width = 8, height = 6, units = "in") 
+           dpi = 600, width = 8, height = 6, units = "cm") 
   
   #return(formatge)
 }
@@ -116,9 +116,10 @@ grafic_barres_individual = function(dades, numero_maxim, path_, nom_plot, i, pal
     ylim(c(0,numero_maxim)) +
     theme_bw() + 
     ylab("Número de tries") + 
-    xlab("") +
+    xlab("") + 
+    theme(axis.text.x = element_text(angle = 25, hjust = 1)) +
     ggsave(file = file.path(path_, "individuals", nom_output), 
-           dpi = 600, width = 8, height = 6, units = "in") 
+           dpi = 600, width = 8, height = 6, units = "cm") 
   #return(barres)
 }
 

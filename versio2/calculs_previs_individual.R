@@ -128,14 +128,14 @@ calculs_individual = function(path_llista, nom_fitxer, numero_respostes=3){
   
   Estatus_ = calcs_estatus(mat)
   Estatus = Estatus_[[1]]
-  Estatus_bo = cbind.data.frame(noms, Estatus[,c(1:6)])
+  Estatus_bo = cbind.data.frame(noms, Estatus)
   names(Estatus_bo)[1] = "Noms"
   
   nom_plot = "estatus"
   
   for (i in 1:nrow(Estatus_bo)){
     vic.m <- melt(Estatus_bo[i,], id.vars = "Noms")
-    grafic_barres_individual(vic.m, max(Estatus_bo[2:7]), path_llista$figures, nom_plot, i, paleta)
+    grafic_barres_individual(vic.m, max(Estatus_bo[2:10]), path_llista$figures, nom_plot, i, paleta)
     grafic_formatge(vic.m, "d'estatus", path_llista$figures, nom_plot, i, paleta)
   }
 

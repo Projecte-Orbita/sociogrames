@@ -133,6 +133,10 @@ calcs_caracter = function(mat, noms){
 
 calcs_estatus = function(mat){
   estatus = cbind.data.frame(mat[,1:6],mat[,19], mat[,26], mat[,27])
+  names(estatus) = c("Agrada", "No agrada", 
+                     "Agrada deures", "No agrada deures", 
+                     "Amic", "Amic recíproc", 
+                     "Defensa", "Té amics", "Juga sol")
   estatus_est = scale(estatus)
   
   return(list(estatus, estatus_est))
@@ -259,85 +263,6 @@ calcs_xarxa_relacional = function(soc, mat, num_respostes){
   return(list(gg, colors, label.color, vertex.shape))
 }
 
-
-crear_dict_preferencies = function(soc, numero_respostes, path_){
-  
-  # Obsolet, vegeu "calcular_preferencies"
-  
-  prefs_dict = list()
-  
-  # A qui escull
-  for (i in 1:round(nrow(soc)/numero_respostes)){
-    prefs_dict[[as.character(soc$noms[1+numero_respostes*(i-1)])]] = list("academic"=NULL, "relacional"=NULL)
-    prefs_dict[[as.character(soc$noms[1+numero_respostes*(i-1)])]][["academic"]] = preferencies(soc, i, "academic", 3)
-    prefs_dict[[as.character(soc$noms[1+numero_respostes*(i-1)])]][["relacional"]] = preferencies(soc, i, "relacional", 3)
-  }
-  
-  # Per qui és escollit
-  
-  
-  
-  prefs_json = toJSON(prefs_dict, pretty = TRUE, auto_unbox = TRUE)
-  options(encoding="UTF-8")
-  con <- file(file.path(path_, paste0("preferencies.txt")), open = "wt", encoding = "UTF-8")
-  sink(con)
-  print(prefs_json)
-  sink()
-  close(con)
-}
-
-
-preferencies = function(soc, nen, area, numero_respostes){
-  
-  # Obsolet, vegeu "calcular_preferencies"
-  
-  if (area == "academic"){
-    area_col = 4
-  }
-  else {
-    area_col = 6
-  }
-  prefs_positives = c()
-  prefs_negatives = c()
-  for (i in 1:numero_respostes){
-    prefs_positives = c(prefs_positives, soc$noms[round(numero_respostes * soc[nen + i - 1, area_col])])
-    prefs_negatives = c(prefs_negatives, soc$noms[round(numero_respostes * soc[nen + i - 1, area_col + 1])])
-  }
-  return(list("tries_positives" = prefs_positives, "tries_negatives" = prefs_negatives))
-}
-
-preferencies_inverses = function(soc, numero_respostes){
-  
-  # Obsolet, vegeu "calcular_preferencies"
-  
-  prefs_dict = list()
-  for (i in 1:round(nrow(soc)/numero_respostes)){
-    list.append(as.character(soc$noms[1+numero_respostes*(i-1)]))
-    prefs_dict[[as.character(soc$noms[1+numero_respostes*(i-1)])]][["academic"]] = list("triat_positiu" = NULL, "triat_negatiu" = NULL)
-    prefs_dict[[as.character(soc$noms[1+numero_respostes*(i-1)])]][["relacional"]] = list("triat_positiu" = NULL, "triat_negatiu" = NULL)
-  }
-  
-  for (i in soc[, 4]){
-    prefs_dict[[soc$noms[1+numero_respostes*(i-1)]]][["academic"]][["triat_positiu"]]=c(prefs_dict[[soc$noms[1+numero_respostes*(i-1)]]][["academic"]][["triat_positiu"]],as.character(soc$noms[i]))
-  }
-  for (i in soc[, 5]){
-    prefs_dict[[soc$noms[1+numero_respostes*(i-1)]]][["academic"]][["triat_negatiu"]]=c(prefs_dict[[soc$noms[1+numero_respostes*(i-1)]]][["academic"]][["triat_negatiu"]],as.character(soc$noms[i]))
-  }
-  for (i in soc[, 6]){
-    prefs_dict[[soc$noms[1+numero_respostes*(i-1)]]][["relacional"]][["triat_positiu"]]=c(prefs_dict[[soc$noms[1+numero_respostes*(i-1)]]][["relacional"]][["triat_positiu"]],as.character(soc$noms[i]))
-  }
-  for (i in soc[, 7]){
-    prefs_dict[[soc$noms[1+numero_respostes*(i-1)]]][["relacional"]][["triat_negatiu"]]=c(prefs_dict[[soc$noms[1+numero_respostes*(i-1)]]][["relacional"]][["triat_negatiu"]],as.character(soc$noms[i]))
-  }
-  
-  prefs_json = toJSON(prefs_dict, pretty = TRUE, auto_unbox = TRUE)
-  options(encoding="UTF-8")
-  con <- file(file.path(path_, paste0("preferencies_inverses.txt")), open = "wt", encoding = "UTF-8")
-  sink(con)
-  print(prefs_json)
-  sink()
-  close(con)
-}
 
 calcular_reciproc = function(xarxa, numero_respostes){
   len = round(nrow(xarxa)/numero_respostes)

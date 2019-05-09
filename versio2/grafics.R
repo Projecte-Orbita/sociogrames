@@ -2,7 +2,10 @@ Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
 require(ggplot2)
 
-paleta <- c("#74ec9c", "#ec445c", "#5bade9", "#ecd044", "#347c7c", "#3c3048", "70f4a8", "94b0a8")
+paleta <- c("#74ec9c", "#ec445c", "#5bade9", "#ecd044", 
+            "#347c7c", "#3c3048", "#70f4a8", "#94b0a8",
+            "#4974a2", "#e25d29", "#66772f", "#8d69c7")  # Aquests últims 4 no són de la paleta.
+
 llista_titols = list("disrupcio" = "Disrupció",
                      "victimes" = "Víctimes",
                      "academic" = "Acadèmic",

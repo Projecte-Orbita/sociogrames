@@ -116,5 +116,6 @@ if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R
   
   nom_escola = 'Hogwarts'
   informe_escola(nom_escola)
-}
+
+  }
 

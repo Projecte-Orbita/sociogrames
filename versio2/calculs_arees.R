@@ -1,5 +1,8 @@
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
+config = config::get()
+encoding_ = config$encoding
+
 # Aquí hi afegeixo els càlculs per cada una de les àrees. Per ara els poso per separat però segurament en un 
 # futur proper s'hauran d'ajuntar en una sola funció. A causa de les diferències entre tots els grups no està
 # clar com es faria això, i per tant ho començo fent separat
@@ -7,7 +10,7 @@ require(reshape2)
 require(igraph)
 require(rlist)
 
-source('utils.R', encoding = "UTF8")
+source('utils.R', encoding = encoding_)
 
 calcs_disrupcio = function(mat, noms){
   

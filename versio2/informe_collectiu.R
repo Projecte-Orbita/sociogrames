@@ -2,8 +2,11 @@
 # WIP
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
-source('texts_collectiu.R', encoding = "UTF-8")
-source('calculs_previs_collectiu.R', encoding = "UTF-8")
+config = config::get()
+encoding_ = config$encoding
+
+source('texts_collectiu.R', encoding = encoding_)
+source('calculs_previs_collectiu.R', encoding = encoding_)
 
 path_fitxer = 'dades/Preguntes sociograma - Sociograma_CMS.csv'
 

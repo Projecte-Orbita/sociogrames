@@ -1,12 +1,18 @@
 # Informe escola
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
-options(endoding="UTF-8")
-source('informe_collectiu.R', encoding = "UTF-8")
-source('informe_individual.R', encoding = "UTF-8")
-source('texts_escola.R', encoding = "UTF-8")
-source('texts_collectiu.R', encoding = "UTF-8")
-source('texts_individual.R', encoding = "UTF-8")
-source('utils.R', encoding = "UTF-8")
+
+config = config::get()  # Importem la configuració; per ara només hi ha l'encoding
+encoding_ = config$encoding
+
+options(endoding=encoding_)
+source('informe_collectiu.R', encoding = encoding_)
+source('informe_individual.R', encoding = encoding_)
+source('texts_escola.R', encoding = encoding_)
+source('texts_collectiu.R', encoding = encoding_)
+source('texts_individual.R', encoding = encoding_)
+source('utils.R', encoding = encoding_)
+
+
 # Aquest fitxer crea els informes per tota l'escola, primer el col·leciu i després els individuals, un fitxer .tex per cada classe
 
 # Coses per debuguejar més ràpid:
@@ -73,7 +79,7 @@ informe_escola = function(nom_escola){
       calculs_collectiu(path_llista = path_llista, nom_fitxer = nom_fitxer, numero_respostes = 3)
     }
     path_ = file.path(path_llista$informes, paste0("sociograma_", curs_classe[cl], ".tex"))
-    con = file(path_, open = "wt", encoding = "UTF-8")
+    con = file(path_, open = "wt", encoding = encoding_)
     sink(con)
     
     cat(coses_latex);

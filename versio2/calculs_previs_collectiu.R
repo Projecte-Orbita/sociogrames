@@ -13,11 +13,15 @@
 
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
+config = config::get()
+encoding_ = config$encoding
+
+
 # Imports
-source('utils.R', encoding = 'UTF8')
-source('grafics.R', encoding = 'UTF8')
-source('taules.R', encoding = 'UTF8')
-source('calculs_arees.R', encoding = 'UTF8')
+source('utils.R', encoding = encoding_)
+source('grafics.R', encoding = encoding_)
+source('taules.R', encoding = encoding_)
+source('calculs_arees.R', encoding = encoding_)
 
 
 # path_fitxer = 'dades/Preguntes sociograma - Sociograma_CMS.csv'
@@ -57,7 +61,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   titol_disrupcio = "Taula 1."
   peu_disrupcio = "Comportament observat pel grup."
   
-  taula_classe_positiva_negativa(dades = Disrupcio, 
+  taula_classe(dades = Disrupcio, 
                negretes = Disrupcio_sino[,1],
                bones = 2,
                mixtes = 6,
@@ -110,6 +114,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   taula_classe(dades = Victimitzacio, 
                negretes = Vict_sino[,1],
                bones = NULL,
+               mixtes = NULL,
                path_ = path_llista$taules, 
                titol = "victimes",
                titol_peu = titol_victimitzacio,
@@ -134,7 +139,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   titol_academic = "Taula 4."
   peu_academic = "Valoració acadèmica observada pel grup."
   
-  taula_classe_positiva_negativa(dades= Academic, 
+  taula_classe(dades= Academic, 
                                  negretes = Academic_sino[,1], 
                                  bones = c(2:3), 
                                  mixtes = 6, 
@@ -161,7 +166,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   titol_estat_anim = "Taula 5."
   peu_estat_anim = "Estat d’ànim observat pel grup."
   
-  taula_classe_positiva_negativa(dades = Estat_anim, 
+  taula_classe(dades = Estat_anim, 
                negretes = Estat_anim_sino[,1],
                bones = 2,
                mixtes = 6,
@@ -189,7 +194,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   titol_caracter = "Taula 6."
   peu_caracter = "Actitud observada pel grup."
   
-  taula_classe_positiva_negativa(dades = Caracter, 
+  taula_classe(dades = Caracter, 
                                  negretes = Caracter_sino[,1], 
                                  bones = c(2,4,6), 
                                  mixtes = 8, 

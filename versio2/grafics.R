@@ -1,5 +1,8 @@
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
+config = config::get()
+encoding_ = config$encoding
+
 require(ggplot2)
 
 paleta <- c("#74ec9c", "#ec445c", "#5bade9", "#ecd044", 
@@ -14,7 +17,7 @@ llista_titols = list("disrupcio" = "Comportament",
 ##### Gràfics col·lectius
 
 grafic_barres_classe = function(columnes, color, noms = noms, path_, nom_grafic){
-  options(encoding="UTF-8")
+  options(encoding=encoding_)
   titol = unlist(llista_titols[nom_grafic], use.names = F)
   agr.m <- melt(columnes, id.vars = "noms")
   agr.m$color = rep(color,nrow(agr.m)/length(noms))
@@ -37,7 +40,10 @@ grafic_barres_classe = function(columnes, color, noms = noms, path_, nom_grafic)
 }
 
 grafic_barres_prosocialitat = function(columnes, noms, path_){
-  options(encoding="UTF-8")
+  
+  # Obsolet
+  
+  options(encoding=encoding_)
   ggplot(columnes, aes(x = as.factor(noms), y = Prosocialitat)) +
     geom_bar(stat='identity', fill = "#5bade9") +  
     scale_fill_manual(values = paleta) +
@@ -54,7 +60,7 @@ grafic_barres_prosocialitat = function(columnes, noms, path_){
 
 grafic_xarxa = function(gg, colors, label.color, vertex.shape, edge.color, paraules, path_, tipus){
 
-  options(encoding="UTF-8")
+  options(encoding=encoding_)
   pdf(file.path(path_, paste0(tipus, ".pdf")), width = 10, height = 15)
   plot(gg,
        layout=layout_with_lgl, # altres opcions són: layout_with_gem layout_with_fr, layout_with_mds, layout_with_lgl
@@ -87,7 +93,7 @@ grafic_xarxa = function(gg, colors, label.color, vertex.shape, edge.color, parau
 
 grafic_formatge = function(dades, tipus, path_, nom_plot, i, paleta = paleta){
   
-  options(encoding="UTF-8")
+  options(encoding=encoding_)
   dades$label = paste0(round(dades$value/sum(dades$value)*100),"%")
   nom_output = paste0(nom_plot, "-formatges-", i, ".pdf")
     
@@ -113,7 +119,7 @@ grafic_barres_individual = function(dades, numero_maxim, path_, nom_plot, i, pal
                 "academic"="Escala acadèmica", "estat_anim"="Estat d'ànim percebut",
                 "caracter"="Caràcter percebut", "estatus"="Estatus sociomètric percebut")
   
-  options(encoding="UTF-8")
+  options(encoding=encoding_)
   nom_output = paste0(nom_plot, "-barres-", i, ".pdf")
   
   barres = ggplot(dades, aes(x = as.factor(variable), y = value)) +
@@ -133,7 +139,7 @@ grafic_barres_individual = function(dades, numero_maxim, path_, nom_plot, i, pal
 
 grafic_resum = function(tot, path_, i){
   
-  options(encoding="UTF-8")
+  options(encoding=encoding_)
   nom_output = paste0("resum-", i, ".pdf")
   
   gp = ggplot(tot, aes(x = ambit, y = tries, fill=dimensio)) +

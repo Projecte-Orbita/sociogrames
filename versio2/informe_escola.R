@@ -1,23 +1,23 @@
 # Informe escola
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
-config = config::get()  # Importem la configuració; per ara només hi ha l'encoding
+config = config::get()  # Importem la configuració
 encoding_ = config$encoding
+individuals = config$individuals  # Per debuguejar més ràpid
+aprofitar = config$aprofitar  # Ídem
 
 options(endoding=encoding_)
-source('informe_collectiu.R', encoding = encoding_)
-source('informe_individual.R', encoding = encoding_)
-source('texts_escola.R', encoding = encoding_)
-source('texts_collectiu.R', encoding = encoding_)
-source('texts_individual.R', encoding = encoding_)
-source('utils.R', encoding = encoding_)
+
+gwd = getwd()
+source(file.path(gwd, 'informe_collectiu.R'), encoding = encoding_)
+source(file.path(gwd, 'informe_individual.R'), encoding = encoding_)
+source(file.path(gwd, 'texts', 'texts_escola.R'), encoding = encoding_)
+source(file.path(gwd, 'texts', 'texts_collectiu.R'), encoding = encoding_)
+source(file.path(gwd, 'texts', 'texts_individual.R'), encoding = encoding_)
+source(file.path(gwd, 'altres', 'utils.R'), encoding = encoding_)
 
 
 # Aquest fitxer crea els informes per tota l'escola, primer el col·leciu i després els individuals, un fitxer .tex per cada classe
-
-# Coses per debuguejar més ràpid:
-individuals = T
-aprofitar = F
 
 informe_escola = function(nom_escola){
 
@@ -118,7 +118,8 @@ informe_escola = function(nom_escola){
   
 }
 
-if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R
+if (!interactive()) {  
+  # equivalent a l'"if __name__==__main__ en R
   
   nom_escola = 'Hogwarts'
   informe_escola(nom_escola)

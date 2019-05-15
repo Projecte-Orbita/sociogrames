@@ -14,6 +14,7 @@ llista_titols = list("disrupcio" = "Comportament",
                      "academic" = "Acadèmic",
                      "estat_anim" = "Estat d'ànim",
                      "caracter" = "Caràcter")
+
 ##### Gràfics col·lectius
 
 grafic_barres_classe = function(columnes, color, noms = noms, path_, nom_grafic){
@@ -93,6 +94,8 @@ grafic_xarxa = function(gg, colors, label.color, vertex.shape, edge.color, parau
 
 grafic_formatge = function(dades, tipus, path_, nom_plot, i, paleta = paleta){
   
+  # TODO: acabar de trobar les mides òptimes
+  
   options(encoding=encoding_)
   dades$label = paste0(round(dades$value/sum(dades$value)*100),"%")
   nom_output = paste0(nom_plot, "-formatges-", i, ".pdf")
@@ -110,7 +113,6 @@ grafic_formatge = function(dades, tipus, path_, nom_plot, i, paleta = paleta){
     ggsave(file = file.path(path_, "individuals", nom_output), 
            dpi = 600, width = 9, height = 6, units = "cm") 
   
-  #return(formatge)
 }
 
 grafic_barres_individual = function(dades, numero_maxim, path_, nom_plot, i, paleta = paleta){
@@ -134,10 +136,11 @@ grafic_barres_individual = function(dades, numero_maxim, path_, nom_plot, i, pal
     theme(axis.text.x = element_text(angle = 18, hjust = 1)) +
     ggsave(file = file.path(path_, "individuals", nom_output), 
            dpi = 600, width = 8, height = 6, units = "cm") 
-  #return(barres)
 }
 
 grafic_resum = function(tot, path_, i){
+  
+  # Ara mateix no s'utilitza
   
   options(encoding=encoding_)
   nom_output = paste0("resum-", i, ".pdf")

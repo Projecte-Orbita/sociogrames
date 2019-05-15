@@ -14,11 +14,15 @@
 #####
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
+config = config::get()
+encoding_ = config$encoding
 # Imports
-source('utils.R', encoding = 'UTF8')
-source('grafics.R', encoding = 'UTF8')
-source('taules.R', encoding = 'UTF8')
-source('calculs_arees.R', encoding = 'UTF8')
+
+gwd = getwd()
+source(file.path(gwd, 'altres', 'utils.R') , encoding = encoding_)
+source(file.path(gwd, 'grafics_i_taules', 'grafics.R'), encoding = encoding_)
+source(file.path(gwd, 'grafics_i_taules', 'taules.R'), encoding = encoding_)
+source(file.path(gwd, 'calculs_previs', 'calculs_arees.R'), encoding = encoding_)
 require(jsonlite)
 
 ######## Manipulacions inicials ###########

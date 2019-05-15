@@ -35,6 +35,9 @@ afegeix_grafic_individual = function(path_llista, nom_grafic, i){
 }
 
 afegeix_grafic_resum = function(path_llista, i){
+  
+  # No s'està fent servir -> considerar moure'l a funcions obsoletes
+  
   nom_grafic = file.path(path_llista$figures, "individuals", paste0("resum-", i, ".pdf"))
   cat(
     paste0(
@@ -94,7 +97,7 @@ heading_alumnes <- function(nom){ cat("
 {0pt}{10pt}{40pt}
 
 \\begin{document}
-\\includepdf[pages=-,pagecommand={\\begin{tikzpicture}[remember picture,overlay]\\node [xshift = 0cm, yshift = 4.5cm] at (current page.center)  {\\textbf{\\huge{",nom,"}}};\\end{tikzpicture}}]{../../Portada-resultats}
+\\includepdf[pages=-,pagecommand={\\begin{tikzpicture}[remember picture,overlay]\\node [xshift = 0cm, yshift = 4.5cm] at (current page.center)  {\\textbf{\\huge{",nom,"}}};\\end{tikzpicture}}]{../../imatges_informes/Portada-resultats}
 
 "
 )

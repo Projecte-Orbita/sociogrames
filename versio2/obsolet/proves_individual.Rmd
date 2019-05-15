@@ -1,0 +1,236 @@
+---
+title: "proves individual"
+author: "Unitat de Bioestadística"
+date: "22 abril de 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
+#options(encoding = "latin1")
+require(ggplot2)
+require(reshape2)
+require(igraph)
+require(visNetwork)
+require(kableExtra)
+require(dplyr)
+require(gridExtra)
+require(cowplot)
+require(plotly)
+source("grafics_i_taules.R", encoding = "UTF-8")
+set.seed(1111)
+```
+
+# Introducció
+
+El sociograma és una tècnica d'anàlisi de dades que permet visualitzar de forma gràfica diferents variables implicades en les relacions entre subjectes. A nivell educatiu, suposa una eina per comprendre el sistema d'interaccions socials d'un grup-classe, aportant informació sobre la intensitat i la qualitat de les relacions entre els alumnes. Conèixer la posició sociomètrica de cada estudiant, així com comprendre els subgrups dins l'aula ens permet elaborar estratègies per facilitar la convivència escolar i influir en el benestar dels alumnes atenent les seves necessitats.
+
+Aquesta és una versió beta de l'informe resultat del Sociograma Àtom als cicles mitjà is superior, tant a nivell estètic com de continguts. Aquest informe està realitzat sobre dades simulades, i per tant els perfils sociomètrics dels nens i nenes poden no tenir sentit. Trobareu el document complet de preguntes en un fitxer que acompanya aquest informe. En totes les preguntes els nens i nenes han de triar els *tres* companys que s'adeqüin millor al que es demana.
+
+Si trobeu errors o conceptes o gràfics que no s'entenen si us plau feu-nos-ho saber a info\@projecteorbita.cat. 
+
+```{r}
+
+######## Manipulacions inicials ###########
+
+# importem
+soc = read.csv('dades/Preguntes sociograma - Sociograma_CMS.csv', fileEncoding = "UTF-8")
+colnames(soc)[1:2] = c("noms", "num")
+
+
+## En cas que sigui necessari, si hi ha missingns en els números i noms de nens (de cada tres només n'han posat un)
+# soc$número =ffill(soc$número, NA)
+# soc$nom = ffill(soc$nom, "")
+
+# Calculem el recompte de quantes vegades cada nen ha estat anomenat en cada categoria:
+num_anomenats = 3 # quants nens es poden anomenar en totes les categories - la majoria de funcions depenen explícitament d'aquest número, però potser no totes; precaució en canviar-lo
+
+# matriu que calcula el número de vegades que s'ha estat anomenat en cada categoria
+mat = matrix(data = 0, 
+             nrow = nrow(soc)/num_anomenats, 
+             ncol = ncol(soc)-2)
+
+for (j in 1:ncol(mat)){
+  for (i in 1:nrow(mat)){
+    mat[i,j] = sum(soc[,j+2]==i)
+  }
+}
+colnames(mat) = colnames(soc[,3:ncol(soc)])
+
+noms = as.character(soc$nom[seq(1, nrow(soc), num_anomenats)]) # faig un vector amb els noms, que necessitaré més endavant
+
+# Estandaritzem tots els resultats:
+mat_est = scale(mat)
+
+
+###### Aquí s'acaben les manipulacions inicials #######
+```
+
+```{r}
+
+# Calculem l'impacte total i la preferència total i les seves estandaritzacions:
+
+impacte = as.data.frame(cbind(mat[,1], mat[,2], mat[,3], mat[,4]))
+impacte_est = scale(impacte)
+
+imp = mat[,1] + mat[,2] + mat[,3] + mat[,4]
+pref_feina = mat[,1] - mat[,2]
+pref_jugar = mat[,3] - mat[,4]
+pref = pref_feina + pref_jugar
+
+imp_pref = cbind(imp, pref, pref_feina, pref_jugar)
+imp_pref_est = scale(imp_pref)
+```
+
+
+```{r}
+# Disrupció (antiga agressivitat)
+
+dis_directe = cbind( mat[,10], mat[,12], mat[,14], mat[,16])
+dis_relacional = cbind( mat[,22], mat[,24], mat[,25], mat[,26])
+
+dis_total = rowSums(dis_relacional) + rowSums(dis_directe)
+
+disrupcio = cbind(dis_relacional, dis_directe, dis_total)
+disrupcio_est = scale(disrupcio)
+
+Disrupcio = cbind.data.frame(dis_total, dis_directe[,4], rowSums(dis_directe[,1:3]), rowSums(dis_relacional))
+rownames(Disrupcio) = noms
+colnames(Disrupcio) = c("Disrupció total", 
+                           "Disrupció física",
+                           "Disrupció verbal",
+                           "Disrupció relacional")
+Disrupcio$noms = as.factor(rownames(Disrupcio))
+
+# Ara en fem un posant 1 en els que són significativament liantes
+Disrupcio_sino = as.data.frame(ifelse(scale(Disrupcio[,-ncol(Disrupcio)])>1, 1, 0))
+
+rownames(Disrupcio_sino) = noms
+Disrupcio_sino$noms = rownames(Disrupcio_sino)
+```
+
+
+```{r}
+# Prosocialitat/cooperació:
+prosocialitat = cbind(mat[,7], mat[,8], mat[,9], mat[,18])
+prosocialitat_est = scale(prosocialitat)
+prosocialitat_total = rowSums(prosocialitat)
+prosocialitat_total_est = scale(rowSums(prosocialitat))
+
+Prosocialitat = prosocialitat_total
+Pro_sino = prosocialitat_est > 1
+Pro_sino = ifelse(Pro_sino, 1, 0)
+Prosocialitat = as.data.frame(Prosocialitat)
+Pro_sino = as.data.frame(Pro_sino)
+rownames(Prosocialitat) = noms
+rownames(Pro_sino) = noms
+colnames(Prosocialitat) = c("Prosocialitat")
+```
+
+```{r}
+# Victimisme
+victima_directe = cbind(mat[,11], mat[,13], mat[,15], mat[,17], mat[,19])
+victima_directe_total = rowSums(victima_directe)
+victima_relacional = cbind(mat[,21], mat[,25])
+victima_relacional_total = rowSums(victima_relacional)
+victima = as.data.frame(cbind(victima_directe, victima_relacional))
+
+victima_total = victima_directe_total + victima_relacional_total
+victima_est = scale(victima)
+
+Victimitzacio = cbind(victima_total, victima_directe[,4], rowSums(victima_directe[,1:3]), victima_relacional_total)
+colnames(Victimitzacio) = c("Total víctima", 
+                            "Víctima física", 
+                            "Víctima verbal",
+                            "Víctima relacional")
+
+Vict_sino = ifelse(victima_est > 1, 1, 0)
+rownames(Victimitzacio) = noms
+rownames(Vict_sino) = noms
+Victimitzacio = as.data.frame(Victimitzacio)
+Victimitzacio$noms = rownames(Victimitzacio)
+```
+
+
+
+```{r}
+academic = as.data.frame(cbind(mat[,38], mat[,40], mat[,39], mat[,41]))
+colnames(academic) = c("Bones notes", "Participa", "Males notes", "No participa")
+academic_est = scale(academic)
+academic_total = mat[,38] + mat[,40] - mat[,39] - mat[,41]
+academic_total_est = scale(academic_total)
+academic_sino = ifelse(academic_total_est < -1,1,0)
+
+academic[,3] = - academic[,3]
+academic[,4] = - academic[,4]
+
+academic$noms = factor(noms, levels = as.character(noms))
+```
+
+```{r}
+# estat d'ànim percebut (emocional)
+
+estat_anim = as.data.frame(cbind(mat[,28], mat[,29], mat[,30], mat[,31]))
+colnames(estat_anim) = c("Dissatisfacció", "Enuig", "Alegria", "Tristor")
+estat_anim_est = scale(estat_anim)
+estat_anim_total = - estat_anim[,1] - estat_anim[,2] + estat_anim[,3] - estat_anim[,4]
+estat_anim_total_est = scale(estat_anim_total)
+estat_anim_sino = ifelse(estat_anim_total_est< -1,1,0)
+estat_anim = -estat_anim
+estat_anim$Alegria = -estat_anim$Alegria
+estat_anim$noms = factor(noms, levels = as.character(noms))
+
+```
+
+
+```{r}
+# caràcter
+caracter = as.data.frame(cbind(mat[,32], mat[,33], mat[,34], mat[,35], mat[,36], mat[,37]))
+colnames(caracter) = c("Lideratge", "No lideratge", "Autonomia", "No autonomia", "Socialització", "No socialització")
+caracter_est = scale(caracter)
+caracter_total = - caracter[,1] - caracter[,2] + caracter[,3] - caracter[,4] + caracter[,5] - caracter[,6]
+caracter_total_est = scale(caracter_total)
+caracter_sino = ifelse(caracter_total_est< -1,1,0)
+caracter[,2] = -caracter[,2]
+caracter[,4] = -caracter[,4]
+caracter[,6] = -caracter[,6]
+caracter$noms = factor(noms, levels = as.character(noms))
+```
+
+```{r}
+estatus = cbind.data.frame(mat[,1:6],mat[,19], mat[,26], mat[,27])
+estatus_est = scale(estatus)
+```
+
+
+# Informes individuals
+
+## Disrupció
+
+Comportament agressiu físic, verbal o relacional cap als altres.
+
+Prové de les pregunes:
+
+*Qui molesta als altres?*
+
+*Qui insulta als altres?*
+
+*Qui pega als altres?*
+
+*Qui diu coses dolentes dels altres?*
+
+*Qui no deixa participar?*
+
+```{r}
+#Disrupcio = Disrupcio[,c(5,2:4,1)]
+#names(Disrupcio)[1] = "Noms"
+nom_plot = "disrupcio"
+for (i in 1:nrow(Disrupcio)){
+  agr.m <- melt(Disrupcio[i,1:4], id.vars = "Noms")
+  grafic_barres_individual(agr.m, max(Disrupcio[2:4]), paleta) +
+  ggsave(file = paste("figures/individuals/", nom_plot, "-", i, ".pdf", sep = ""), 
+           dpi = 600, width = 8, height = 6, units = "in") 
+}
+```
+

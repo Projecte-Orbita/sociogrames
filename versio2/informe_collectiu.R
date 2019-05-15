@@ -1,14 +1,18 @@
 # Informe col·lectiu
-# WIP
+
+
+#### Alerta: No funciona tot sol, només com a helper a l'informe escoles ####
+
+
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
 config = config::get()
 encoding_ = config$encoding
 
-source('texts_collectiu.R', encoding = encoding_)
-source('calculs_previs_collectiu.R', encoding = encoding_)
+gwd = getwd()
+source(file.path(gwd, 'texts', 'texts_collectiu.R'), encoding = encoding_)
+source(file.path(gwd, 'calculs_previs', 'calculs_previs_collectiu.R'), encoding = encoding_)
 
-path_fitxer = 'dades/Preguntes sociograma - Sociograma_CMS.csv'
 
 informe_classe = function(path_llista, nom_fitxer){
   

@@ -1,10 +1,14 @@
 # Informes individuals
 
+
+#### Alerta: No funciona tot sol, només com a helper a l'informe escoles ####
+
+
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 options(encoding = "UTF-8")
 
-source('texts_individual.R', encoding = "UTF-8")
-source('calculs_previs_individual.R', encoding = "UTF-8")
+source('texts/texts_individual.R', encoding = "UTF-8")
+source('calculs_previs/calculs_previs_individual.R', encoding = "UTF-8")
 
 
 informe_individual = function(path_llista, nom_fitxer, noms){

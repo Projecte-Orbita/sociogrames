@@ -35,7 +35,7 @@ coses_latex = "
 \\usepackage{graphicx}
 \\pagestyle{fancy}
 \\fancyhf{}  
-\\lfoot{\\includegraphics[scale=0.3]{../../informe-atom-peu}}
+\\lfoot{\\includegraphics[scale=0.3]{../../imatges_informes/informe-atom-peu}}
 \\rfoot{\\small \\thepage}
 
 \\setlength\\parindent{0pt}
@@ -93,7 +93,7 @@ titol_classes <- function(escola, classe){
   \\HRule \\\\[1.5cm]
   
   \\vspace{5cm}
-  \\includegraphics[scale=0.3]{../../logo_orbita.png} 
+  \\includegraphics[scale=0.3]{../../imatges_informes/logo_orbita.png} 
   \\vfill % Fill the rest of the page with whitespace
   \\end{titlepage}"));
 }

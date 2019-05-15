@@ -12,7 +12,7 @@ informe_classe = function(path_llista, nom_fitxer){
   # Disrupció
   cat(disrupcio)
   
-  peu_disrupcio = "Grau de de disrupció de cada alumne."
+  peu_disrupcio = "Comportament percebut de cada alumne."
   afegeix_grafic(path_llista, "disrupcio", peu_disrupcio)
   cat(disrupcio_post)
   
@@ -21,15 +21,15 @@ informe_classe = function(path_llista, nom_fitxer){
   importar_i_imprimir_taula(path_llista, "disrupcio")
   
   # Prosocialitat
-  cat(prosocialitat)
+  #cat(prosocialitat)
   
-  peu_prosocialitat = "Grau de de prosocialitat de cada alumne."
-  afegeix_grafic(path_llista, "prosocialitat", peu_prosocialitat)
-  cat(prosocialitat_post)
+  #peu_prosocialitat = "Grau de de prosocialitat de cada alumne."
+  #afegeix_grafic(path_llista, "prosocialitat", peu_prosocialitat)
+  #cat(prosocialitat_post)
   
-  cat(abans_taula)
+  #cat(abans_taula)
   
-  importar_i_imprimir_taula(path_llista, "prosocialitat")
+  #importar_i_imprimir_taula(path_llista, "prosocialitat")
   
   # Víctima
   cat(victimes)
@@ -75,20 +75,30 @@ informe_classe = function(path_llista, nom_fitxer){
   
   importar_i_imprimir_taula(path_llista, "caracter")
   
+  # Xarxa amical
+  
+  #cat(xarxa_relacional)
+  cat("\\section*{Xarxa d'amics}")
+  
+  peu_xarxa_amical = "Relacions d'amistat a l’aula."
+  afegeix_grafic(path_llista, "xarxa_amical", peu_xarxa_amical)
+  
   # Xarxa acadèmica
   
-  cat(xarxa_academica)
-  
+  #cat(xarxa_academica)
+  cat("\\section*{Xarxa relacional acadèmica}")
   peu_xarxa_academica = "Relacions acadèmiques a l’aula."
   afegeix_grafic(path_llista, "xarxa_academica", peu_xarxa_academica)
   
   # Xarxa relacional
   
-  cat(xarxa_relacional)
+  #cat(xarxa_relacional)
+  cat("\\section*{Xarxa social relacional}")
   
   peu_xarxa_relacional = "Relacions socials a l’aula."
   afegeix_grafic(path_llista, "xarxa_relacional", peu_xarxa_relacional)
   
+
 }
 
 if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R

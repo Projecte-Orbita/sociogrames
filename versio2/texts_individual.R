@@ -180,18 +180,36 @@ afegeix_preferencies = function(rels, noms, i, numero_respostes, tipus){
   
   if (tipus == "academic"){
     titol = "Acadèmic"
+    text11 = " ha triat positivament:"
+    text12neg = "I no ha estat triat/da per ningú. \\\\ "
+    text12pos = "Ha estat triat/da per:  "
+    text21 = "I negativament:"
+    text22neg = "I no ha estat triat/da negativament per ningú. \\\\ "
+    text22pos = "Ha estat triat/da per:  "
     col_rel = 8
     col = 2
   }
   
   else if (tipus == "relacional"){
     titol = "Relacional"
+    text11 = " ha triat positivament:"
+    text12neg = "I no ha estat triat/da per ningú. \\\\ "
+    text12pos = "Ha estat triat/da per:  "
+    text21 = "I negativament:"
+    text22neg = "I no ha estat triat/da negativament per ningú. \\\\ "
+    text22pos = "Ha estat triat/da per:  "
     col_rel = 10
     col = 4
   }
   
   else if (tipus == "amical") {
     titol = "Amical"
+    text11 = " ha triat que són amics o amigues:"
+    text12neg = "En realitat, no ha estat triat/da per ningú. \\\\ "
+    text12pos = "En realitat, ha estat triat/da per:  "
+    text21 = "Ha triat que creu que el triaran a ell/a com a amistat:"
+    text22neg = "I ningú creu que l'haurà triat. \\\\ "
+    text22pos = "Ha estat triat/da com a amistat recíproca per:  "
     col_rel = 12
     col=6
   }
@@ -200,7 +218,7 @@ afegeix_preferencies = function(rels, noms, i, numero_respostes, tipus){
   pos = 1 + numero_respostes*(i-1)
   
   cat(paste0("\\subsubsection*{", titol, "}"))
-  cat(paste0("En/na ", noms[i]), " ha triat positivament a:")
+  cat(paste0("En/na ", noms[i], text11))
   
   cat("\\begin{itemize}")
   k = pos
@@ -223,11 +241,11 @@ afegeix_preferencies = function(rels, noms, i, numero_respostes, tipus){
   quins_triat = which(rels[, col]==i)
   
   if (length(quins_triat)==0){
-    cat("I no ha estat triat/da per ningú. \\\\ ")
+    cat(text12neg)
   }
   
   else {
-    cat("Ha estat triat/da per:  ")
+    cat(text12pos)
     cat("\\begin{itemize}")
     
     for (element in quins_triat){
@@ -239,7 +257,7 @@ afegeix_preferencies = function(rels, noms, i, numero_respostes, tipus){
     cat("\\end{itemize}")
   }
   
-  cat(paste0("I negativament a:"))
+  cat(text21)
   cat("\\begin{itemize}")
   k = pos
   for (j in 1:numero_respostes){
@@ -260,11 +278,11 @@ afegeix_preferencies = function(rels, noms, i, numero_respostes, tipus){
   
   quins_triat = which(rels[, col + 1]==i)
   if (length(quins_triat)==0){
-    cat("I no ha estat triat/da negativament per ningú. \\\\ ")
+    cat(text22neg)
   }
   
   else {
-    cat("Ha estat triat/da per:  ")
+    cat(text22pos)
     cat("\\begin{itemize}")
     for (element in quins_triat){
 

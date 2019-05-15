@@ -2,80 +2,6 @@
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 require(readr)
 
-coses_latex = "
-\\documentclass[a4paper, 12pt, oneside]{book}%{article}
-\\usepackage{framed}
-\\usepackage[left=3cm,right=3cm,top=2cm]{geometry}
-\\usepackage[sfdefault]{cabin}
-\\usepackage{graphicx,longtable}
-%\\usepackage[latin1]{inputenc}
-\\usepackage{amsmath}
-\\usepackage{color}
-\\usepackage{multicol}
-\\usepackage{flushend}
-\\usepackage{balance}
-\\usepackage{float}
-%\\usepackage{subfig}
-\\usepackage{subcaption}
-\\usepackage{enumitem}
-\\usepackage{titlesec}
-\\newcommand{\\sectionbreak}{\\clearpage}  % per començar una pàgina en cada secció
-\\usepackage[final]{pdfpages}
-\\usepackage[T1]{fontenc}
-% \\usepackage[latin1]{inputenc}   %paquet que serveix per poder escriure
-%els accents de forma normal en Linux
-%\\usepackage[ansinew]{inputenc}  % aquesta és la versio per windows
-\\usepackage[utf8]{inputenc}
-\\usepackage[catalan]{babel}
-
-\\definecolor{orbita}{rgb}{0.0235, 0.8275, 0.5921}
-\\usepackage[table]{xcolor}
-
-\\usepackage{fancyhdr}
-\\usepackage{graphicx}
-\\pagestyle{fancy}
-\\fancyhf{}  
-\\lfoot{\\includegraphics[scale=0.3]{../../informe-atom-peu}}
-\\rfoot{\\small \\thepage}
-
-\\setlength\\parindent{0pt}
-\\captionsetup[subfigure]{labelformat=empty}
-\\fancyfootoffset[LO,LE]{2cm}
-
-\\titleformat{\\chapter}[display]
-{\\normalfont\\huge\\bfseries}{}{0pt}{\\Huge}
-\\titlespacing*{\\chapter}
-{0pt}{10pt}{40pt}
-"
-
-pagina_titol = function(nom_escola){
-  cat(
-    paste0(
-      "
-      \\begin{document}
-
-  \\begin{titlepage}
-  \\newcommand{\\HRule}{\\rule{\\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
-  \\center % Center everything on the page
-  
-  \\vspace*{3cm}
-  
-  \\textsc{\\LARGE Informe  Sociograma Àtom}\\\\ % Name of your university/college
-  \\textsc{\\Large ", nom_escola, "}\\\\[0.5cm] % Major heading such as course name
-  
-  \\HRule \\\\[0.4cm]
-  { \\huge \\bfseries Curs A class B}\\\\[0.4cm] % Title of your document
-  \\HRule \\\\[1.5cm]
-  
-  \\vspace{5cm}
- % \\includegraphics[scale=0.3]{logo_orbita.png} % Include a department/university logo - this will require the graphicx package
-  \\vfill % Fill the rest of the page with whitespace
-  \\end{titlepage}
-      \\vspace{1.1cm}
-      "
-    )
-  )
-}
 
 afegeix_grafic = function(path_llista, nom_grafic, peu_grafic){
   path_grafic = file.path(path_llista$figures, paste0(nom_grafic, ".pdf"))
@@ -105,17 +31,21 @@ introduccio = "
 "
 
 disrupcio = "
-\\section*{Escala de Disrupció} 
+\\section*{Escala de Comportament} 
 
-Mesura el grau de disrupció que cada alumne causa a l’aula, segons la percepció dels companys, causat per 
-l’\\textbf{agressivitat} física (agressions), verbal (comentaris negatius o insults) i relacional (evitar, ignorar o 
-dir rumors sobre altres). 
+Mesura el grau de prosocialitat/cooperació, és a dir, la percepció dels companys de quin grau l’alumne \\textbf{ajuda} 
+als seus companys i crea un bon clima social i escolar i de disrupció, és a dir, l’\\textbf{agressivitat} física 
+(agressions), verbal (comentaris negatius o insults) i relacional (evitar, ignorar o dir rumors sobre altres) observada 
+pels companys i les companyes.
 
 "
 disrupcio_post = "
 Aquestes respostes provenen de les preguntes:
 
 \\begin{itemize}
+\\item \\emph{Ajuda els altres quan tenen un problema.}
+\\item \\emph{Col·labora amb els altres.}
+\\item \\emph{Defensa els altres.}
 \\item \\emph{Molesta als altres.}
 \\item \\emph{No deixa participar als altres.}
 \\item \\emph{Insulta als altres.}
@@ -134,9 +64,9 @@ Mesura el grau de prosocialitat de cada alumne, és a dir, la percepció dels co
 prosocialitat_post = "
 Aquestes respostes provenen de les preguntes:
 \\begin{itemize}
-\\item \\emph{Ajuda als altres quan tenen un problema.}
+\\item \\emph{Ajuda els altres quan tenen un problema.}
 \\item \\emph{Col·labora amb els altres.}
-\\item \\emph{Defensa als altres.}
+\\item \\emph{Defensa els altres.}
 \\end{itemize}
 \\newpage
 "
@@ -144,7 +74,7 @@ Aquestes respostes provenen de les preguntes:
 victimes = "
 		\\section*{Escala de victimització}
 		
-Mesura el grau de victimització de cada alumne, és a dir, qui rep o \textbf{pateix conductes agressives} dels 
+Mesura el grau de victimització de cada alumne, és a dir, qui rep o \\textbf{pateix conductes agressives} dels 
 altres i en quin grau, segons la percepció dels companys. Considera la victimització física (rebre agressions), 
 verbal (rebre comentaris negatius o insults) i relacional (ser evitat, ignorat o ser el centre de rumors). 
 
@@ -204,7 +134,7 @@ Aquestes respostes provenen de les preguntes:
 "
 
 caracter = "
-		\\section*{Escala d’Actitud}
+		\\section*{Escala de caràcter}
 		
 Mesura la percepció del grup del \\textbf{caràcter}, forma de ser o capacitat de resoldre els problemes de 
 dels alumnes de l’aula. Considera les variables: lideratge (rol de líder o seguidor), autonomia (capacitat de 
@@ -255,7 +185,7 @@ La xarxa consta dels següents elements:
 \\begin{itemize}
 \\item \\emph{Verd}: bones notes
 \\item \\emph{Groc}: notes mitjanes
-\\item Vermell: males notes
+\\item \\emph{Vermell}: males notes
 \\end{itemize}
 \\end{itemize}
 \\item \\textbf{Fletxes}: es refereix a la relació existent entre els alumnes de l’aula.
@@ -263,7 +193,12 @@ La xarxa consta dels següents elements:
 \\item \\underline{Normal}: la direcció indica la tria des d’un alumne a l’altre
 \\item \\underline{Blava}: indica que els dos alumnes s’han triat de forma recíproca
 \\end{itemize}
-\\item \\textbf{Noms}: mostra el nom de l’alumne i indica amb el color el grau de participació a l’aula.
+\\item \\textbf{Noms}: mostra el nom de l’alumne i indica amb el color el grau de participació a l’aula:
+\\begin{itemize}
+\\item \\underline{Verd}: participa molt
+\\item \\underline{negre}: neutre 
+\\item \\underline{Vermell}: participa poc
+\\end{itemize}
 \\end{enumerate}
 "
 
@@ -297,7 +232,7 @@ La xarxa consta dels següents elements:
 \\begin{itemize}
 \\item \\emph{Verd}: bones notes
 \\item \\emph{Groc}: notes mitjanes
-\\item Vermell: males notes
+\\item \\emph{Vermell}: males notes
 \\end{itemize}
 \\end{itemize}
 \\item \\textbf{Fletxes:} es refereix a la relació existent entre els alumnes de l’aula.
@@ -305,7 +240,12 @@ La xarxa consta dels següents elements:
 \\item \\underline{Normal}: la direcció indica la tria des d’un alumne a l’altre
 \\item \\underline{Blava}: indica que els dos alumnes s’han triat de forma recíproca
 \\end{itemize}
-\\item \\textbf{Noms:} mostra el nom de l’alumne i indica amb el color el grau de participació a l’aula.
+\\item \\textbf{Noms:} mostra el nom de l’alumne i indica amb el color l'estat dànim percebut pels companys i les companyes:
+\\begin{itemize}
+\\item \\underline{Verd}: estat d'ànim positiu
+\\item \\underline{negre}: neutre
+\\item \\underline{Vermell}: estat d'ànim negatiu
+\\end{itemize}
 \\end{enumerate}
 "
 

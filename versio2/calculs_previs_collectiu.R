@@ -13,15 +13,12 @@
 
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
-
 # Imports
 source('utils.R', encoding = 'UTF8')
 source('grafics.R', encoding = 'UTF8')
 source('taules.R', encoding = 'UTF8')
 source('calculs_arees.R', encoding = 'UTF8')
 
-
-######## Manipulacions inicials ###########
 
 # path_fitxer = 'dades/Preguntes sociograma - Sociograma_CMS.csv'
 
@@ -45,49 +42,53 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   Disrupcio = disrupcio_[[1]]
   Disrupcio_sino = disrupcio_[[2]]
   
-  grafic_barres_classe(columnes = Disrupcio[,2:5], 
+  Disrupcio[,2:4] = -1*Disrupcio[,2:4]
+  
+  grafic_barres_classe(columnes = Disrupcio[,-5], 
                        color = Disrupcio_sino[,1], 
                        noms = noms, 
                        path_ = path_llista$figures, 
                        nom_grafic =  "disrupcio")  # Gràfic
   
-  Disrupcio = Disrupcio[,c(5,2:4,1)]
+  Disrupcio = Disrupcio[,c(6,1:5)]
   names(Disrupcio)[1] = "Noms"
+  Disrupcio[,3:5] = -1*Disrupcio[,3:5]
   
   titol_disrupcio = "Taula 1."
-  peu_disrupcio = "Disrupció observada pel grup."
+  peu_disrupcio = "Comportament observat pel grup."
   
-  taula_classe(dades = Disrupcio, 
+  taula_classe_positiva_negativa(dades = Disrupcio, 
                negretes = Disrupcio_sino[,1],
-               bones = NULL,
+               bones = 2,
+               mixtes = 6,
                path_ = path_llista$taules, 
                titol = "disrupcio",
                titol_peu = titol_disrupcio,
                peu_taula = peu_disrupcio)  # Taula
   
   # Cooperació
-  prosocialitat_ = calcs_prosocialitat(mat, noms)
-  Prosocialitat = prosocialitat_[[1]]
-  Prosocialitat_sino = prosocialitat_[[2]]
-  
-  grafic_barres_prosocialitat(columnes = Prosocialitat, 
-                              noms = noms, 
-                              path_ = path_llista$figures)
-  
-  # TODO: Potser en aquest apartat podríem fer un diagrama 2D amb notorietat?
-  names(Prosocialitat)[2] = "Noms"
-  Prosocialitat = Prosocialitat[, c(2,1)]
-  
-  titol_prosocialitat = "Taula 2."
-  peu_prosocialitat = "Prosocialitat observada pel grup."
-  
-  taula_classe_negativa(dades = Prosocialitat, 
-                        negretes = Prosocialitat_sino[,1], 
-                        bones = NULL,
-                        path_ = path_llista$taules, 
-                        titol = "prosocialitat",
-                        titol_peu = titol_prosocialitat,
-                        peu_taula = peu_prosocialitat)
+  # prosocialitat_ = calcs_prosocialitat(mat, noms)
+  # Prosocialitat = prosocialitat_[[1]]
+  # Prosocialitat_sino = prosocialitat_[[2]]
+  # 
+  # grafic_barres_prosocialitat(columnes = Prosocialitat, 
+  #                             noms = noms, 
+  #                             path_ = path_llista$figures)
+  # 
+  # 
+  # names(Prosocialitat)[2] = "Noms"
+  # Prosocialitat = Prosocialitat[, c(2,1)]
+  # 
+  # titol_prosocialitat = "Taula 2."
+  # peu_prosocialitat = "Prosocialitat observada pel grup."
+  # 
+  # taula_classe_negativa(dades = Prosocialitat, 
+  #                       negretes = Prosocialitat_sino[,1], 
+  #                       bones = NULL,
+  #                       path_ = path_llista$taules, 
+  #                       titol = "prosocialitat",
+  #                       titol_peu = titol_prosocialitat,
+  #                       peu_taula = peu_prosocialitat)
   
   # Victimisme
   Victimitzacio_ = calcs_victimitzacio(mat, noms)
@@ -135,7 +136,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   
   taula_classe_positiva_negativa(dades= Academic, 
                                  negretes = Academic_sino[,1], 
-                                 bones = c(1:2), 
+                                 bones = c(2:3), 
                                  mixtes = 6, 
                                  path_ = path_llista$taules, 
                                  titol = "academic", 
@@ -162,8 +163,8 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   
   taula_classe_positiva_negativa(dades = Estat_anim, 
                negretes = Estat_anim_sino[,1],
-               bones = 1,
-               mixtes = 5,
+               bones = 2,
+               mixtes = 6,
                path_ = path_llista$taules, 
                titol = "estat_anim",
                titol_peu = titol_estat_anim,
@@ -190,7 +191,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   
   taula_classe_positiva_negativa(dades = Caracter, 
                                  negretes = Caracter_sino[,1], 
-                                 bones = c(1,3,5), 
+                                 bones = c(2,4,6), 
                                  mixtes = 8, 
                                  path_ = path_llista$taules, 
                                  titol = "caracter",
@@ -215,14 +216,16 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   colors = X_Academic_[[2]]
   label.color = X_Academic_[[3]]
   vertex.shape = X_Academic_[[4]]
+  edge.color = X_Academic_[[5]]
   
-  paraules = c(nom_curs, "Males notes","Notes mitjanes", "Bones notes",
+  paraules = c(nom_curs,  "Bones notes","Notes mitjanes", "Males notes",
                "Poc popular","Normal", "Molt popular")
   Encoding(paraules) = "UTF-8-BOM"
   grafic_xarxa(gg = gg, 
                colors = colors, 
                label.color = label.color,
                vertex.shape =  vertex.shape,
+               edge.color = edge.color,
                paraules = paraules, 
                path_ = path_llista$figures, 
                tipus = "xarxa_academica")
@@ -233,6 +236,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   colors = X_relacional_[[2]]
   label.color = X_relacional_[[3]]
   vertex.shape = X_relacional_[[4]]
+  edge.color = X_relacional_[[5]]
   
   paraules = c(nom_curs, "Poc disruptiu","Disrupcio mitjana", "Molt disruptiu",
                "Poc popular","Normal", "Molt popular")
@@ -241,9 +245,31 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
                colors = colors, 
                label.color = label.color,
                vertex.shape =  vertex.shape,
+               edge.color = edge.color,
                paraules = paraules, 
                path_ = path_llista$figures, 
                tipus = "xarxa_relacional")
+  
+  # Xarxa Amical
+  
+  X_amical_ = calcs_xarxa_relacional(soc, mat, numero_respostes)
+  gg = X_amical_[[1]]
+  colors = X_amical_[[2]]
+  label.color = X_amical_[[3]]
+  vertex.shape = X_amical_[[4]]
+  edge.color = X_amical_[[5]]
+  
+  paraules = c(nom_curs, "Pocs amics","Mitjana amics", "Molts amics",
+               "Poc popular","Normal", "Molt popular")
+  Encoding(paraules) = "UTF-8-BOM"
+  grafic_xarxa(gg = gg, 
+               colors = colors, 
+               label.color = label.color,
+               vertex.shape =  vertex.shape,
+               edge.color = edge.color,
+               paraules = paraules, 
+               path_ = path_llista$figures, 
+               tipus = "xarxa_amical")
 
 }
 

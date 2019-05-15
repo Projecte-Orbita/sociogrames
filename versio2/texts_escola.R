@@ -1,6 +1,82 @@
 # Texts informe per l'escola sencera
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
+
+coses_latex = "
+\\documentclass[a4paper, 12pt, oneside]{book}%{article}
+\\usepackage{framed}
+\\usepackage[left=3cm,right=3cm,top=2cm]{geometry}
+\\usepackage[sfdefault]{cabin}
+\\usepackage{graphicx,longtable}
+%\\usepackage[latin1]{inputenc}
+\\usepackage{amsmath}
+\\usepackage{color}
+\\usepackage{multicol}
+\\usepackage{flushend}
+\\usepackage{balance}
+\\usepackage{float}
+%\\usepackage{subfig}
+\\usepackage{subcaption}
+\\usepackage{enumitem}
+\\usepackage{titlesec}
+\\newcommand{\\sectionbreak}{\\clearpage}  % per començar una pàgina en cada secció
+\\usepackage[final]{pdfpages}
+\\usepackage[T1]{fontenc}
+% \\usepackage[latin1]{inputenc}   %paquet que serveix per poder escriure
+%els accents de forma normal en Linux
+%\\usepackage[ansinew]{inputenc}  % aquesta és la versio per windows
+\\usepackage[utf8]{inputenc}
+\\usepackage[catalan]{babel}
+
+\\definecolor{orbita}{rgb}{0.0235, 0.8275, 0.5921}
+\\usepackage[table, dvipsnames]{xcolor}
+
+\\usepackage{fancyhdr}
+\\usepackage{graphicx}
+\\pagestyle{fancy}
+\\fancyhf{}  
+\\lfoot{\\includegraphics[scale=0.3]{../../informe-atom-peu}}
+\\rfoot{\\small \\thepage}
+
+\\setlength\\parindent{0pt}
+\\captionsetup[subfigure]{labelformat=empty}
+\\fancyfootoffset[LO,LE]{2cm}
+
+\\titleformat{\\chapter}[display]
+{\\normalfont\\huge\\bfseries}{}{0pt}{\\Huge}
+\\titlespacing*{\\chapter}
+{0pt}{10pt}{40pt}
+"
+
+pagina_titol = function(nom_escola){
+  cat(
+    paste0(
+      "
+      \\begin{document}
+
+  \\begin{titlepage}
+  \\newcommand{\\HRule}{\\rule{\\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+  \\center % Center everything on the page
+  
+  \\vspace*{3cm}
+  
+  \\textsc{\\LARGE Informe  Sociograma Àtom}\\\\ % Name of your university/college
+  \\textsc{\\Large ", nom_escola, "}\\\\[0.5cm] % Major heading such as course name
+  
+  \\HRule \\\\[0.4cm]
+  { \\huge \\bfseries Curs A class B}\\\\[0.4cm] % Title of your document
+  \\HRule \\\\[1.5cm]
+  
+  \\vspace{5cm}
+ % \\includegraphics[scale=0.3]{logo_orbita.png} % Include a department/university logo - this will require the graphicx package
+  \\vfill % Fill the rest of the page with whitespace
+  \\end{titlepage}
+      \\vspace{1.1cm}
+      "
+    )
+  )
+}
+
 titol_classes <- function(escola, classe){
   cat(paste0(
     "\\begin{titlepage}

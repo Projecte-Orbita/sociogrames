@@ -88,3 +88,23 @@ ffill <- function(vector, type){
   }
   return (vector)
 }
+
+calcular_reciproc = function(xarxa, numero_respostes){
+  len = round(nrow(xarxa)/numero_respostes)
+  gg <- graph.data.frame(xarxa, directed=T)
+  gg <- simplify(gg, remove.multiple = F, remove.loops = T) 
+  
+  adj = as_adjacency_matrix(gg, sparse = TRUE)
+  names(xarxa) = c("num", "altre")
+  reci = rep(0, nrow(xarxa))
+  
+  for (i in 1:len){
+    for (j in 1:len){
+      if (adj[i,j] == 1 & adj[j,i] == 1){
+        reci[which(xarxa$num==i & xarxa$altre==j)] = 1
+      }
+    }
+  }
+  
+  return(reci)
+}

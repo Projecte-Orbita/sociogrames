@@ -7,25 +7,36 @@ require(reshape2)
 require(igraph)
 require(rlist)
 
+source('utils.R', encoding = "UTF8")
+
 calcs_disrupcio = function(mat, noms){
+  
+  prosocialitat = cbind(mat[,7], mat[,8], mat[,9], mat[,18])
+  prosocialitat_total = rowSums(prosocialitat)
+  
   dis_directe = cbind( mat[,10], mat[,12], mat[,14], mat[,16])
   dis_relacional = cbind( mat[,22], mat[,24], mat[,25], mat[,26])
   
-  dis_total = rowSums(dis_relacional) + rowSums(dis_directe)
+  dis_total = prosocialitat_total - rowSums(dis_relacional) - rowSums(dis_directe)
   
   disrupcio = cbind(dis_relacional, dis_directe, dis_total)
   disrupcio_est = scale(disrupcio)
   
-  Disrupcio = cbind.data.frame(dis_total, dis_directe[,4], rowSums(dis_directe[,1:3]), rowSums(dis_relacional))
+  Disrupcio = cbind.data.frame(prosocialitat_total, 
+                               dis_directe[,4], 
+                               rowSums(dis_directe[,1:3]), 
+                               rowSums(dis_relacional),
+                               dis_total)
   rownames(Disrupcio) = noms
-  colnames(Disrupcio) = c("Disrupció total", 
+  colnames(Disrupcio) = c("Prosocialitat", 
                           "Disrupció física",
-                          "Disrupció verbal",
-                          "Disrupció relacional")
+                          "D. verbal",
+                          "D. relacional",
+                          "Global")
   Disrupcio$noms = as.factor(rownames(Disrupcio))
   
   # Ara en fem un posant 1 en els que són significativament liantes
-  Disrupcio_sino = as.data.frame(ifelse(scale(Disrupcio[,-ncol(Disrupcio)])>1, 1, 0))
+  Disrupcio_sino = as.data.frame(ifelse(scale(Disrupcio[,5]) < -1, 1, 0))
   
   rownames(Disrupcio_sino) = noms
   Disrupcio_sino$noms = rownames(Disrupcio_sino)
@@ -150,19 +161,7 @@ calcs_xarxa_academica = function(soc, mat, num_respostes){
   gg <- simplify(gg, remove.multiple = F, remove.loops = T) 
   deg <- degree(gg, mode="all")
   
-  adj = as_adjacency_matrix(gg, sparse = TRUE)
-  
-  # això és per pintar les relacions bidireccionals de blau (no és molt necessari)
-  reci = rep(0, nrow(xarxa))
-  xarxa$relacions = reci
-  
-  for (i in 1:length(noms)){
-    for (j in 1:length(noms)){
-      if (adj[i,j] == 1 & adj[j,i] == 1){
-        xarxa$relacions[which(xarxa$num==i & xarxa$Feina_sí==j)] = 1
-      }
-    }
-  }
+  edge.color = calcular_reciproc(xarxa[,2:3], num_respostes)
   
   V(gg)$label <- as.character(noms)
   V(gg)$label.cex = 1
@@ -180,9 +179,9 @@ calcs_xarxa_academica = function(soc, mat, num_respostes){
   colnames(color_academic) = c("academic", "noms")
   
   color_academic$corregida = color_academic$academic- min(color_academic$academic) + 1
-  paleta <- colorRampPalette(c("chartreuse3", 
+  paleta <- colorRampPalette(c("firebrick", 
                                "khaki1", 
-                               "firebrick"))(n = max(color_academic$corregida))
+                               "chartreuse3"))(n = max(color_academic$corregida))
   paleta = paste0(paleta, "90")   ## afegeixo transparència
   
   colors = rep("", length(noms))
@@ -196,11 +195,11 @@ calcs_xarxa_academica = function(soc, mat, num_respostes){
   participa_est = scale(mat[,40] - mat[,41])
   
   label.color = ifelse(participa_est > 1, "chartreuse3", ifelse(participa_est< -1, "firebrick", "black"))
-  edge.color = ifelse(xarxa$relacions==1, "darkblue", "black")
+  edge.color = ifelse(edge.color==1, "darkblue", "black")
 
   #vertex.shape = vertex.shape[seq(1, length(vertex.shape), num_respostes)]
   
-  return(list(gg, colors, label.color, vertex.shape))
+  return(list(gg, colors, label.color, vertex.shape, edge.color))
   
 }
 
@@ -212,17 +211,7 @@ calcs_xarxa_relacional = function(soc, mat, num_respostes){
   gg <- simplify(gg, remove.multiple = F, remove.loops = T) 
   deg <- degree(gg, mode="all")
   
-  adj = as_adjacency_matrix(gg, sparse = TRUE)
-  reci = rep(0, nrow(xarxa))
-  xarxa$relacions = reci
-  
-  for (i in 1:length(noms)){
-    for (j in 1:length(noms)){
-      if (adj[i,j] == 1 & adj[j,i] == 1){
-        xarxa$relacions[which(xarxa$num==i & xarxa$Amics==j)] = 1
-      }
-    }
-  }
+  edge.color = calcular_reciproc(xarxa[,2:3], num_respostes)
   
   V(gg)$label <- as.character(noms)
   V(gg)$label.cex = 1
@@ -258,31 +247,57 @@ calcs_xarxa_relacional = function(soc, mat, num_respostes){
   estat_anim_est = scale(estat_anim_total)
 
   label.color = ifelse(estat_anim_est > 1, "chartreuse3", ifelse(estat_anim_est< -1, "firebrick", "black"))
-  edge.color = ifelse(xarxa$relacions==1, "darkblue", "black")
+  edge.color = ifelse(edge.color==1, "darkblue", "black")
   
-  return(list(gg, colors, label.color, vertex.shape))
+  return(list(gg, colors, label.color, vertex.shape, edge.color))
 }
 
-
-calcular_reciproc = function(xarxa, numero_respostes){
-  len = round(nrow(xarxa)/numero_respostes)
-  gg <- graph.data.frame(xarxa, directed=T)
+calcs_xarxa_amical = function(soc, mat, num_respostes){
+  options(encoding="UTF-8")
+  xarxa = soc[,c(1,3,8)]
+  noms = as.character(xarxa$noms[seq(1,nrow(xarxa),num_respostes)])
+  gg <- graph.data.frame(xarxa[,c(2,3)], directed=T)
   gg <- simplify(gg, remove.multiple = F, remove.loops = T) 
+  deg <- degree(gg, mode="all")
   
-  adj = as_adjacency_matrix(gg, sparse = TRUE)
-  reci = rep(0, nrow(xarxa))
+  edge.color = calcular_reciproc(xarxa[,2:3], num_respostes)
   
-  for (i in 1:len){
-    for (j in 1:len){
-      if (adj[i,j] == 1 & adj[j,i] == 1){
-        reci[which(xarxa$num==i & xarxa$Amics==j)] = 1
-      }
-    }
+  V(gg)$label <- as.character(noms)
+  V(gg)$label.cex = 1
+  V(gg)$label.font = 2
+  V(gg)$size <- deg*3 + 1
+  vertex.shape = ifelse(as.character(soc$genere)=="nen", "square",
+                        ifelse(as.character(soc$genere)=="nena", "circle", 
+                               ifelse(as.character(soc$genere)=="altres", "vrectangle", "crectangle")))
+  vertex.shape = vertex.shape[seq(1, length(vertex.shape), num_respostes)]
+  #V(gg)$shape = vertex.shape
+  
+  estatus = cbind.data.frame(mat[,1:6],mat[,19], mat[,26], mat[,27])
+  est_total = rowSums(estatus)
+  est_total$noms = noms
+  
+  colnames(est_total) = c("estatus", "noms")
+  
+  est_total$corregida = est_total$estatus- min(est_total$estatus) + 1
+  paleta <- colorRampPalette(c("chartreuse3", 
+                               "khaki1", 
+                               "firebrick"))(n = max(est_total$corregida))
+  paleta = paste0(paleta, "90")   ## afegeixo transparència
+  
+  colors = rep("", length(noms))
+  
+  for (i in 1:length(noms)){
+    colors[i] = paleta[est_total$corregida[i]]
   }
   
-  return(reci)
+  estat_anim_total = - mat[,28] - mat[,29] + mat[,30] - mat[,31]
+  estat_anim_est = scale(estat_anim_total)
+  
+  label.color = ifelse(estat_anim_est > 1, "chartreuse3", ifelse(estat_anim_est< -1, "firebrick", "black"))
+  edge.color = ifelse(edge.color==1, "darkblue", "black")
+  
+  return(list(gg, colors, label.color, vertex.shape, edge.color))
 }
-
 
 calcular_preferencies = function(soc, path_, numero_respostes){
   

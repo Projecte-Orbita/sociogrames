@@ -6,7 +6,7 @@ paleta <- c("#74ec9c", "#ec445c", "#5bade9", "#ecd044",
             "#347c7c", "#3c3048", "#70f4a8", "#94b0a8",
             "#4974a2", "#e25d29", "#66772f", "#8d69c7")  # Aquests últims 4 no són de la paleta.
 
-llista_titols = list("disrupcio" = "Disrupció",
+llista_titols = list("disrupcio" = "Comportament",
                      "victimes" = "Víctimes",
                      "academic" = "Acadèmic",
                      "estat_anim" = "Estat d'ànim",
@@ -52,7 +52,7 @@ grafic_barres_prosocialitat = function(columnes, noms, path_){
            dpi = 600, width = 15, height = 10, units = "cm") 
 }
 
-grafic_xarxa = function(gg, colors, label.color, vertex.shape, paraules, path_, tipus){
+grafic_xarxa = function(gg, colors, label.color, vertex.shape, edge.color, paraules, path_, tipus){
 
   options(encoding="UTF-8")
   pdf(file.path(path_, paste0(tipus, ".pdf")), width = 10, height = 15)
@@ -65,7 +65,7 @@ grafic_xarxa = function(gg, colors, label.color, vertex.shape, paraules, path_, 
        vertex.frame.color = NA,
        vertex.alpha = 0.75,
        vertex.shape =  vertex.shape,
-       #edge.color = edge.color , !!! no funciona !!!
+       edge.color = edge.color, # !!! no funciona !!!
        edge.curved = .2,
        edge.arrow.size = 0.55, 
        label.cex = 0.5,
@@ -73,12 +73,12 @@ grafic_xarxa = function(gg, colors, label.color, vertex.shape, paraules, path_, 
        main = paraules[1]
   )
   
-  legend(x=0.7, y=-0.9, c(paraules[2],paraules[3], paraules[4]),
-         pch=21, col="#777777", pt.bg=c("chartreuse3", "khaki1", "firebrick"),
-         pt.cex=3, cex=1.5, bty="n", ncol=1)
-  legend(x=-1.2, y=-0.9, c(paraules[5],paraules[6], paraules[7]),
-         pch=21, col="#777777", pt.bg="gray",
-         pt.cex=c(4,5,6), cex=1.5, bty="n", ncol=1)
+  #legend(x=0.7, y=-0.9, c(paraules[2],paraules[3], paraules[4]),
+  #       pch=21, col="#777777", pt.bg=c("chartreuse3", "khaki1", "firebrick"),
+  #       pt.cex=3, cex=1.5, bty="n", ncol=1)
+  #legend(x=-1.2, y=-0.9, c(paraules[5],paraules[6], paraules[7]),
+  #       pch=21, col="#777777", pt.bg="gray",
+  #       pt.cex=c(4,5,6), cex=1.5, bty="n", ncol=1)
   dev.off()
   
 }
@@ -102,12 +102,16 @@ grafic_formatge = function(dades, tipus, path_, nom_plot, i, paleta = paleta){
     labs(title = paste0(sum(dades$value)," tries\n", tipus)) +
     theme(plot.title = element_text(hjust = 0.5)) +
     ggsave(file = file.path(path_, "individuals", nom_output), 
-           dpi = 600, width = 8, height = 6, units = "cm") 
+           dpi = 600, width = 9, height = 6, units = "cm") 
   
   #return(formatge)
 }
 
 grafic_barres_individual = function(dades, numero_maxim, path_, nom_plot, i, paleta = paleta){
+  
+  titols = list("disrupcio"="Escala de disrupció", "victimes"="Escala de victimització",
+                "academic"="Escala acadèmica", "estat_anim"="Estat d'ànim percebut",
+                "caracter"="Caràcter percebut", "estatus"="Estatus sociomètric percebut")
   
   options(encoding="UTF-8")
   nom_output = paste0(nom_plot, "-barres-", i, ".pdf")
@@ -120,7 +124,8 @@ grafic_barres_individual = function(dades, numero_maxim, path_, nom_plot, i, pal
     theme_bw() + 
     ylab("Número de tries") + 
     xlab("") + 
-    theme(axis.text.x = element_text(angle = 25, hjust = 1)) +
+    labs(title = titols[nom_plot]) +
+    theme(axis.text.x = element_text(angle = 18, hjust = 1)) +
     ggsave(file = file.path(path_, "individuals", nom_output), 
            dpi = 600, width = 8, height = 6, units = "cm") 
   #return(barres)

@@ -176,10 +176,9 @@ resum = "
 A continuació presentem de forma condensada un gràfic amb totes les dimensions mesurades en el sociograma:
 "
 
-
-
-
 afegeix_preferencies = function(rels, noms, i, numero_respostes, tipus){
+  
+  # Obsolet
   
   if (tipus == "academic"){
     titol = "Acadèmic"
@@ -298,4 +297,89 @@ afegeix_preferencies = function(rels, noms, i, numero_respostes, tipus){
   
 }
 
+escriure_preferencies = function(rels, noms, i, numero_respostes, tipus){
+  
+  if (tipus == "academic"){
+    titol = "\\subsubsection*{Acadèmic}\n"
+    text11 = "\nEn la pregunta \\emph{\"Amb qui faries un treball?\"}: \\\\"
+    text21 = "\nEn la pregunta \\emph{\"Amb qui no faries un treball?\"}: \\\\"
+    col_rel = 8
+    col = 2
+  }
+  
+  else if (tipus == "relacional"){
+    titol = "\\subsubsection*{Relacional}\n"
+    text11 = "\nEn la pregunta \\emph{\"Amb qui jugaries al pati?\"}: \\\\"
+    text21 = "\nEn la pregunta \\emph{\"Amb qui no jugaries al pati?\"}: \\\\"
+    col_rel = 10
+    col = 4
+  }
+  
+  else if (tipus == "amical") {
+    titol = "\\subsubsection*{Amical}\n"
+    text11 = "\nEn la pregunta \\emph{\"Qui són els teus amics?\"}: \\\\"
+    text21 = "\nEn la pregunta \\emph{\"Qui creus qeu et triarà com a amic/ga?\"}: \\\\"
+    col_rel = 12
+    col=6
+  }
+  
+  noms = as.character(noms)
+  pos = 1 + numero_respostes*(i-1)
+  k = pos
+  
+  noms_fora = c()
+  for (j in 1:numero_respostes){
+    
+    noms_fora = c(noms_fora, noms[rels[k, col]])
+    k = k + 1
+  }
+  
+  quins_triat = which(rels[, col]==i)
+  
+  noms_dins = c(NA)  # És lleugerament diferent per tenir en compte el cas on no hi ha res.
+  for (element in quins_triat){
+    i = 1
+    noms_dins[i] = noms[rels[element, 1]]
+    i = i + 1
+  }
+  
+  n = max(numero_respostes, length(noms_dins))
+  length(noms_fora) = n
+  length(noms_dins) = n
+  
+  df_taula = cbind.data.frame(noms_fora, noms_dins)
+  df_taula = apply(df_taula, 2, as.character)
+  df_taula[is.na(df_taula)] = " "
 
+  cat(titol)
+  cat(text11)
+  taula_preferencies(df_taula)
+
+  noms_fora = c()
+  for (j in 1:numero_respostes){
+    
+    noms_fora = c(noms_fora, noms[rels[k, col+1]])
+    k = k + 1
+  }
+  
+  quins_triat = which(rels[, col+1]==i)
+  
+  noms_dins = c(NA)
+  for (element in quins_triat){
+    i = 1
+    noms_dins[i] = noms[rels[element, 1]]
+    i = i + 1
+  }
+  
+  n = max(numero_respostes, length(noms_dins))
+  length(noms_fora) = n
+  length(noms_dins) = n
+  
+  df_taula = cbind.data.frame(noms_fora, noms_dins)
+  df_taula = apply(df_taula, 2, as.character)
+  df_taula[is.na(df_taula)] = " "
+  
+  cat(text21)
+  taula_preferencies(df_taula)
+
+}

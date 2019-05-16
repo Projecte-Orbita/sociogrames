@@ -59,9 +59,9 @@ informe_individual = function(path_llista, nom_fitxer, noms){
     #afegeix_grafic_resum(path_llista, i)
     
     cat("\\subsection*{Preferències relacionals}")
-    afegeix_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "academic")
-    afegeix_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "relacional")
-    afegeix_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "amical")
+    escriure_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "academic")
+    escriure_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "relacional")
+    escriure_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "amical")
   }
 }
 

@@ -30,6 +30,10 @@ coses_latex = "
 
 \\definecolor{orbita}{rgb}{0.0235, 0.8275, 0.5921}
 \\usepackage[table, dvipsnames]{xcolor}
+\\usepackage{booktabs}
+
+\\usepackage[printwatermark]{xwatermark}
+\\newwatermark[firstpage,color=gray!50,angle=45,scale=3,xpos=0,ypos=0]{Esborrany v2.3.1}
 
 \\usepackage{fancyhdr}
 \\usepackage{graphicx}
@@ -66,7 +70,7 @@ pagina_titol = function(nom_escola){
   \\HRule \\\\[0.4cm]
   { \\huge \\bfseries Curs A class B}\\\\[0.4cm] % Title of your document
   \\HRule \\\\[1.5cm]
-  
+  \\date
   \\vspace{5cm}
  % \\includegraphics[scale=0.3]{logo_orbita.png} % Include a department/university logo - this will require the graphicx package
   \\vfill % Fill the rest of the page with whitespace

@@ -42,3 +42,21 @@ taula_classe = function(dades, negretes, bones = NULL, mixtes = NULL, path_,tito
   sink()
   close(con)
 }
+
+taula_preferencies = function(df_taula){
+  noms_columnes = c("Ha triat a", "Ha estat triat/da per")
+  df_taula = as.data.frame(df_taula)
+  cat(df_taula %>% 
+        mutate(noms_fora = cell_spec(noms_fora, 
+                                     bold = df_taula$noms_fora %in% df_taula$noms_dins, 
+                                     format="latex"),
+               noms_dins = cell_spec(noms_dins, 
+                                     bold = df_taula$noms_dins %in% df_taula$noms_fora, 
+                                     format="latex")) %>%
+        kable(format = "latex", escape = F, row.names = F, 
+              align = "c", col.names = noms_columnes,
+              booktabs =T)%>%
+        kable_styling(full_width =F, 
+                      position = "center")
+  )
+}

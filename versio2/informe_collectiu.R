@@ -50,6 +50,12 @@ informe_classe = function(path_llista, nom_fitxer){
   importar_i_imprimir_taula(path_llista, "victimes")
   
   # Acadèmic
+  aca = FALSE
+  if (aca){
+  
+  # Està així perquè la info acadèmica ja és a la xarxa i per tant per no duplicar-la, però encara no és segur, així
+  # que ho deixo aquí així.
+    
   cat(academic)
   
   peu_academic = "Grau de valoració acadèmica de cada alumne."
@@ -59,6 +65,8 @@ informe_classe = function(path_llista, nom_fitxer){
   cat(abans_taula)
   
   importar_i_imprimir_taula(path_llista, "academic")
+  }
+  
   
   # Estat d'ànim
   cat(estat_anim)
@@ -74,7 +82,7 @@ informe_classe = function(path_llista, nom_fitxer){
   # Caràcter
   cat(caracter)
   
-  peu_caracter = "Actitud percebuda de cada alumne."
+  peu_caracter = "Caràcter percebut de cada alumne."
   afegeix_grafic(path_llista, "caracter", peu_caracter)
   cat(caracter_post)
   

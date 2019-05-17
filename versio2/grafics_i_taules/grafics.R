@@ -121,9 +121,9 @@ grafic_barres_individual = function(dades, numero_maxim, path_, nom_plot, i, pal
   
   # TODO: acabar de trobar les mides òptimes
   
-  titols = list("disrupcio"="Escala de disrupció", "victimes"="Escala de victimització",
-                "academic"="Escala acadèmica", "estat_anim"="Estat d'ànim percebut",
-                "caracter"="Caràcter percebut", "estatus"="Estatus sociomètric percebut")
+  titols = list("disrupcio"="1. Escales de comportament percebut", "victimes"="2. Escala de victimització percebuda",
+                "academic"="3. Escala acadèmica percebuda", "estat_anim"="4. Estat d'ànim percebut",
+                "caracter"="5. Caràcter percebut", "estatus"="6. Estatus sociomètric percebut")
   
   options(encoding=encoding_)
   nom_output = paste0(nom_plot, "-barres-", i, ".pdf")

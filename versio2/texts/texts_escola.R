@@ -35,6 +35,12 @@ coses_latex = "
 \\usepackage[printwatermark]{xwatermark}
 \\newwatermark[firstpage,color=gray!50,angle=45,scale=3,xpos=0,ypos=0]{Esborrany v2.3.1}
 
+\\newcommand\\blankpage{ %  per tenir una pàgina en blanc al final
+	\\null
+	\\thispagestyle{empty}%
+	\\addtocounter{page}{-1}%
+	\\newpage}
+
 \\usepackage{fancyhdr}
 \\usepackage{graphicx}
 \\pagestyle{fancy}
@@ -171,3 +177,8 @@ nom. En les qüestions plantejades hi ha preguntes que es formulen de forma dire
 negativa.
 
 "
+
+final_latex = "
+\\afterpage{\\blankpage}
+
+\\end{document}"

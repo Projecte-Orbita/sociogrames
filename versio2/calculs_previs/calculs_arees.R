@@ -203,7 +203,7 @@ calcs_xarxa_academica = function(soc, mat, num_respostes){
   participa_est = scale(mat[,40] - mat[,41])
   
   label.color = ifelse(participa_est > 1, "chartreuse3", ifelse(participa_est< -1, "firebrick", "black"))
-  edge.color = ifelse(edge.color==1, "darkblue", "black")
+  edge.color = ifelse(edge.color==1, adjustcolor("darkblue", alpha.f = .5), adjustcolor("black", alpha.f = .5))
 
   #vertex.shape = vertex.shape[seq(1, length(vertex.shape), num_respostes)]
   
@@ -255,7 +255,7 @@ calcs_xarxa_relacional = function(soc, mat, num_respostes){
   estat_anim_est = scale(estat_anim_total)
 
   label.color = ifelse(estat_anim_est > 1, "chartreuse3", ifelse(estat_anim_est< -1, "firebrick", "black"))
-  edge.color = ifelse(edge.color==1, "darkblue", "black")
+  edge.color = ifelse(edge.color==1, adjustcolor("darkblue", alpha.f = .5), adjustcolor("black", alpha.f = .5))
   
   return(list(gg, colors, label.color, vertex.shape, edge.color))
 }
@@ -305,7 +305,7 @@ calcs_xarxa_amical = function(soc, mat, num_respostes){
                        ifelse(estat_anim_est< -1, "firebrick", 
                               "black"))
   
-  edge.color = ifelse(edge.color==1, "darkblue", "black")
+  edge.color = ifelse(edge.color==1, adjustcolor("darkblue", alpha.f = .5), adjustcolor("black", alpha.f = .5))
   
   return(list(gg, colors, label.color, vertex.shape, edge.color))
 }

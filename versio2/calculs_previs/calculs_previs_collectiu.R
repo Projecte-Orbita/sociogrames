@@ -192,7 +192,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   Caracter[,c(3,5,7)] = - Caracter[,c(3,5,7)]
   
   titol_caracter = "Taula 6."
-  peu_caracter = "Actitud observada pel grup."
+  peu_caracter = "Caràcter observat pel grup."
   
   taula_classe(dades = Caracter, 
                                  negretes = Caracter_sino, 

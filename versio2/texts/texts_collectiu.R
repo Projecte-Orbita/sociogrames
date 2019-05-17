@@ -139,6 +139,8 @@ caracter = "
 Mesura la percepció del grup del \\textbf{caràcter}, forma de ser o capacitat de resoldre els problemes de 
 dels alumnes de l’aula. Considera les variables: lideratge (rol de líder o seguidor), autonomia (capacitat de 
 gestionar els problemes o demanar ajuda) i socialització (es comunica sovint amb els altres o no).
+.
+
 "
 
 caracter_post = "
@@ -252,7 +254,6 @@ La xarxa consta dels següents elements:
 nota_final = "
 		\\emph{Nota}: el color del nom del nen o la nena indica si és percebut com a content pels seus companys. Verd és que sí, vermell és que no, negre és que no hi ha prou respostes sobre ell o ella perquè sigui rellevant. 
 "
-final_latex = "\\end{document}"
 
 abans_taula = "
 A continuació presentem els mateixos resultats en format de taula:

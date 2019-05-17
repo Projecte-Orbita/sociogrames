@@ -37,18 +37,18 @@ calculs_individual = function(path_llista, nom_fitxer, numero_respostes=3){
   
   # Ara anem fent els gràfics i els objectes amb els quals escriurem les taules:
   
-  # Prosocialitat:
+  # Comportament
   disrupcio_ = calcs_disrupcio(mat, noms)
   Disrupcio = disrupcio_[[1]]
   Disrupcio_sino = disrupcio_[[2]]
-  Disrupcio = Disrupcio[,c(5,2:4,1)]
+  Disrupcio = Disrupcio[,c(6,1:4)]
   names(Disrupcio)[1] = "Noms"
   
   nom_plot = "disrupcio"
   
   for (i in 1:nrow(Disrupcio)){
-    vic.m <- melt(Disrupcio[i,1:4], id.vars = "Noms")
-    grafic_barres_individual(vic.m, max(Disrupcio[2:4]), path_llista$figures, nom_plot, i, paleta)
+    vic.m <- melt(Disrupcio[i,1:5], id.vars = "Noms")
+    grafic_barres_individual(vic.m, max(Disrupcio[2:5]), path_llista$figures, nom_plot, i, paleta)
     grafic_formatge(vic.m, "disruptives", path_llista$figures, nom_plot, i, paleta)
   }
   

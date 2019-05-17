@@ -49,7 +49,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   Disrupcio[,2:4] = -1*Disrupcio[,2:4]
   
   grafic_barres_classe(columnes = Disrupcio[,-5], 
-                       color = Disrupcio_sino[,1], 
+                       color = Disrupcio_sino, 
                        noms = noms, 
                        path_ = path_llista$figures, 
                        nom_grafic =  "disrupcio")  # Gràfic
@@ -62,7 +62,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   peu_disrupcio = "Comportament observat pel grup."
   
   taula_classe(dades = Disrupcio, 
-               negretes = Disrupcio_sino[,1],
+               negretes = Disrupcio_sino,
                bones = 2,
                mixtes = 6,
                path_ = path_llista$taules, 
@@ -114,7 +114,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   taula_classe(dades = Victimitzacio, 
                negretes = Vict_sino[,1],
                bones = NULL,
-               mixtes = NULL,
+               mixtes = 4,
                path_ = path_llista$taules, 
                titol = "victimes",
                titol_peu = titol_victimitzacio,
@@ -195,7 +195,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   peu_caracter = "Actitud observada pel grup."
   
   taula_classe(dades = Caracter, 
-                                 negretes = Caracter_sino[,1], 
+                                 negretes = Caracter_sino, 
                                  bones = c(2,4,6), 
                                  mixtes = 8, 
                                  path_ = path_llista$taules, 

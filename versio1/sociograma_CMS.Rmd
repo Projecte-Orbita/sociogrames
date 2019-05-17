@@ -599,6 +599,5 @@ visNetwork(ns, es) %>%
   visPhysics(solver = "forceAtlas2Based", 
              forceAtlas2Based = list(gravitationalConstant = -20), 
              enabled = F) 
-  
 ```
 

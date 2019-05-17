@@ -124,5 +124,5 @@ if (!interactive()) {
   nom_escola = 'Hogwarts'
   informe_escola(nom_escola)
 
-  }
+}
 

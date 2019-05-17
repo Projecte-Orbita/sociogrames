@@ -61,8 +61,10 @@ grafic_barres_prosocialitat = function(columnes, noms, path_){
 
 grafic_xarxa = function(gg, colors, label.color, vertex.shape, edge.color, paraules, path_, tipus){
 
+  # TODO: fer que els gràfics quedin més grans
+  
   options(encoding=encoding_)
-  pdf(file.path(path_, paste0(tipus, ".pdf")), width = 10, height = 15)
+  pdf(file.path(path_, paste0(tipus, ".pdf")), width = 10, height = 18)
   plot(gg,
        layout=layout_with_lgl, # altres opcions són: layout_with_gem layout_with_fr, layout_with_mds, layout_with_lgl
        frame = F,
@@ -117,6 +119,8 @@ grafic_formatge = function(dades, tipus, path_, nom_plot, i, paleta = paleta){
 
 grafic_barres_individual = function(dades, numero_maxim, path_, nom_plot, i, paleta = paleta){
   
+  # TODO: acabar de trobar les mides òptimes
+  
   titols = list("disrupcio"="Escala de disrupció", "victimes"="Escala de victimització",
                 "academic"="Escala acadèmica", "estat_anim"="Estat d'ànim percebut",
                 "caracter"="Caràcter percebut", "estatus"="Estatus sociomètric percebut")
@@ -129,13 +133,13 @@ grafic_barres_individual = function(dades, numero_maxim, path_, nom_plot, i, pal
              fill = paleta[1:length(dades$variable)],
              width = .5) + 
     ylim(c(0,numero_maxim)) +
-    theme_bw() + 
+    theme_light() + 
     ylab("Número de tries") + 
     xlab("") + 
     labs(title = titols[nom_plot]) +
     theme(axis.text.x = element_text(angle = 18, hjust = 1)) +
     ggsave(file = file.path(path_, "individuals", nom_output), 
-           dpi = 600, width = 8, height = 6, units = "cm") 
+           dpi = 600, width = 13, height = 7, units = "cm") 
 }
 
 grafic_resum = function(tot, path_, i){

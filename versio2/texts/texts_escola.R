@@ -70,7 +70,7 @@ pagina_titol = function(nom_escola){
   \\HRule \\\\[0.4cm]
   { \\huge \\bfseries Curs A class B}\\\\[0.4cm] % Title of your document
   \\HRule \\\\[1.5cm]
-  \\date
+
   \\vspace{5cm}
  % \\includegraphics[scale=0.3]{logo_orbita.png} % Include a department/university logo - this will require the graphicx package
   \\vfill % Fill the rest of the page with whitespace
@@ -95,7 +95,7 @@ titol_classes <- function(escola, classe){
   \\HRule \\\\[0.4cm]
   { \\huge \\bfseries ", classe, "}\\\\[0.4cm] % Title of your document
   \\HRule \\\\[1.5cm]
-  
+  {\\large \\today}\\\\[2cm]
   \\vspace{5cm}
   \\includegraphics[scale=0.3]{../../imatges_informes/logo_orbita.png} 
   \\vfill % Fill the rest of the page with whitespace

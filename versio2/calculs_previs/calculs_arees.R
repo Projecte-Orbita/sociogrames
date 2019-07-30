@@ -13,6 +13,10 @@ require(rlist)
 gwd = getwd()
 source(file.path(gwd, 'altres', 'utils.R'), encoding = encoding_)
 
+# TODO: ajuntar les diferents àrees: són bastant diferents entre elles i no veig la manera d'intentar ajuntar-les
+# sense fer una funció del tot impràctica; però segurament es pugui fer si es repensa tot una mica.
+# Segurament es poden moure coses a calculs_previs_collectiu i calculs_previs_individual perquè sigui més elegant
+
 calcs_disrupcio = function(mat, noms){
   
   prosocialitat = cbind(mat[,7], mat[,8], mat[,9], mat[,18])
@@ -28,43 +32,18 @@ calcs_disrupcio = function(mat, noms){
                                rowSums(dis_directe[,1:3]), 
                                rowSums(dis_relacional),
                                comportament_total)
-  rownames(Disrupcio) = noms
+  Disrupcio$noms = as.factor(noms)
   colnames(Disrupcio) = c("Prosocialitat", 
                           "Disrupció física",
                           "D. verbal",
                           "D. relacional",
-                          "Global")
-  Disrupcio$noms = as.factor(rownames(Disrupcio))
+                          "Global",
+                          "noms")
   
-  # Ara en fem un posant 1 en els que són significativament liantes
   prosocialitat_total_est = as.vector(scale(prosocialitat_total))
   disrupcio_total_est = as.vector(scale(rowSums(dis_directe + dis_relacional)))
   
-  Disrupcio_sino = ifelse(disrupcio_total_est > 1 | prosocialitat_total_est > 1, 1, 0)
-  
-  return(list(Disrupcio, Disrupcio_sino))
-}
-
-calcs_prosocialitat = function(mat, noms){
-  # Aquí hi ha un cacau impressionant
-  # No s'està fent servir perquè s'ha ajuntat amb disrupció -> considerar eliminar
-  
-  prosocialitat = cbind(mat[,7], mat[,8], mat[,9], mat[,18])
-  prosocialitat_est = scale(prosocialitat)
-  prosocialitat_total = rowSums(prosocialitat)
-  prosocialitat_total_est = scale(rowSums(prosocialitat))
-  
-  Pro_sino = ifelse(prosocialitat_total_est < 1, 1, 0)
-  Prosocialitat = as.data.frame(rowSums(prosocialitat))
-  Pro_sino = as.data.frame(Pro_sino)
-  rownames(Prosocialitat) = noms
-  rownames(Pro_sino) = noms
-  colnames(Prosocialitat) = c("Prosocialitat")
-  Prosocialitat$noms = factor(rownames(Prosocialitat), 
-                              levels = unique(as.character(rownames(Prosocialitat))))
-  Prosocialitat$lletra = ifelse(prosocialitat_total_est< -1,"bold", "plain")
-  
-  return(list(Prosocialitat, Pro_sino))
+  return(list(Disrupcio, prosocialitat_total_est, disrupcio_total_est))
 }
 
 calcs_victimitzacio = function(mat, noms){
@@ -77,7 +56,7 @@ calcs_victimitzacio = function(mat, noms){
   victima_total = victima_directe_total + victima_relacional_total
   victima_est = scale(victima_total)
   
-  Victimitzacio = cbind(victima_total, 
+  Victimitzacio = cbind.data.frame(victima_total, 
                         victima_directe[,4], 
                         rowSums(victima_directe[,c(1:3, 5)]), 
                         victima_relacional_total)
@@ -86,22 +65,24 @@ calcs_victimitzacio = function(mat, noms){
                               "Víctima física", 
                               "Víctima verbal",
                               "Víctima relacional")
+  Victimitzacio$noms = as.factor(noms)
   
-  Vict_sino = ifelse(victima_est > 1 | victima_est < -1, 1, 0)
-  rownames(Victimitzacio) = noms
-  rownames(Vict_sino) = noms
-  Victimitzacio = as.data.frame(Victimitzacio)
-  Victimitzacio$noms = rownames(Victimitzacio)
+  victimitacio_negreta = ifelse(abs(victima_est) > 1, 1, 0)
   
-  return(list(Victimitzacio, Vict_sino))
+  return(list(Victimitzacio, rep(0, nrow(Victimitzacio)), victima_est))
 }
 
 calcs_academic = function(mat, noms){
+  
+  # Ara mateix no s'utilitza
+  
   academic_total = mat[,38] + mat[,40] - mat[,39] - mat[,41]
   academic = as.data.frame(cbind(mat[,38], mat[,40], mat[,39], mat[,41], academic_total))
   colnames(academic) = c("Bones notes", "Participa", "Males notes", "No participa", "Puntuació global")
   academic_est = scale(academic)
   
+  academic_bo_est = scale(rowSums(academic[, 1:2]))
+  academic_dolent_est = scale(rowSums(academic[, 3:4]))
   academic_total_est = scale(academic_total)
   academic_sino = ifelse(academic_total_est < -1 | academic_total_est > 1,1,0)
   
@@ -110,7 +91,7 @@ calcs_academic = function(mat, noms){
   
   academic$noms = factor(noms, levels = as.character(noms))
   
-  return(list(academic, academic_sino))
+  return(list(academic, academic_bo_est, academic_dolent_est))
 }
 
 calcs_estat_anim = function(mat, noms){
@@ -121,12 +102,12 @@ calcs_estat_anim = function(mat, noms){
   estat_anim_bo_est = scale(mat[,30])
   estat_anim_dolent_est = as.vector(scale(rowSums(estat_anim[, c(1,2,4)])))
   estat_anim_total_est = as.vector(scale(estat_anim_total))
-  estat_anim_sino = ifelse(estat_anim_dolent_est > 1 | estat_anim_bo_est > 1,1,0)
+  estat_anim_sino = ifelse(estat_anim_dolent_est > 1 | estat_anim_bo_est > 1 | estat_anim_dolent_est < -1 | estat_anim_bo_est < -1 ,1,0)
   estat_anim = -estat_anim
   estat_anim$Alegria = -estat_anim$Alegria
   estat_anim$noms = factor(noms, levels = as.character(noms))
   
-  return(list(estat_anim, estat_anim_sino))
+  return(list(estat_anim, estat_anim_bo_est, estat_anim_dolent_est))
 }
 
 calcs_caracter = function(mat, noms){
@@ -137,13 +118,13 @@ calcs_caracter = function(mat, noms){
   
   caracter_bo_est = as.vector(scale(rowSums(caracter[, c(1,3,5)])))
   caracter_dolent_est = as.vector(scale(rowSums(caracter[, c(2,4,6)])))
-  caracter_sino = ifelse(caracter_dolent_est > 1 | caracter_bo_est > 1,1,0)
+  caracter_sino = ifelse(caracter_dolent_est > 1 | caracter_bo_est > 1 | caracter_dolent_est < -1 | caracter_bo_est < -1,1,0)
   caracter[,2] = -caracter[,2]
   caracter[,4] = -caracter[,4]
   caracter[,6] = -caracter[,6]
   caracter$noms = factor(noms, levels = as.character(noms))
   
-  return(list(caracter, caracter_sino))
+  return(list(caracter, caracter_bo_est, caracter_dolent_est))
 }
 
 calcs_estatus = function(mat){
@@ -152,10 +133,10 @@ calcs_estatus = function(mat){
                      "Agrada deures", "No agrada deures", 
                      "Amic", "Amic recíproc", 
                      "Defensa", "Té amics", "Juga sol")
-  estatus_est = scale(estatus)
-  estatus_sino = ifelse(estatus_est > 1 | estatus_est < -1, 1, 0)
-  
-  return(list(estatus, estatus_sino))
+  estatus_est_bo = scale(rowSums(estatus[, c(1,3,4,5,7,8)]))
+  estatus_est_dolent = scale(rowSums(estatus[, c(2,4,6,9)]))
+
+  return(list(estatus, estatus_est_bo, estatus_est_dolent))
 }
 
 calcs_xarxa_academica = function(soc, mat, num_respostes){

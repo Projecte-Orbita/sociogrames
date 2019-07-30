@@ -142,3 +142,25 @@ taula_classe_negativa = function(dades, negretes, bones = NULL, path_, titol, ti
   sink()
   close(con)
 }
+
+calcs_prosocialitat = function(mat, noms){
+  # Aquí hi ha un cacau impressionant
+  # No s'està fent servir perquè s'ha ajuntat amb disrupció -> considerar eliminar
+  
+  prosocialitat = cbind(mat[,7], mat[,8], mat[,9], mat[,18])
+  prosocialitat_est = scale(prosocialitat)
+  prosocialitat_total = rowSums(prosocialitat)
+  prosocialitat_total_est = scale(rowSums(prosocialitat))
+  
+  Pro_sino = ifelse(prosocialitat_total_est < 1, 1, 0)
+  Prosocialitat = as.data.frame(rowSums(prosocialitat))
+  Pro_sino = as.data.frame(Pro_sino)
+  rownames(Prosocialitat) = noms
+  rownames(Pro_sino) = noms
+  colnames(Prosocialitat) = c("Prosocialitat")
+  Prosocialitat$noms = factor(rownames(Prosocialitat), 
+                              levels = unique(as.character(rownames(Prosocialitat))))
+  Prosocialitat$lletra = ifelse(prosocialitat_total_est< -1,"bold", "plain")
+  
+  return(list(Prosocialitat, Pro_sino))
+}

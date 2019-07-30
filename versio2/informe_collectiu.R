@@ -16,7 +16,7 @@ source(file.path(gwd, 'calculs_previs', 'calculs_previs_collectiu.R'), encoding 
 
 informe_classe = function(path_llista, nom_fitxer){
   
-  # Disrupció
+  # Comportament
   cat(disrupcio)
   
   peu_disrupcio = "Comportament percebut de cada alumne."
@@ -26,17 +26,6 @@ informe_classe = function(path_llista, nom_fitxer){
   cat(abans_taula)
   
   importar_i_imprimir_taula(path_llista, "disrupcio")
-  
-  # Prosocialitat
-  #cat(prosocialitat)
-  
-  #peu_prosocialitat = "Grau de de prosocialitat de cada alumne."
-  #afegeix_grafic(path_llista, "prosocialitat", peu_prosocialitat)
-  #cat(prosocialitat_post)
-  
-  #cat(abans_taula)
-  
-  #importar_i_imprimir_taula(path_llista, "prosocialitat")
   
   # Víctima
   cat(victimes)
@@ -90,20 +79,12 @@ informe_classe = function(path_llista, nom_fitxer){
   
   importar_i_imprimir_taula(path_llista, "caracter")
   
-  # Xarxa amical
+  # gràfic 2D relacional
   
-  #cat(xarxa_relacional)
-  cat("\\section*{Xarxa d'amics}")
+  cat("\\section*{Mapa de comportament}")
   
-  peu_xarxa_amical = "Relacions d'amistat a l’aula."
-  afegeix_grafic(path_llista, "xarxa_amical", peu_xarxa_amical)
-  
-  # Xarxa acadèmica
-  
-  #cat(xarxa_academica)
-  cat("\\section*{Xarxa relacional acadèmica}")
-  peu_xarxa_academica = "Relacions acadèmiques a l’aula."
-  afegeix_grafic(path_llista, "xarxa_academica", peu_xarxa_academica)
+  peu_2D_relacional = "Mapa de posicionament social percebut a la classe"
+  afegeix_grafic(path_llista, "disrupcio_2D", peu_2D_relacional)
   
   # Xarxa relacional
   
@@ -112,6 +93,27 @@ informe_classe = function(path_llista, nom_fitxer){
   
   peu_xarxa_relacional = "Relacions socials a l’aula."
   afegeix_grafic(path_llista, "xarxa_relacional", peu_xarxa_relacional)
+
+  # gràfic 2D acadèmic
+  
+  cat("\\section*{Mapa de situació acadèmica}")
+  
+  peu_2D_academic = "Mapa de posicionament acadèmic percebut a la classe"
+  afegeix_grafic(path_llista, "academic_2D", peu_2D_academic)
+  
+  # Xarxa acadèmica
+  
+  #cat(xarxa_academica)
+  cat("\\section*{Xarxa relacional acadèmica}")
+  peu_xarxa_academica = "Relacions acadèmiques a l’aula."
+  afegeix_grafic(path_llista, "xarxa_academica", peu_xarxa_academica)
+  
+  # Xarxa amical -> per ara no la posem
+  
+  # cat("\\section*{Xarxa d'amics}")
+  
+  # peu_xarxa_amical = "Relacions d'amistat a l’aula."
+  # afegeix_grafic(path_llista, "xarxa_amical", peu_xarxa_amical)
   
 
 }

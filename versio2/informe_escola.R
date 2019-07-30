@@ -9,6 +9,7 @@ aprofitar = config$aprofitar  # Ídem
 options(endoding=encoding_)
 
 gwd = getwd()
+
 source(file.path(gwd, 'informe_collectiu.R'), encoding = encoding_)
 source(file.path(gwd, 'informe_individual.R'), encoding = encoding_)
 source(file.path(gwd, 'texts', 'texts_escola.R'), encoding = encoding_)

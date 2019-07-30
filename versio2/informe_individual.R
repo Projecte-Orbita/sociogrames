@@ -15,6 +15,15 @@ informe_individual = function(path_llista, nom_fitxer, noms){
   
   rels = read.csv(file.path(path_llista$taules, "relacions.csv"))
   
+  # Importem els fitxers de valoracions, per només haver-ho de fer una vegada
+  
+  vals_disrupcio = fromJSON(readLines(file.path(path_llista$taules, "vals_disrupcio.json")))
+  vals_victimes = fromJSON(readLines(file.path(path_llista$taules, "vals_victimes.json")))
+  vals_academic = fromJSON(readLines(file.path(path_llista$taules, "vals_academic.json")))
+  vals_ea = fromJSON(readLines(file.path(path_llista$taules, "vals_ea.json")))
+  vals_caracter = fromJSON(readLines(file.path(path_llista$taules, "vals_caracter.json")))
+  vals_estatus = fromJSON(readLines(file.path(path_llista$taules, "vals_estatus.json")))
+  
   for (i in 1:length(noms)){
     
     nom = noms[i]
@@ -52,16 +61,67 @@ informe_individual = function(path_llista, nom_fitxer, noms){
     # Estatus sociomètric
     #cat(estatus_sociometric_ind)
     afegeix_grafic_individual(path_llista, "estatus", i)
-    cat("\\newpage")
+    #cat("\\newpage")
     
     # Resum
     #cat(resum)
     #afegeix_grafic_resum(path_llista, i)
     
+    # Valoracions (que poden anar aquí o abans de les preferències, ja veurem)
+    
+    # cat("\\newpage")
+    cat("\\subsection*{Valoracions}")
+    
+    nom = noms[i]
+    if (!is.na(vals_disrupcio[nom])){
+      cat("\\textbf{Àmbit de comportament}")
+      cat("\\begin{itemize}")
+      for (element in vals_disrupcio[nom])
+        cat(unlist(element))
+      cat("\\end{itemize}")
+    }
+    if (!is.na(vals_victimes[nom])){
+      cat("\\textbf{Àmbit de victimització}")
+      cat("\\begin{itemize}")
+      for (element in vals_victimes[nom])
+        cat(unlist(element))
+      cat("\\end{itemize}")
+    }
+    if (!is.na(vals_academic[nom])){
+      cat("\\textbf{Àmbit acadèmic}")
+      cat("\\begin{itemize}")
+      for (element in vals_academic[nom])
+        cat(unlist(element))
+      cat("\\end{itemize}")
+    }
+    if (!is.na(vals_ea[nom])){
+      cat("\\textbf{Àmbit d'estat ànimic}")
+      cat("\\begin{itemize}")
+      for (element in vals_ea[nom])
+        cat(unlist(element))
+      cat("\\end{itemize}")
+    }
+    if (!is.na(vals_caracter[nom])){
+      cat("\\textbf{Àmbit de caràcter}")
+      cat("\\begin{itemize}")
+      for (element in vals_caracter[nom])
+        cat(unlist(element))
+      cat("\\end{itemize}")
+    }
+    if (!is.na(vals_estatus[nom])){
+      cat("\\textbf{Àmbit d'estatus social}")
+      cat("\\begin{itemize}")
+      for (element in vals_estatus[nom])
+        cat(unlist(element))
+      cat("\\end{itemize}")
+    }
+    
     cat("\\subsection*{Preferències relacionals}")
     escriure_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "academic")
     escriure_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "relacional")
     escriure_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "amical")
+    
+
   }
 }
 

@@ -33,8 +33,9 @@ coses_latex = "
 \\usepackage{booktabs}
 
 \\usepackage[printwatermark]{xwatermark}
-\\newwatermark[firstpage,color=gray!50,angle=45,scale=3,xpos=0,ypos=0]{Esborrany v2.3.1}
+%\\newwatermark[firstpage,color=gray!50,angle=45,scale=3,xpos=0,ypos=0]{Esborrany v2.3.3}
 
+\\usepackage{afterpage}
 \\newcommand\\blankpage{ %  per tenir una pàgina en blanc al final
 	\\null
 	\\thispagestyle{empty}%

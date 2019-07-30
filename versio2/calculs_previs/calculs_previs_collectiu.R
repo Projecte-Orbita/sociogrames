@@ -44,15 +44,22 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   # Prosocialitat:
   disrupcio_ = calcs_disrupcio(mat, noms)
   Disrupcio = disrupcio_[[1]]
-  Disrupcio_sino = disrupcio_[[2]]
+  color_A = disrupcio_[[2]]
+  color_B = disrupcio_[[3]]
   
   Disrupcio[,2:4] = -1*Disrupcio[,2:4]
   
   grafic_barres_classe(columnes = Disrupcio[,-5], 
-                       color = Disrupcio_sino, 
+                       color_A = color_A,
+                       color_B = color_B,
                        noms = noms, 
                        path_ = path_llista$figures, 
                        nom_grafic =  "disrupcio")  # Gràfic
+  
+  grafic_2D(Disrupcio[, c(1, 4, 6)],
+            tipus = "comportament",
+            path_ = path_llista$figures,
+            nom_grafic = "disrupcio_2D")
   
   Disrupcio = Disrupcio[,c(6,1:5)]
   names(Disrupcio)[1] = "Noms"
@@ -62,7 +69,8 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   peu_disrupcio = "Comportament observat pel grup."
   
   taula_classe(dades = Disrupcio, 
-               negretes = Disrupcio_sino,
+               color_A = color_A,
+               color_B = color_B,
                bones = 2,
                mixtes = 6,
                path_ = path_llista$taules, 
@@ -70,37 +78,18 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
                titol_peu = titol_disrupcio,
                peu_taula = peu_disrupcio)  # Taula
   
-  # Cooperació
-  # prosocialitat_ = calcs_prosocialitat(mat, noms)
-  # Prosocialitat = prosocialitat_[[1]]
-  # Prosocialitat_sino = prosocialitat_[[2]]
-  # 
-  # grafic_barres_prosocialitat(columnes = Prosocialitat, 
-  #                             noms = noms, 
-  #                             path_ = path_llista$figures)
-  # 
-  # 
-  # names(Prosocialitat)[2] = "Noms"
-  # Prosocialitat = Prosocialitat[, c(2,1)]
-  # 
-  # titol_prosocialitat = "Taula 2."
-  # peu_prosocialitat = "Prosocialitat observada pel grup."
-  # 
-  # taula_classe_negativa(dades = Prosocialitat, 
-  #                       negretes = Prosocialitat_sino[,1], 
-  #                       bones = NULL,
-  #                       path_ = path_llista$taules, 
-  #                       titol = "prosocialitat",
-  #                       titol_peu = titol_prosocialitat,
-  #                       peu_taula = peu_prosocialitat)
   
   # Victimisme
   Victimitzacio_ = calcs_victimitzacio(mat, noms)
   Victimitzacio = Victimitzacio_[[1]]
-  Vict_sino = Victimitzacio_[[2]]
+  color_A = Victimitzacio_[[2]]
+  color_B = Victimitzacio_[[3]]
+  
+  # TODO: victimització té els colors al revés...
   
   grafic_barres_classe(columnes = Victimitzacio[,2:5], 
-                       color = Vict_sino[,1],
+                       color_A = color_A,
+                       color_B = color_B,
                        noms = noms, 
                        path_ = path_llista$figures, 
                        nom_grafic = "victimes")
@@ -112,9 +101,10 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   peu_vicimitzacio = "Victimització observada pel grup."
   
   taula_classe(dades = Victimitzacio, 
-               negretes = Vict_sino[,1],
+               color_A = color_A,
+               color_B = color_B,
                bones = NULL,
-               mixtes = 4,
+               mixtes = 5,
                path_ = path_llista$taules, 
                titol = "victimes",
                titol_peu = titol_victimitzacio,
@@ -123,13 +113,23 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   # Acadèmic
   Academic_ = calcs_academic(mat, noms)
   Academic = Academic_[[1]]
-  Academic_sino = Academic_[[2]]
+  color_A = Academic_[[2]]
+  color_B = Academic_[[3]]
+  
   
   grafic_barres_classe( columnes = Academic[,-5], 
-                        color = Academic_sino, 
+                        color_A = color_A,
+                        color_B = color_B,
                         noms = noms, 
                         path_ = path_llista$figures, 
                         nom_grafic = "academic")
+  
+  temp_df = cbind.data.frame(rowSums(Academic[,1:2]), rowSums(Academic[,3:4]), Academic[,6])
+  names(temp_df)[3] = "noms"
+  grafic_2D(temp_df,
+            tipus = "academic",
+            path_ = path_llista$figures,
+            nom_grafic = "academic_2D")
   
   Academic[,3] = - Academic[,3]
   Academic[,4] = - Academic[,4]
@@ -140,21 +140,24 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   peu_academic = "Valoració acadèmica observada pel grup."
   
   taula_classe(dades= Academic, 
-                                 negretes = Academic_sino[,1], 
-                                 bones = c(2:3), 
-                                 mixtes = 6, 
-                                 path_ = path_llista$taules, 
-                                 titol = "academic", 
-                                 titol_peu = titol_academic,
-                                 peu_taula = peu_academic)
+               color_A = color_A,
+               color_B = color_B,
+               bones = c(2:3), 
+               mixtes = 6, 
+               path_ = path_llista$taules, 
+               titol = "academic", 
+               titol_peu = titol_academic,
+               peu_taula = peu_academic)
   
   # Estat d'ànim
   Estat_anim_ = calcs_estat_anim(mat, noms)
   Estat_anim = Estat_anim_[[1]]
-  Estat_anim_sino = Estat_anim_[[2]]
-  
+  color_A = Estat_anim_[[2]]
+  color_B = Estat_anim_[[3]]
+
   grafic_barres_classe(columnes = Estat_anim[, -5],  # traiem la puntuació global.
-                       color = Estat_anim_sino, 
+                       color_A = color_A,
+                       color_B = color_B,
                        noms = noms, 
                        path_ = path_llista$figures, 
                        nom_grafic = "estat_anim")
@@ -167,7 +170,8 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   peu_estat_anim = "Estat d’ànim observat pel grup."
   
   taula_classe(dades = Estat_anim, 
-               negretes = Estat_anim_sino[,1],
+               color_A = color_A,
+               color_B = color_B,
                bones = 2,
                mixtes = 6,
                path_ = path_llista$taules, 
@@ -178,10 +182,11 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   # Caràcter
   Caracter_ = calcs_caracter(mat, noms)
   Caracter = Caracter_[[1]]
-  Caracter_sino = Caracter_[[2]]
-  
+  color_A = Caracter_[[2]]
+  color_B = Caracter_[[3]]
   grafic_barres_classe(columnes = Caracter[,-7], 
-                       color = Caracter_sino, 
+                       color_A = color_A,
+                       color_B = color_B,
                        noms = noms, 
                        path_ = path_llista$figures, 
                        nom_grafic = "caracter")
@@ -195,13 +200,14 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   peu_caracter = "Caràcter observat pel grup."
   
   taula_classe(dades = Caracter, 
-                                 negretes = Caracter_sino, 
-                                 bones = c(2,4,6), 
-                                 mixtes = 8, 
-                                 path_ = path_llista$taules, 
-                                 titol = "caracter",
-                                 titol_peu = titol_caracter,
-                                 peu_taula = peu_caracter)
+               color_A = color_A,
+               color_B = color_B,
+               bones = c(2,4,6), 
+               mixtes = 8, 
+               path_ = path_llista$taules, 
+               titol = "caracter",
+               titol_peu = titol_caracter,
+               peu_taula = peu_caracter)
   
   # Xarxes
   soc$noms = unlist(lapply(noms, function(x) rep(x, numero_respostes)), use.names = F)
@@ -215,6 +221,7 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
                 )
 
   nom_curs = paste(cursos[[substr(curs, 1, 1)]], substr(curs, 2, 2), sep = " ")
+  
   # Xarxa acadèmica
   X_Academic_ = calcs_xarxa_academica(soc, mat, numero_respostes)
   gg = X_Academic_[[1]]

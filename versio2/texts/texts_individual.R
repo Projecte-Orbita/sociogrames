@@ -318,7 +318,7 @@ escriure_preferencies = function(rels, noms, i, numero_respostes, tipus){
   else if (tipus == "amical") {
     titol = "\\subsubsection*{Amical}\n"
     text11 = "\nEn la pregunta \\emph{\"Qui són els teus amics?\"}: \\\\"
-    text21 = "\nEn la pregunta \\emph{\"Qui creus qeu et triarà com a amic/ga?\"}: \\\\"
+    text21 = "\nEn la pregunta \\emph{\"Qui creus que et triarà com a amic/ga?\"}: \\\\"
     col_rel = 12
     col=6
   }

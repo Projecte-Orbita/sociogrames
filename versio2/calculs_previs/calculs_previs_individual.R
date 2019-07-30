@@ -15,7 +15,8 @@
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
 config = config::get()
-encoding_ = config$encoding
+encoding_ = as.character(config$encoding)
+options(encoding=encoding_)
 # Imports
 
 gwd = getwd()
@@ -23,6 +24,7 @@ source(file.path(gwd, 'altres', 'utils.R') , encoding = encoding_)
 source(file.path(gwd, 'grafics_i_taules', 'grafics.R'), encoding = encoding_)
 source(file.path(gwd, 'grafics_i_taules', 'taules.R'), encoding = encoding_)
 source(file.path(gwd, 'calculs_previs', 'calculs_arees.R'), encoding = encoding_)
+source(file.path(gwd, 'valoracions', 'valoracions.R'), encoding = encoding_)
 require(jsonlite)
 
 ######## Manipulacions inicials ###########
@@ -40,93 +42,115 @@ calculs_individual = function(path_llista, nom_fitxer, numero_respostes=3){
   # Comportament
   disrupcio_ = calcs_disrupcio(mat, noms)
   Disrupcio = disrupcio_[[1]]
-  Disrupcio_sino = disrupcio_[[2]]
+  color_A = disrupcio_[[2]]  # Es diu color per mantenir consistència amb el col·lectiu, però és la estandarització A
+  color_B = disrupcio_[[3]]  # Ídem B
   Disrupcio = Disrupcio[,c(6,1:4)]
   names(Disrupcio)[1] = "Noms"
   
   nom_plot = "disrupcio"
   
+  llista_valoracions = list()
+  
   for (i in 1:nrow(Disrupcio)){
     vic.m <- melt(Disrupcio[i,1:5], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Disrupcio[2:5]), path_llista$figures, nom_plot, i, paleta)
     grafic_formatge(vic.m, "disruptives", path_llista$figures, nom_plot, i, paleta)
+    llista_valoracions[noms[i]] = valoracions_disrupcio(noms[i], color_A[i], color_B[i], Disrupcio[i, ])
   }
   
-  # Cooperació
-  # Aquest no hi és en l'individual, no sé perquè
-  # prosocialitat_ = calcs_prosocialitat(mat, noms)
-  # Prosocialitat = prosocialitat_[[1]]
-  # Prosocialitat_sino = prosocialitat_[[2]]
-  # grafic_barres_prosocialitat(Prosocialitat, noms)
-  # # TODO: Potser en aquest apartat podríem fer un diagrama 2D amb notorietat?
-  # names(Prosocialitat)[2] = "Noms"
-  # Prosocialitat = Prosocialitat[, c(2,1)]
-  # taula_classe_negativa(Prosocialitat, Prosocialitat_sino[,1], titol = "prosocialitat")
+  # Escrivim les valoracions en un fitxer que capturarem més endavant
+  con = file(file.path(path_llista$taules, "vals_disrupcio.json"), open = "w+", encoding = encoding_)
+  writeLines(toJSON(llista_valoracions), con)
+  close(con)
   
   # Victimisme
   Victimitzacio_ = calcs_victimitzacio(mat, noms)
   Victimitzacio = Victimitzacio_[[1]]
-  Vict_sino = Victimitzacio_[[2]]
+  color_A = Victimitzacio_[[2]]
+  color_B = Victimitzacio_[[3]]
   Victimitzacio = Victimitzacio[,c(5,2:4,1)]
   names(Victimitzacio)[1] = "Noms"
   
   nom_plot = "victimes"
   
+  llista_valoracions = list()
+  
   for (i in 1:nrow(Victimitzacio)){
     vic.m <- melt(Victimitzacio[i,1:4], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Victimitzacio[2:4]), path_llista$figures, nom_plot, i, paleta)
-    grafic_formatge(vic.m, "victimitzadores", path_llista$figures, nom_plot, i, paleta) 
+    grafic_formatge(vic.m, "victimitzadores", path_llista$figures, nom_plot, i, paleta)
+    llista_valoracions[noms[i]] = valoracions_victimes(noms[i], color_A[i], color_B[i], Victimitzacio[i, ])
   }
+  
+  con = file(file.path(path_llista$taules, "vals_victimes.json"), open = "w+", encoding = encoding_)
+  writeLines(toJSON(llista_valoracions), con)
+  close(con)
 
   
   # Acadèmic
   Academic_ = calcs_academic(mat, noms)
   Academic = Academic_[[1]]
-  Academic_sino = Academic_[[2]]
+  color_A = Academic_[[2]]
+  color_B = Academic_[[3]]
   Academic = Academic[,c(5,1:4)]
   names(Academic)[1] = "Noms"
   Academic[,4:5] = -1*Academic[,4:5]
   
   nom_plot = "academic"
   
+  llista_valoracions = list()
+  
   for (i in 1:nrow(Academic)){
     vic.m <- melt(Academic[i,], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Academic[2:5]), path_llista$figures, nom_plot, i, paleta)
-    grafic_formatge(vic.m, "acadèmiques", path_llista$figures, nom_plot, i, paleta) 
+    grafic_formatge(vic.m, "acadèmiques", path_llista$figures, nom_plot, i, paleta)
+    llista_valoracions[noms[i]] = valoracions_academic(noms[i], color_A[i], color_B[i])
   }
+  con = file(file.path(path_llista$taules, "vals_academic.json"), open = "w+", encoding = encoding_)
+  writeLines(toJSON(llista_valoracions), con)
+  close(con)
   
   # Estat d'ànim
   Estat_anim_ = calcs_estat_anim(mat, noms)
   Estat_anim = Estat_anim_[[1]]
-  Estat_anim_sino = Estat_anim_[[2]]
   Estat_anim = Estat_anim[,c(6, 3,1,2,4)]
   Estat_anim[,3:5] = -1*Estat_anim[,3:5]
   names(Estat_anim)[1] = "Noms"
   
   nom_plot = "estat_anim"
   
+  llista_valoracions = list()
+  
   for (i in 1:nrow(Estat_anim)){
     vic.m <- melt(Estat_anim[i,], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Estat_anim[2:5]), path_llista$figures, nom_plot, i, paleta) 
-    grafic_formatge(vic.m, "d'estat d'ànim", path_llista$figures, nom_plot, i, paleta) 
+    grafic_formatge(vic.m, "d'estat d'ànim", path_llista$figures, nom_plot, i, paleta)
+    llista_valoracions[noms[i]] = valoracions_estat_anim(noms[i], color_A[i], color_B[i])
   }
-
+  con = file(file.path(path_llista$taules, "vals_ea.json"), open = "w+", encoding = encoding_)
+  writeLines(toJSON(llista_valoracions), con)
+  close(con)
   
   # Caràcter
   Caracter_ = calcs_caracter(mat, noms)
   Caracter = Caracter_[[1]]
-  Caracter_sino = Caracter_[[2]]
   Caracter = Caracter[,c(8,1:6)]
   names(Caracter)[1] = "Noms"
   Caracter[,c(3,5,7)] = - Caracter[,c(3,5,7)]
   
   nom_plot = "caracter"
   
+  llista_valoracions = list()
+  
   for (i in 1:nrow(Caracter)){
     vic.m <- melt(Caracter[i,], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Caracter[2:7]), path_llista$figures, nom_plot, i, paleta)
-    grafic_formatge(vic.m, "de caràcter", path_llista$figures, nom_plot, i, paleta) 
+    grafic_formatge(vic.m, "de caràcter", path_llista$figures, nom_plot, i, paleta)
+    llista_valoracions[noms[i]] = valoracions_caracter(noms[i], color_A[i], color_B[i])
   }
+  con = file(file.path(path_llista$taules, "vals_caracter.json"), open = "w+", encoding = encoding_)
+  writeLines(toJSON(llista_valoracions), con)
+  close(con)
   
   # Estatus sociomètric
   
@@ -137,12 +161,18 @@ calculs_individual = function(path_llista, nom_fitxer, numero_respostes=3){
   
   nom_plot = "estatus"
   
+  llista_valoracions = list()
+  
   for (i in 1:nrow(Estatus_bo)){
     vic.m <- melt(Estatus_bo[i,], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Estatus_bo[2:10]), path_llista$figures, nom_plot, i, paleta)
     grafic_formatge(vic.m, "d'estatus", path_llista$figures, nom_plot, i, paleta)
+    llista_valoracions[noms[i]] = valoracions_estatus(noms[i], color_A[i], color_B[i])
   }
-
+  con = file(file.path(path_llista$taules, "vals_estatus.json"), open = "w+", encoding = encoding_)
+  writeLines(toJSON(llista_valoracions), con)
+  close(con)
+  
   # Resum
   
   for (i in 1:nrow(Estatus_bo)){

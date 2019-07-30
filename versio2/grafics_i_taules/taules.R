@@ -9,7 +9,7 @@ require(kableExtra)
 require(dplyr)
 
 
-taula_classe = function(dades, negretes, bones = NULL, mixtes = NULL, path_,titol, titol_peu, peu_taula)
+taula_classe = function(dades, color_A, color_B, bones = NULL, mixtes = NULL, path_,titol, titol_peu, peu_taula)
   {
   options(encoding=encoding_)
   con <- file(file.path(path_, paste0(titol, '.txt')), open = "wt", encoding = encoding_)
@@ -18,19 +18,26 @@ taula_classe = function(dades, negretes, bones = NULL, mixtes = NULL, path_,tito
   cols = seq(2,ncol(dades))
   no_dolentes = c(bones, mixtes)
   dolentes = cols[!cols %in% no_dolentes]
+  color = rep("#000000",  # Si preferim blau com els altres: #0000CD
+              nrow(dades))
+  color[color_A > 1 | color_B < -1] = "#228B22"  # Verd
+  color[color_A < -1 | color_B > 1] = "#CD2626"  # Vermell
+  color[color_A > 1 & color_B > 1] = "#68228B"  # Lila fosc
+  color[color_A < -1 & color_B < -1] = "#00BFFF"  # Blau cel
   
   cat(dades %>% 
-          mutate(Noms = cell_spec(Noms, bold = ifelse(negretes==0,FALSE,TRUE), format="latex")) %>%
+          mutate(Noms = cell_spec(Noms, color = color, format="latex")) %>%
           mutate_at((.vars = vars(dolentes)), 
                     funs(cell_spec(., "latex", 
-                                   color = ifelse(. > mean(.) + sd(.), "red", "blue")) )) %>%
+                                   color = ifelse(. > mean(.) + sd(.), "#CD2626", "#0000CD")) )) %>%
            mutate_at(.vars = vars(bones), 
                      funs(cell_spec(., "latex", 
-                                    color = ifelse(. > mean(.) + sd(.), "ForestGreen", "blue")) )) %>%
+                                    color = ifelse(. > mean(.) + sd(.), "#228B22", "#0000CD")) )) %>%
            mutate_at(.vars = vars(mixtes), 
                      funs(cell_spec(., "latex", 
-                                    color = ifelse(. < mean(.) - sd(.), "red",
-                                                   ifelse(. > mean(.) + sd(.), "ForestGreen", "blue"))))) %>%
+                                    color = color))) %>%
+                                     # ifelse(. < mean(.) - sd(.), "#CD2626",
+                                    #               ifelse(. > mean(.) + sd(.), "#228B22", "#0000CD"))))) %>%
           kable(format = "latex", escape = F, row.names = F, align = "c") %>%
           footnote(general = peu_taula, 
                    general_title = titol_peu, 

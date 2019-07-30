@@ -31,14 +31,19 @@ introduccio = "
 "
 
 disrupcio = "
-\\section*{Escala de Comportament} 
+\\section*{Comportament} 
 
-Mesura el grau de prosocialitat/cooperació, és a dir, la percepció dels companys de quin grau l’alumne \\textbf{ajuda} 
-als seus companys i crea un bon clima social i escolar i de disrupció, és a dir, l’\\textbf{agressivitat} física 
-(agressions), verbal (comentaris negatius o insults) i relacional (evitar, ignorar o dir rumors sobre altres) observada 
+Aquesta àrea recull les respostes de les escales:
+
+\\begin{enumerate}
+\\item Prosocialitat: Mesura el grau de prosocialitat/cooperació, és a dir, la percepció dels companys de quin grau l’alumne \\textbf{ajuda} 
+als seus companys i crea un bon clima social i escolar.
+
+\\item Disrupció: mesura el grau d'agressivitat física (agressions), verbal (comentaris negatius o insults) i relacional (evitar, ignorar o dir rumors sobre altres) observada 
 pels companys i les companyes.
-
+\\end{enumerate}
 "
+
 disrupcio_post = "
 Aquestes respostes provenen de les preguntes:
 

@@ -82,12 +82,15 @@ grafic_barres_prosocialitat = function(columnes, noms, path_){
 
 grafic_2D = function(df, tipus, path_, nom_grafic){
   
+  # TODO: afegir títols en els eixos oblics i afegir una funció que faci que les paraules (controvers, popular, etc.) 
+  # no se superposin als noms dels nens.
+  
   if (tipus == "comportament"){
-    paraules = c("Prosocialitat", "Disrupció", "Controvers", "Negligit", "Popular", "Rebutjat")
+    paraules = c("`tries positives`", "`tries negatives`", "Controvers", "Negligit", "Popular", "Rebutjat")
   }
   
   else if(tipus == "academic"){
-    paraules = c("Prosocialitat", "Disrupció", "Controvers", "Negligit", "Popular", "Rebutjat")
+    paraules = c("`tries positives`", "`tries negatives`", "Controvers", "Negligit", "Popular", "Rebutjat")
   }
   
   else{
@@ -131,16 +134,24 @@ grafic_2D = function(df, tipus, path_, nom_grafic){
                     seed = 1,
                     xlim = c(-max_x - .1, max_x + .1),
                     ylim = c(-max_y - .1, max_y + .1)) + 
-    xlim(c(-max_x - .15, max_x + .15)) + 
-    ylim(c(-max_y - .15, max_y + .15)) +
-    annotate("text", x = 0, y = max_y + 0.1, label = paste0("bold(+ ", paraules[1], ")"), parse = T) + 
-    annotate("text", x = max_x, y = - 0.1, label = paste0("bold(+ ", paraules[2], ")"), parse = T) + 
-    annotate("text", x = 0, y = - max_y - 0.1, label = paste0("bold(- ", paraules[1], ")"), parse = T) + 
-    annotate("text", x = - max_x, y = - 0.1, label = paste0("bold(- ", paraules[2], ")"), parse = T) + 
-    annotate("text", x = max_x + 0.1, y = max_y + 0.1, label = paste0("italic(", paraules[3], ")"), parse = T) + 
-    annotate("text", x = -max_x - 0.1, y = -max_y - 0.1, label = paste0("italic(", paraules[4], ")"), parse = T) + 
-    annotate("text", x = -max_x - 0.1, y = max_y + 0.1, label = paste0("italic(", paraules[5], ")"), parse = T) + 
-    annotate("text", x = max_x + 0.1, y = - max_y - 0.1, label = paste0("italic(", paraules[6], ")"), parse = T) + 
+    xlim(c(-max_x - .2, max_x + .2)) + 
+    ylim(c(-max_y - .2, max_y + .2)) +
+    annotate("text", x = 0, y = max_y + 0.1, 
+             label = paste0("bold(+ ", paraules[1], ")"), parse = T) + 
+    annotate("text", x = max_x, y = - 0.1, 
+             label = paste0("bold(+ ", paraules[2], ")"), parse = T) + 
+    annotate("text", x = 0, y = - max_y - 0.1, 
+             label = paste0("bold(- ", paraules[1], ")"), parse = T) + 
+    annotate("text", x = - max_x, y = - 0.1, 
+             label = paste0("bold(- ", paraules[2], ")"), parse = T) + 
+    annotate("text", x = max_x + 0.1, y = max_y + 0.1, 
+             label = paste0("italic(", paraules[3], ")"), parse = T) + 
+    annotate("text", x = -max_x - 0.1, y = -max_y - 0.1, 
+             label = paste0("italic(", paraules[4], ")"), parse = T) + 
+    annotate("text", x = -max_x - 0.1, y = max_y + 0.1, 
+             label = paste0("italic(", paraules[5], ")"), parse = T) + 
+    annotate("text", x = max_x + 0.1, y = - max_y - 0.1, 
+             label = paste0("italic(", paraules[6], ")"), parse = T) + 
     theme_void() + 
     ggsave(file = file.path(path_, paste0(nom_grafic, '.pdf')), 
            dpi = 1200, width = 25, height = 25, units = "cm") 
@@ -156,7 +167,7 @@ grafic_xarxa = function(gg, colors, label.color, vertex.shape, edge.color, parau
   plot(gg,
        layout=layout_with_lgl, # altres opcions són: layout_with_gem layout_with_fr, layout_with_mds, layout_with_lgl
        frame = F,
-       vertex.label.color = label.color, 
+       # vertex.label.color = label.color, 
        vertex.color = as.character(colors),
        width = 1.5,
        vertex.frame.color = NA,

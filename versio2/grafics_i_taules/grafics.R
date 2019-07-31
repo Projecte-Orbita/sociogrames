@@ -109,52 +109,52 @@ grafic_2D = function(df, tipus, path_, nom_grafic){
   
   ggplot(df, aes(x = df[, 2], y = df[, 1], label = noms)) + 
     background_image(t(fons)) +
-    geom_segment(x = 0, y = 0, xend = 0, yend = max_y, 
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "solid") + 
-    geom_segment(x = 0, y = 0, xend = 0, yend = -max_y, 
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "solid") + 
-    geom_segment(x = 0, y = 0, xend = max_x, yend = 0, 
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "solid") + 
-    geom_segment(x = 0, y = 0, xend = -max_x, yend = 0, 
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "solid") + 
+    geom_segment(x = 0, y = 0, xend = 0, yend = max_y,
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "solid") +
+    geom_segment(x = 0, y = 0, xend = 0, yend = -max_y,
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "solid") +
+    geom_segment(x = 0, y = 0, xend = max_x, yend = 0,
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "solid") +
+    geom_segment(x = 0, y = 0, xend = -max_x, yend = 0,
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "solid") +
     geom_segment(x = 0, y = 0, xend = max_x, yend = max_y,
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "dashed") + 
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "dashed") +
     geom_segment(x = 0, y = 0, xend = max_x, yend = -max_y,
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "dashed") + 
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "dashed") +
     geom_segment(x = 0, y = 0, xend = -max_x, yend = max_y,
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "dashed") + 
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "dashed") +
     geom_segment(x = 0, y = 0, xend = -max_x, yend = -max_y,
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "dashed") + 
-    geom_text_repel(fontface = "plain", 
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "dashed") +
+    geom_text_repel(fontface = "plain",
                     seed = 1,
                     xlim = c(-max_x - .1, max_x + .1),
-                    ylim = c(-max_y - .1, max_y + .1)) + 
+                    ylim = c(-max_y - .1, max_y + .1)) +
+    annotate("text", x = 0, y = max_y + 0.1,
+             label = paste0("bold(+ ", paraules[1], ")"), parse = T) +
+    annotate("text", x = max_x, y = - 0.1,
+             label = paste0("bold(+ ", paraules[2], ")"), parse = T) +
+    annotate("text", x = 0, y = - max_y - 0.1,
+             label = paste0("bold(- ", paraules[1], ")"), parse = T) +
+    annotate("text", x = - max_x, y = - 0.1,
+             label = paste0("bold(- ", paraules[2], ")"), parse = T) +
+    annotate("text", x = max_x + 0.1, y = max_y + 0.1,
+             label = paste0("italic(", paraules[3], ")"), parse = T) +
+    annotate("text", x = -max_x - 0.1, y = -max_y - 0.1,
+             label = paste0("italic(", paraules[4], ")"), parse = T) +
+    annotate("text", x = -max_x - 0.1, y = max_y + 0.1,
+             label = paste0("italic(", paraules[5], ")"), parse = T) +
+    annotate("text", x = max_x + 0.1, y = - max_y - 0.1,
+             label = paste0("italic(", paraules[6], ")"), parse = T) +
     xlim(c(-max_x - .2, max_x + .2)) + 
     ylim(c(-max_y - .2, max_y + .2)) +
-    annotate("text", x = 0, y = max_y + 0.1, 
-             label = paste0("bold(+ ", paraules[1], ")"), parse = T) + 
-    annotate("text", x = max_x, y = - 0.1, 
-             label = paste0("bold(+ ", paraules[2], ")"), parse = T) + 
-    annotate("text", x = 0, y = - max_y - 0.1, 
-             label = paste0("bold(- ", paraules[1], ")"), parse = T) + 
-    annotate("text", x = - max_x, y = - 0.1, 
-             label = paste0("bold(- ", paraules[2], ")"), parse = T) + 
-    annotate("text", x = max_x + 0.1, y = max_y + 0.1, 
-             label = paste0("italic(", paraules[3], ")"), parse = T) + 
-    annotate("text", x = -max_x - 0.1, y = -max_y - 0.1, 
-             label = paste0("italic(", paraules[4], ")"), parse = T) + 
-    annotate("text", x = -max_x - 0.1, y = max_y + 0.1, 
-             label = paste0("italic(", paraules[5], ")"), parse = T) + 
-    annotate("text", x = max_x + 0.1, y = - max_y - 0.1, 
-             label = paste0("italic(", paraules[6], ")"), parse = T) + 
     theme_void() + 
     ggsave(file = file.path(path_, paste0(nom_grafic, '.pdf')), 
            dpi = 1200, width = 25, height = 25, units = "cm") 
@@ -200,6 +200,7 @@ grafic_formatge = function(dades, tipus, path_, nom_plot, i, paleta = paleta){
   
   # TODO: acabar de trobar les mides òptimes
   # TODO: els percentatges no es veuen gaire bé
+  # FIXME: treu un warning de missing rows que no sé d'on surt, perquè no hi falta res
   
   options(encoding=encoding_)
   dades$label = paste0(round(dades$value/sum(dades$value)*100),"%")
@@ -213,11 +214,10 @@ grafic_formatge = function(dades, tipus, path_, nom_plot, i, paleta = paleta){
     scale_fill_manual(values = paleta[1:length(dades$variable)]) +
     geom_text(aes(label=label), 
               position = position_stack(vjust = .6)) +
-              # nudge_y = 1.2) +
     theme_void() + 
     xlab("") +
     theme(legend.position="none") +
-    labs(title = paste0(sum(dades$value)," tries\n", tipus)) +
+    ggtitle(paste0(sum(dades$value)," tries\n", tipus)) +
     theme(plot.title = element_text(hjust = 0.5)) +
     ggsave(file = file.path(path_, "individuals", nom_output), 
            dpi = 600, width = 9, height = 6, units = "cm") 

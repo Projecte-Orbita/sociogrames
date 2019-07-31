@@ -79,9 +79,12 @@ informe_classe = function(path_llista, nom_fitxer){
   
   importar_i_imprimir_taula(path_llista, "caracter")
   
+  
+  cat("\\section*{Xarxes}")
+  
   # gràfic 2D relacional
   
-  cat("\\section*{Mapa de comportament}")
+  cat("\\subsection*{Mapa de comportament}")
   
   peu_2D_relacional = "Mapa de posicionament social percebut a la classe"
   afegeix_grafic(path_llista, "disrupcio_2D", peu_2D_relacional)
@@ -89,14 +92,14 @@ informe_classe = function(path_llista, nom_fitxer){
   # Xarxa relacional
   
   #cat(xarxa_relacional)
-  cat("\\section*{Xarxa social relacional}")
+  cat("\\subsection*{Xarxa social}")
   
   peu_xarxa_relacional = "Relacions socials a l’aula."
   afegeix_grafic(path_llista, "xarxa_relacional", peu_xarxa_relacional)
 
   # gràfic 2D acadèmic
   
-  cat("\\section*{Mapa de situació acadèmica}")
+  cat("\\subsection*{Mapa de situació acadèmica}")
   
   peu_2D_academic = "Mapa de posicionament acadèmic percebut a la classe"
   afegeix_grafic(path_llista, "academic_2D", peu_2D_academic)
@@ -104,7 +107,7 @@ informe_classe = function(path_llista, nom_fitxer){
   # Xarxa acadèmica
   
   #cat(xarxa_academica)
-  cat("\\section*{Xarxa relacional acadèmica}")
+  cat("\\subsection*{Xarxa acadèmica}")
   peu_xarxa_academica = "Relacions acadèmiques a l’aula."
   afegeix_grafic(path_llista, "xarxa_academica", peu_xarxa_academica)
   

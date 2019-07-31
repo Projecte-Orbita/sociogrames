@@ -31,7 +31,7 @@ informe_individual = function(path_llista, nom_fitxer, noms){
     titol_alumne(nom)
     # cat(introduccio)
     
-    #cat("\\subsection*{Escales de relació}")
+    cat("\\subsection*{Resultats de les escales}")
     
     # Disrupció
     #cat(disrupcio_ind)
@@ -44,9 +44,12 @@ informe_individual = function(path_llista, nom_fitxer, noms){
     cat("\\vspace{-2cm}")
     
     # Acadèmic
+    # 
+    #!!!!!!!!!!!!! Per ara no ho posem !!!!!!!!!!!!!!!!!
+    # 
     #cat(academic_ind)
-    afegeix_grafic_individual(path_llista, "academic", i)
-    cat("\\vspace{-2cm}")
+    #afegeix_grafic_individual(path_llista, "academic", i)
+    #cat("\\vspace{-2cm}")
     
     # Estat d'ànim
     #cat(estat_anim_ind)
@@ -59,26 +62,40 @@ informe_individual = function(path_llista, nom_fitxer, noms){
     cat("\\vspace{-2cm}")
     
     # Estatus sociomètric
+    #     # 
+    #!!!!!!!!!!!!! Per ara no ho posem !!!!!!!!!!!!!!!!!
+    # 
     #cat(estatus_sociometric_ind)
-    afegeix_grafic_individual(path_llista, "estatus", i)
+    #afegeix_grafic_individual(path_llista, "estatus", i)
     #cat("\\newpage")
     
     # Resum
     #cat(resum)
     #afegeix_grafic_resum(path_llista, i)
     
-    # Valoracions (que poden anar aquí o abans de les preferències, ja veurem)
+    cat("\\subsection*{Resultats de les xarxes}")
+    escriure_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "academic")
+    escriure_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "relacional")
+    escriure_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "amical")
+    
+    # Valoracions 
     
     # cat("\\newpage")
-    cat("\\subsection*{Valoracions}")
+    cat("\\subsection*{Interpretació dels resultats}")
     
     nom = noms[i]
+    
+    valoracions = 6
+    
     if (!is.na(vals_disrupcio[nom])){
       cat("\\textbf{Àmbit de comportament}")
       cat("\\begin{itemize}")
       for (element in vals_disrupcio[nom])
         cat(unlist(element))
       cat("\\end{itemize}")
+    }
+    else {
+      valoracions = valoracions - 1
     }
     if (!is.na(vals_victimes[nom])){
       cat("\\textbf{Àmbit de victimització}")
@@ -87,6 +104,9 @@ informe_individual = function(path_llista, nom_fitxer, noms){
         cat(unlist(element))
       cat("\\end{itemize}")
     }
+    else {
+      valoracions = valoracions - 1
+    }
     if (!is.na(vals_academic[nom])){
       cat("\\textbf{Àmbit acadèmic}")
       cat("\\begin{itemize}")
@@ -94,33 +114,48 @@ informe_individual = function(path_llista, nom_fitxer, noms){
         cat(unlist(element))
       cat("\\end{itemize}")
     }
+    else {
+      valoracions = valoracions - 1
+    }
     if (!is.na(vals_ea[nom])){
       cat("\\textbf{Àmbit d'estat ànimic}")
       cat("\\begin{itemize}")
       for (element in vals_ea[nom])
         cat(unlist(element))
       cat("\\end{itemize}")
+      
+    }
+    else {
+      valoracions = valoracions - 1
     }
     if (!is.na(vals_caracter[nom])){
-      cat("\\textbf{Àmbit de caràcter}")
+      cat("\\textbf{Escala de caràcter}")
       cat("\\begin{itemize}")
       for (element in vals_caracter[nom])
         cat(unlist(element))
       cat("\\end{itemize}")
     }
+    else {
+      valoracions = valoracions - 1
+    }
     if (!is.na(vals_estatus[nom])){
-      cat("\\textbf{Àmbit d'estatus social}")
+      cat("\\textbf{Escala d'estatus social}")
       cat("\\begin{itemize}")
       for (element in vals_estatus[nom])
         cat(unlist(element))
       cat("\\end{itemize}")
     }
+    else {
+      valoracions = valoracions - 1
+    }
     
-    cat("\\subsection*{Preferències relacionals}")
-    escriure_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "academic")
-    escriure_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "relacional")
-    escriure_preferencies(rels=rels, noms=noms, i=i, numero_respostes = 3, tipus = "amical")
+    if (valoracions == 0){
+      cat(paste0("En/na ", nom, " té tots els resultats dins dels valors considerats normals i per tant
+                 no hi ha àrees a valorar."))
+    }
     
+    cat("\\subsection*{Orientacions}")
+    cat("FALTA")
 
   }
 }

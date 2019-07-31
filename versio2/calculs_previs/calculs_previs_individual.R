@@ -54,7 +54,7 @@ calculs_individual = function(path_llista, nom_fitxer, numero_respostes=3){
   for (i in 1:nrow(Disrupcio)){
     vic.m <- melt(Disrupcio[i,1:5], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Disrupcio[2:5]), path_llista$figures, nom_plot, i, paleta)
-    grafic_formatge(vic.m, "disruptives", path_llista$figures, nom_plot, i, paleta)
+    grafic_formatge(vic.m, "de comportament", path_llista$figures, nom_plot, i, paleta)
     llista_valoracions[noms[i]] = valoracions_disrupcio(noms[i], color_A[i], color_B[i], Disrupcio[i, ])
   }
   
@@ -78,7 +78,7 @@ calculs_individual = function(path_llista, nom_fitxer, numero_respostes=3){
   for (i in 1:nrow(Victimitzacio)){
     vic.m <- melt(Victimitzacio[i,1:4], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Victimitzacio[2:4]), path_llista$figures, nom_plot, i, paleta)
-    grafic_formatge(vic.m, "victimitzadores", path_llista$figures, nom_plot, i, paleta)
+    grafic_formatge(vic.m, "de victimització", path_llista$figures, nom_plot, i, paleta)
     llista_valoracions[noms[i]] = valoracions_victimes(noms[i], color_A[i], color_B[i], Victimitzacio[i, ])
   }
   

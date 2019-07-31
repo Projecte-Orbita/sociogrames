@@ -4,7 +4,10 @@ config = config::get()
 encoding_ = config$encoding
 
 require(ggplot2)
+require(ggpubr)
+require(ggrepel)
 require(plotly)
+
 
 paleta <- c("#74ec9c", "#ec445c", "#5bade9", "#ecd044", 
             "#347c7c", "#3c3048", "#70f4a8", "#94b0a8",
@@ -181,12 +184,12 @@ grafic_xarxa = function(gg, colors, label.color, vertex.shape, edge.color, parau
        main = paraules[1]
   )
   
-  #legend(x=0.7, y=-0.9, c(paraules[2],paraules[3], paraules[4]),
-  #       pch=21, col="#777777", pt.bg=c("chartreuse3", "khaki1", "firebrick"),
-  #       pt.cex=3, cex=1.5, bty="n", ncol=1)
-  #legend(x=-1.2, y=-0.9, c(paraules[5],paraules[6], paraules[7]),
-  #       pch=21, col="#777777", pt.bg="gray",
-  #       pt.cex=c(4,5,6), cex=1.5, bty="n", ncol=1)
+  legend(x=0.7, y=-0.9, c(paraules[2],paraules[3], paraules[4]),
+         pch=21, col="#777777", pt.bg=c("chartreuse3", "khaki1", "firebrick"),
+         pt.cex=3, cex=1.5, bty="n", ncol=1)
+  legend(x=-1.2, y=-0.9, c(paraules[5],paraules[6], paraules[7]),
+         pch=21, col="#777777", pt.bg="gray",
+         pt.cex=c(4,5,6), cex=1.5, bty="n", ncol=1)
   dev.off()
   
 }

@@ -8,29 +8,29 @@ aprofitar = config$aprofitar  # Ídem
 
 options(endoding=encoding_)
 
-gwd = getwd()
+wd = getwd()
 
-source(file.path(gwd, 'informe_collectiu.R'), encoding = encoding_)
-source(file.path(gwd, 'informe_individual.R'), encoding = encoding_)
-source(file.path(gwd, 'texts', 'texts_escola.R'), encoding = encoding_)
-source(file.path(gwd, 'texts', 'texts_collectiu.R'), encoding = encoding_)
-source(file.path(gwd, 'texts', 'texts_individual.R'), encoding = encoding_)
-source(file.path(gwd, 'altres', 'utils.R'), encoding = encoding_)
+source(file.path(wd, 'informe_collectiu.R'), encoding = encoding_)
+source(file.path(wd, 'informe_individual.R'), encoding = encoding_)
+source(file.path(wd, 'texts', 'texts_escola.R'), encoding = encoding_)
+source(file.path(wd, 'texts', 'texts_collectiu.R'), encoding = encoding_)
+source(file.path(wd, 'texts', 'texts_individual.R'), encoding = encoding_)
+source(file.path(wd, 'altres', 'utils.R'), encoding = encoding_)
 
 
 # Aquest fitxer crea els informes per tota l'escola, primer el col·leciu i després els individuals, un fitxer .tex per cada classe
 
 informe_escola = function(nom_escola){
-
+  
   nom_escola_arreglat = make.names(nom_escola)  # és el que farem servir per coses internes i traiem accents i espais
   
   wd <- getwd();
   
   # Creem ara els paths que anirem fent servir:
-  path_dades = file.path(getwd(), 'temp/dades')
-  path_figures = file.path(getwd(), "temp/figures/")
-  path_taules = file.path(getwd(), "temp/taules/")
-  path_informes = file.path(getwd(), "temp/informes/")
+  path_dades = file.path(wd, 'temp/dades')
+  path_figures = file.path(wd, "temp/figures/")
+  path_taules = file.path(wd, "temp/taules/")
+  path_informes = file.path(wd, "temp/informes/")
   
   # Ajuntem tots els paths en un "diccionari" per tenir-los una mica ordenats i poder-hi accedir fàcilment.
   path_llista = list('dades' = path_dades, 
@@ -41,6 +41,8 @@ informe_escola = function(nom_escola){
   
   if (!aprofitar){
     # I creem els directoris sobreescrivint si ja existeixen:
+    # FIXME: ja els hem netejat abans, no sé si cal una segona vegada
+    
     directoris_ = c(path_figures, path_taules, path_informes)  # Alerta de no netejar el de dades!
     netejar_directoris(c(directoris_, file.path(directoris_, "individuals")))
   }
@@ -120,10 +122,10 @@ informe_escola = function(nom_escola){
 }
 
 if (!interactive()) {  
-  # equivalent a l'"if __name__==__main__ en R
+  # equivalent a l'"if __name__==__main__ en python
   
   nom_escola = 'Hogwarts'
   informe_escola(nom_escola)
-
+  
 }
 

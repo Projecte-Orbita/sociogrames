@@ -46,8 +46,11 @@ grafic_barres_classe = function(columnes, color_A, color_B, noms = noms, path_, 
   color_B = rep(color_B, nrow(agr.m)/length(noms))
   agr.m$color[color_A > 1 | color_B < -1] = "#228B22"  # Verd
   agr.m$color[color_A < -1 | color_B > 1] = "#CD2626"  # Vermell
+  
+  if (nom_grafic == "disrupcio"){
   agr.m$color[color_A > 1 & color_B > 1] = "#68228B"  # Lila fosc
   agr.m$color[color_A < -1 & color_B < -1] = "#00BFFF"  # Blau cel
+  }
   # agr.m$color = as.factor(agr.m$color)
   agr.m$noms = factor(agr.m$noms, levels = unique(as.character(agr.m$noms)))
   ggplot(agr.m, aes(x = noms, y = value, fill=variable)) +

@@ -9,7 +9,8 @@ require(kableExtra)
 require(dplyr)
 
 
-taula_classe = function(dades, color_A, color_B, bones = NULL, mixtes = NULL, path_,titol, titol_peu, peu_taula)
+taula_classe = function(dades, color_A, color_B, bones = NULL, mixtes = NULL, path_, 
+                        titol, titol_peu, peu_taula)
   {
   options(encoding=encoding_)
   con <- file(file.path(path_, paste0(titol, '.txt')), open = "wt", encoding = encoding_)
@@ -22,8 +23,11 @@ taula_classe = function(dades, color_A, color_B, bones = NULL, mixtes = NULL, pa
               nrow(dades))
   color[color_A > 1 | color_B < -1] = "#228B22"  # Verd
   color[color_A < -1 | color_B > 1] = "#CD2626"  # Vermell
+  
+  if (titol == "disrupcio"){
   color[color_A > 1 & color_B > 1] = "#68228B"  # Lila fosc
   color[color_A < -1 & color_B < -1] = "#00BFFF"  # Blau cel
+  }
   
   cat(dades %>% 
           mutate(Noms = cell_spec(Noms, color = color, format="latex")) %>%

@@ -81,6 +81,7 @@ informe_escola = function(nom_escola){
     if (!aprofitar){
       calculs_collectiu(path_llista = path_llista, nom_fitxer = nom_fitxer, numero_respostes = 3)
     }
+    
     path_ = file.path(path_llista$informes, paste0("sociograma_", curs_classe[cl], ".tex"))
     con = file(path_, open = "wt", encoding = encoding_)
     sink(con)

@@ -86,13 +86,13 @@ informe_classe = function(path_llista, nom_fitxer){
   
   cat("\\subsection*{Mapa de comportament}")
   
-  peu_2D_relacional = "Mapa de posicionament social percebut a la classe"
+  peu_2D_relacional = "Mapa de posicionament social percebut a la classe."
   afegeix_grafic(path_llista, "disrupcio_2D", peu_2D_relacional)
   
   # Xarxa relacional
   
   #cat(xarxa_relacional)
-  cat("\\subsection*{Xarxa social}")
+  cat("\\subsection*{Xarxa d'estatus social}")
   
   peu_xarxa_relacional = "Relacions socials a l’aula."
   afegeix_grafic(path_llista, "xarxa_relacional", peu_xarxa_relacional)
@@ -101,7 +101,7 @@ informe_classe = function(path_llista, nom_fitxer){
   
   cat("\\subsection*{Mapa de situació acadèmica}")
   
-  peu_2D_academic = "Mapa de posicionament acadèmic percebut a la classe"
+  peu_2D_academic = "Mapa de posicionament acadèmic percebut a la classe."
   afegeix_grafic(path_llista, "academic_2D", peu_2D_academic)
   
   # Xarxa acadèmica

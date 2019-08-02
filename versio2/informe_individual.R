@@ -139,7 +139,7 @@ informe_individual = function(path_llista, nom_fitxer, noms){
       valoracions = valoracions - 1
     }
     if (!is.na(vals_estatus[nom])){
-      cat("\\textbf{Escala d'estatus social}")
+      cat("\\textbf{Xarxa d'estatus social}")
       cat("\\begin{itemize}")
       for (element in vals_estatus[nom])
         cat(unlist(element))

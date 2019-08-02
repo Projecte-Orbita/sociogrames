@@ -174,7 +174,6 @@ calcs_xarxa_academica = function(soc, mat, num_respostes){
   paleta = paste0(paleta, "90")   ## afegeixo transparència
   
   colors = rep("", length(noms))
-  
   for (i in 1:length(noms)){
     colors[i] = paleta[color_academic$corregida[i]]
   }
@@ -183,10 +182,15 @@ calcs_xarxa_academica = function(soc, mat, num_respostes){
   
   participa_est = scale(mat[,40] - mat[,41])
   
-  label.color = ifelse(participa_est > 1, "chartreuse3", ifelse(participa_est< -1, "firebrick", "black"))
-  edge.color = ifelse(edge.color==1, adjustcolor("darkblue", alpha.f = .5), adjustcolor("black", alpha.f = .5))
-
-  #vertex.shape = vertex.shape[seq(1, length(vertex.shape), num_respostes)]
+  label.color = ifelse(participa_est > 1, 
+                       "chartreuse3", 
+                       ifelse(participa_est< -1, 
+                              "firebrick", 
+                              "black"))
+  
+  edge.color = ifelse(edge.color==1, 
+                      adjustcolor("darkblue", alpha.f = .5), 
+                      adjustcolor("black", alpha.f = .5))
   
   return(list(gg, colors, label.color, vertex.shape, edge.color))
   

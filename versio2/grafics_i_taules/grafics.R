@@ -5,6 +5,8 @@ encoding_ = config$encoding
 
 require(ggplot2)
 require(plotly)
+require(ggpubr)
+require(ggrepel)
 
 paleta <- c("#74ec9c", "#ec445c", "#5bade9", "#ecd044", 
             "#347c7c", "#3c3048", "#70f4a8", "#94b0a8",

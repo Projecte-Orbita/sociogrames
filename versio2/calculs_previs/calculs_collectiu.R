@@ -1,15 +1,7 @@
-#####
-#
-# Llicència alguna que hem de buscar
-#
-####
+# Càlculs previs col·lectiu
 
-
-#####
-# Aquest és el codi que fa els càlculs i els gràfics que després un altre fitxer farà servir per fer 
-# l'informe en latex.
-
-#####
+# Aquest és el codi que fa els càlculs i els gràfics que després la funció informe_collectiu, que
+# és al fitxer informe_collectiu.R farà servir per fer el tros col·lectiu de l'informe en latex.
 
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
@@ -26,9 +18,21 @@ source(file.path(gwd, 'grafics_i_taules', 'taules.R'), encoding = encoding_)
 source(file.path(gwd, 'calculs_previs', 'calculs_arees.R'), encoding = encoding_)
 
 
-calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
+calculs_collectiu = function(dades, path_llista, nom_fitxer, numero_respostes=3){
   
-  dades = importar_i_manipular(file.path(path_llista$dades, nom_fitxer), numero_respostes)
+  # Funció que analitza la part col·lectiva del sociograma i crea els gràfics i les taules de resultats
+  
+  # Arguments: dades: una llista amb les dades que ens interessen
+  #            path_llista: la llista de carpetes
+  #            nom_fitxer: el csv amb el que estem treballant en aquests moments
+  #            numero_respostes: quin és el màxim número de respostes que pot clicar cada nen
+  # Importa: res
+  # Retorna: res
+  # Exporta: els gràfics de la part col·lectiva dels informes
+  #          les taules de resultats en format .txt
+  
+  # Extraiem les dades que necessitarem:
+  
   mat = dades[[1]]
   mat_est = dades[[2]]
   noms = dades[[3]]
@@ -36,7 +40,6 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   curs = dades[[5]]
   
   # Escurcem els noms perquè es vegin millor:
-  
   noms = formatejar_noms(noms)
   
   # Ara anem fent els gràfics i els objectes amb els quals escriurem les taules:
@@ -264,6 +267,11 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
   
   # Xarxa Amical
   
+  # Obsoleta però no ho elimineu encara
+  
+  amical = False
+  
+  if (amical){
   X_amical_ = calcs_xarxa_relacional(soc, mat, numero_respostes)
   gg = X_amical_[[1]]
   colors = X_amical_[[2]]
@@ -282,7 +290,5 @@ calculs_collectiu = function(path_llista, nom_fitxer, numero_respostes=3){
                paraules = paraules, 
                path_ = path_llista$figures, 
                tipus = "xarxa_amical")
-
+  }
 }
-
-#calculs(path_fitxer, 3)

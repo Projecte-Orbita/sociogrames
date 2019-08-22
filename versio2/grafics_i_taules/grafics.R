@@ -4,9 +4,12 @@ config = config::get()
 encoding_ = config$encoding
 
 require(ggplot2)
+require(ggpubr)
+require(ggrepel)
 require(plotly)
 require(ggpubr)
 require(ggrepel)
+
 
 paleta <- c("#74ec9c", "#ec445c", "#5bade9", "#ecd044", 
             "#347c7c", "#3c3048", "#70f4a8", "#94b0a8",
@@ -45,8 +48,11 @@ grafic_barres_classe = function(columnes, color_A, color_B, noms = noms, path_, 
   color_B = rep(color_B, nrow(agr.m)/length(noms))
   agr.m$color[color_A > 1 | color_B < -1] = "#228B22"  # Verd
   agr.m$color[color_A < -1 | color_B > 1] = "#CD2626"  # Vermell
+  
+  if (nom_grafic == "disrupcio"){
   agr.m$color[color_A > 1 & color_B > 1] = "#68228B"  # Lila fosc
   agr.m$color[color_A < -1 & color_B < -1] = "#00BFFF"  # Blau cel
+  }
   # agr.m$color = as.factor(agr.m$color)
   agr.m$noms = factor(agr.m$noms, levels = unique(as.character(agr.m$noms)))
   ggplot(agr.m, aes(x = noms, y = value, fill=variable)) +
@@ -108,52 +114,52 @@ grafic_2D = function(df, tipus, path_, nom_grafic){
   
   ggplot(df, aes(x = df[, 2], y = df[, 1], label = noms)) + 
     background_image(t(fons)) +
-    geom_segment(x = 0, y = 0, xend = 0, yend = max_y, 
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "solid") + 
-    geom_segment(x = 0, y = 0, xend = 0, yend = -max_y, 
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "solid") + 
-    geom_segment(x = 0, y = 0, xend = max_x, yend = 0, 
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "solid") + 
-    geom_segment(x = 0, y = 0, xend = -max_x, yend = 0, 
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "solid") + 
+    geom_segment(x = 0, y = 0, xend = 0, yend = max_y,
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "solid") +
+    geom_segment(x = 0, y = 0, xend = 0, yend = -max_y,
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "solid") +
+    geom_segment(x = 0, y = 0, xend = max_x, yend = 0,
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "solid") +
+    geom_segment(x = 0, y = 0, xend = -max_x, yend = 0,
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "solid") +
     geom_segment(x = 0, y = 0, xend = max_x, yend = max_y,
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "dashed") + 
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "dashed") +
     geom_segment(x = 0, y = 0, xend = max_x, yend = -max_y,
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "dashed") + 
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "dashed") +
     geom_segment(x = 0, y = 0, xend = -max_x, yend = max_y,
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "dashed") + 
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "dashed") +
     geom_segment(x = 0, y = 0, xend = -max_x, yend = -max_y,
-                 arrow = arrow(length = unit(0.35,"cm")), 
-                 linetype = "dashed") + 
-    geom_text_repel(fontface = "plain", 
+                 arrow = arrow(length = unit(0.35,"cm")),
+                 linetype = "dashed") +
+    geom_text_repel(fontface = "plain",
                     seed = 1,
                     xlim = c(-max_x - .1, max_x + .1),
-                    ylim = c(-max_y - .1, max_y + .1)) + 
+                    ylim = c(-max_y - .1, max_y + .1)) +
+    annotate("text", x = 0, y = max_y + 0.1,
+             label = paste0("bold(+ ", paraules[1], ")"), parse = T) +
+    annotate("text", x = max_x, y = - 0.1,
+             label = paste0("bold(+ ", paraules[2], ")"), parse = T) +
+    annotate("text", x = 0, y = - max_y - 0.1,
+             label = paste0("bold(- ", paraules[1], ")"), parse = T) +
+    annotate("text", x = - max_x, y = - 0.1,
+             label = paste0("bold(- ", paraules[2], ")"), parse = T) +
+    annotate("text", x = max_x + 0.1, y = max_y + 0.1,
+             label = paste0("italic(", paraules[3], ")"), parse = T) +
+    annotate("text", x = -max_x - 0.1, y = -max_y - 0.1,
+             label = paste0("italic(", paraules[4], ")"), parse = T) +
+    annotate("text", x = -max_x - 0.1, y = max_y + 0.1,
+             label = paste0("italic(", paraules[5], ")"), parse = T) +
+    annotate("text", x = max_x + 0.1, y = - max_y - 0.1,
+             label = paste0("italic(", paraules[6], ")"), parse = T) +
     xlim(c(-max_x - .2, max_x + .2)) + 
     ylim(c(-max_y - .2, max_y + .2)) +
-    annotate("text", x = 0, y = max_y + 0.1, 
-             label = paste0("bold(+ ", paraules[1], ")"), parse = T) + 
-    annotate("text", x = max_x, y = - 0.1, 
-             label = paste0("bold(+ ", paraules[2], ")"), parse = T) + 
-    annotate("text", x = 0, y = - max_y - 0.1, 
-             label = paste0("bold(- ", paraules[1], ")"), parse = T) + 
-    annotate("text", x = - max_x, y = - 0.1, 
-             label = paste0("bold(- ", paraules[2], ")"), parse = T) + 
-    annotate("text", x = max_x + 0.1, y = max_y + 0.1, 
-             label = paste0("italic(", paraules[3], ")"), parse = T) + 
-    annotate("text", x = -max_x - 0.1, y = -max_y - 0.1, 
-             label = paste0("italic(", paraules[4], ")"), parse = T) + 
-    annotate("text", x = -max_x - 0.1, y = max_y + 0.1, 
-             label = paste0("italic(", paraules[5], ")"), parse = T) + 
-    annotate("text", x = max_x + 0.1, y = - max_y - 0.1, 
-             label = paste0("italic(", paraules[6], ")"), parse = T) + 
     theme_void() + 
     ggsave(file = file.path(path_, paste0(nom_grafic, '.pdf')), 
            dpi = 1200, width = 25, height = 25, units = "cm") 
@@ -169,26 +175,27 @@ grafic_xarxa = function(gg, colors, label.color, vertex.shape, edge.color, parau
   plot(gg,
        layout=layout_with_lgl, # altres opcions són: layout_with_gem layout_with_fr, layout_with_mds, layout_with_lgl
        frame = F,
-       # vertex.label.color = label.color, 
+       # vertex.label.color = label.color,  # obsolet segons nova versió
+       vertex.label.color = "black",
        vertex.color = as.character(colors),
        width = 1.5,
        vertex.frame.color = NA,
        vertex.alpha = 0.75,
        vertex.shape =  vertex.shape,
        edge.color = edge.color, 
-       edge.curved = ifelse(edge.color=="darkblue", 0, .2),
+       edge.curved = ifelse(edge.color=="#00008B80", 0, .2),
        edge.arrow.size = 0.55, 
        label.cex = 0.5,
        #main = ifelse(tipus=="xarxa_academica", "Xarxa Acadèmica", "Xarxa Relacional"),
        main = paraules[1]
   )
   
-  #legend(x=0.7, y=-0.9, c(paraules[2],paraules[3], paraules[4]),
-  #       pch=21, col="#777777", pt.bg=c("chartreuse3", "khaki1", "firebrick"),
-  #       pt.cex=3, cex=1.5, bty="n", ncol=1)
-  #legend(x=-1.2, y=-0.9, c(paraules[5],paraules[6], paraules[7]),
-  #       pch=21, col="#777777", pt.bg="gray",
-  #       pt.cex=c(4,5,6), cex=1.5, bty="n", ncol=1)
+  legend(x=0.7, y=-0.9, c(paraules[2],paraules[3], paraules[4]),
+         pch=21, col="#777777", pt.bg=c("chartreuse3", "khaki1", "firebrick"),
+         pt.cex=3, cex=1.5, bty="n", ncol=1)
+  legend(x=-1.2, y=-0.9, c(paraules[5],paraules[6], paraules[7]),
+         pch=21, col="#777777", pt.bg="gray",
+         pt.cex=c(4,5,6), cex=1.5, bty="n", ncol=1)
   dev.off()
   
 }
@@ -199,6 +206,7 @@ grafic_formatge = function(dades, tipus, path_, nom_plot, i, paleta = paleta){
   
   # TODO: acabar de trobar les mides òptimes
   # TODO: els percentatges no es veuen gaire bé
+  # FIXME: treu un warning de missing rows que no sé d'on surt, perquè no hi falta res
   
   options(encoding=encoding_)
   dades$label = paste0(round(dades$value/sum(dades$value)*100),"%")
@@ -212,11 +220,10 @@ grafic_formatge = function(dades, tipus, path_, nom_plot, i, paleta = paleta){
     scale_fill_manual(values = paleta[1:length(dades$variable)]) +
     geom_text(aes(label=label), 
               position = position_stack(vjust = .6)) +
-              # nudge_y = 1.2) +
     theme_void() + 
     xlab("") +
     theme(legend.position="none") +
-    labs(title = paste0(sum(dades$value)," tries\n", tipus)) +
+    ggtitle(paste0(sum(dades$value)," tries\n", tipus)) +
     theme(plot.title = element_text(hjust = 0.5)) +
     ggsave(file = file.path(path_, "individuals", nom_output), 
            dpi = 600, width = 9, height = 6, units = "cm") 

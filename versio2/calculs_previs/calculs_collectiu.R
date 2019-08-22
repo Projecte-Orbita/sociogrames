@@ -88,8 +88,6 @@ calculs_collectiu = function(dades, path_llista, nom_fitxer, numero_respostes=3)
   color_A = Victimitzacio_[[2]]
   color_B = Victimitzacio_[[3]]
   
-  # TODO: victimització té els colors al revés...
-  
   grafic_barres_classe(columnes = Victimitzacio[,2:5], 
                        color_A = color_A,
                        color_B = color_B,

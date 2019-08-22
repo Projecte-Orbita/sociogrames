@@ -88,6 +88,9 @@ informe_classe = function(path_llista){
   
   importar_i_imprimir_taula(path_llista, "caracter")
   
+  
+  cat("\\section*{Xarxes}")
+  
   # gràfic 2D relacional
   
   cat("\\section*{Mapa social relacional}")
@@ -100,13 +103,14 @@ informe_classe = function(path_llista){
   # Xarxa relacional
   
   #cat(xarxa_relacional)
-  cat("\\section*{Xarxa social relacional}")
+  cat("\\subsection*{Xarxa d'estatus social}")
   
   peu_xarxa_relacional = "Xarxa de posicionament social del grup-classe."
   afegeix_grafic(path_llista, "xarxa_relacional", peu_xarxa_relacional)
 
   # gràfic 2D acadèmic
   
+
   cat("\\section*{Mapa social acadèmic}")
   
   peu_2D_academic = "Mapa de posicionament acadèmic del grup-classe."
@@ -117,13 +121,14 @@ informe_classe = function(path_llista){
   # Xarxa acadèmica
   
   #cat(xarxa_academica)
+
   cat("\\section*{Xarxa social acadèmica}")
   peu_xarxa_academica = "Xarxa de posicionament acadèmic del grup-classe."
   afegeix_grafic(path_llista, "xarxa_academica", peu_xarxa_academica)
   
   # Xarxa amical -> per ara no la posem
   
-  # cat("\\section*{Xarxa d'amics}")
+  cat("\\section*{Xarxa d'amics}")
   
   # peu_xarxa_amical = "Relacions d'amistat a l’aula."
   # afegeix_grafic(path_llista, "xarxa_amical", peu_xarxa_amical)

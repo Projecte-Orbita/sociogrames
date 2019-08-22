@@ -1,17 +1,29 @@
 # Informes individuals
 
+# Aquest fitxer conté la funció informe_individual, que agafa els resultats dels càlculs previs 
+# individuals i escriu la part col·lectiva del latex de la classe. Per tant, importa figures 
+# prèviament creades i text the texts_collectius.R i treu una part de text que anirà en un fitxer .tex.
+# La funció és cridada per la funció informe_escola a informe_escola.R
 
 #### Alerta: No funciona tot sol, només com a helper a l'informe escoles ####
-
 
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 options(encoding = "UTF-8")
 
 source('texts/texts_individual.R', encoding = "UTF-8")
-source('calculs_previs/calculs_previs_individual.R', encoding = "UTF-8")
+source('calculs_previs/calculs_individual.R', encoding = "UTF-8")
 
 
-informe_individual = function(path_llista, nom_fitxer, noms){
+informe_individual = function(path_llista, noms){
+  
+  # Funció que escriu la part individual del latex de la classe
+  # Arguments: llista de paths per saber on ha de trobar les imatges i llista de noms dels nens.
+  # Importacions: fitxer de relacions: relacions.cvs
+  #               fitxers de valoracions de disrupció
+  #               gràfics individuals
+  # Retorna: Res; només escriu latex en un fitxer ja obert per un sink previ
+  
+  # Escrivim les escales:
   
   rels = read.csv(file.path(path_llista$taules, "relacions.csv"))
   
@@ -161,5 +173,5 @@ informe_individual = function(path_llista, nom_fitxer, noms){
 }
 
 if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R
-  informe_individual(path_llista, nom_fitxer, noms)
+  informe_individual(path_llista, noms)
 }

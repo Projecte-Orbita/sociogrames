@@ -270,3 +270,23 @@ importar_i_imprimir_taula = function(path_llista, nom_fitxer){
   cat(taula)
 
 }
+
+text_mapa_relacional = "Interpretació: \\newline
+      \\begin{itemize}
+      \\item Popular-r (moltes tries +): Els companys el/la tenen molt en compte dins el grup i l'escullen per relacionar-s'hi. 
+      \\item Rebutjat-r (moltes tries -): Els companys el/la tenen molt en compte dins el grup però l'exclouen.
+      \\item Negligit-r (poques tries): Els companys el/la tenen poc en compte dins el sistema de relacions del grup.
+      \\item Controvers-r (moltes tries + i -): Els companys el/la tenen molt en compte dins el grup tant per relacionar-s'hi com per excloure'l.
+      \\end{itemize}
+      
+      " 
+
+text_mapa_academic = "Interpretació: \\newline
+      \\begin{itemize}
+      \\item Popular-r (moltes tries +): Els companys el/la tenen molt en compte dins del grup respecte a la seva alta competència acadèmica.  
+      \\item Rebutjat-r (moltes tries -): Els companys el/la tenen molt en compte dins el grup respecte a la seva baixa competència acadèmica.
+      \\item Negligit-r (poques tries): Els companys el/la tenen poc en compte dins el grup respecte a la seva competència acadèmica.
+      \\item Controvers-r (moltes tries + i -): Els companys el/la tenen molt en compte dins el grup i alguns l'escullen per relacionar-s'hi i altres per excloure'l.
+      \\end{itemize}
+      
+      " 

@@ -7,6 +7,8 @@ require(ggplot2)
 require(ggpubr)
 require(ggrepel)
 require(plotly)
+require(ggpubr)
+require(ggrepel)
 
 
 paleta <- c("#74ec9c", "#ec445c", "#5bade9", "#ecd044", 

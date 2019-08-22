@@ -1,0 +1,24 @@
+Package: SociogramesAtom
+Title: Paquet que crea els sociogrames del Test Àtom, creats per Projecte Òrbita SCCL
+Version: 2.2
+Authors@R: c(person("Emília", "Garcia", email = "egarcia@projecteorbita.cat", role = c("aut", "cre")),
+           person("Eudald", "Correig", email = "ecorreig@projecteorbita.cat", role = c( "aut")))
+Description: Aquest paquet importa els resultats del sociograma Àtom administrat a una escola, les analitza i genera un informe per cada classe. Els informes estan en format latex, que ha de ser compilat per general un pdf. 
+Depends: R (>= 3.5.3)
+License: Marca registrada.
+Encoding: UTF-8
+LazyData: true
+Imports:
+  jsonlite (>= 1.5),        
+  readr (>= 1.1.1),        
+  stringr (>= 1.3.0),
+  dplyr (>= 0.7.8),
+  reshape2 (>= 1.4.3),
+  rlist (>= 0.4.6.1),
+  kableExtra (>= 1.1.0),
+  ggplot2 (>= 3.2.1),      
+  ggrepel (>= 0.7.0),
+  ggpubr (>= 0.1.6),
+  igraph (>= 1.2.1),
+  plotly (>= 4.7.1)
+RoxygenNote: 6.1.1

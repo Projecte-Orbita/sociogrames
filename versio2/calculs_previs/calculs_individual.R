@@ -1,17 +1,9 @@
 # Càlculs previs individual
 
-#####
-#
-# Llicència alguna que hem de buscar
-#
-####
-
-
-#####
 # Aquest és el codi que fa els càlculs i els gràfics que després un altre fitxer farà servir per fer 
 # l'informe en latex.
 
-#####
+
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
 config = config::get()
@@ -29,9 +21,20 @@ require(jsonlite)
 
 ######## Manipulacions inicials ###########
 
-calculs_individual = function(path_llista, nom_fitxer, numero_respostes=3){
+calculs_individual = function(dades, path_llista, nom_fitxer, numero_respostes=3){
   
-  dades = importar_i_manipular(file.path(path_llista$dades, nom_fitxer), numero_respostes)
+  # Funció que analitza la part individual del sociograma i crea els gràfics i les valoracions.
+  # Arguments: dades: una llista amb les dades que ens interessen
+  #            path_llista: la llista de carpetes
+  #            nom_fitxer: el csv amb el que estem treballant en aquests moments
+  #            numero_respostes: quin és el màxim número de respostes que pot clicar cada nen
+  # Importa: res
+  # Retorna: un vector amb els noms dels nens i les nenes
+  # Exporta: els gràfics de la part col·lectiva dels informes 
+  #          .jsons amb les valoracions per cada nen i nena
+  
+  # Extraiem les dades que necessitarem:
+  
   mat = dades[[1]]
   mat_est = dades[[2]]
   noms = dades[[3]]

@@ -1,4 +1,9 @@
 # Informe escola
+
+# Aquest és el fitxer principal, que conté la funció informe_escola, que crea els latex pels informes
+# Parteix dels csv que estan a la carpeta temp/dades. Crearà un .tex per cada .csv a la carpeta
+# TODO: implementar que pugui importar directament d'un excel.
+
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
 config = config::get()  # Importem la configuració
@@ -10,19 +15,24 @@ options(endoding=encoding_)
 
 wd = getwd()
 
+source(file.path(wd, 'calculs_previs', 'calculs_collectiu.R'), encoding = encoding_)
+source(file.path(wd, 'calculs_previs', 'calculs_individual.R'), encoding = encoding_)
 source(file.path(wd, 'informe_collectiu.R'), encoding = encoding_)
 source(file.path(wd, 'informe_individual.R'), encoding = encoding_)
 source(file.path(wd, 'texts', 'texts_escola.R'), encoding = encoding_)
 source(file.path(wd, 'texts', 'texts_collectiu.R'), encoding = encoding_)
 source(file.path(wd, 'texts', 'texts_individual.R'), encoding = encoding_)
 source(file.path(wd, 'altres', 'utils.R'), encoding = encoding_)
-
-
-# Aquest fitxer crea els informes per tota l'escola, primer el col·leciu i després els individuals, un fitxer .tex per cada classe
+source(file.path(wd, 'altres', 'manipulacions_dades.R'), encoding = encoding_)
 
 informe_escola = function(nom_escola){
   
-  nom_escola_arreglat = make.names(nom_escola)  # és el que farem servir per coses internes i traiem accents i espais
+  # Aquesta funció crea les figures de l'informe i els .tex, una carpeta de figures i un .tex
+  # per cada classe
+  # Arguments: nom_escola: el nom de l'escola tal com volem que surti a l'informe
+  # Importacions: els csv que es trobin a la carpeta temp/dades
+  # Retorna: res
+  # Exporta: les imatges i els fitxers .tex dels informes.
   
   wd <- getwd();
   
@@ -37,7 +47,9 @@ informe_escola = function(nom_escola){
                      'figures' = path_figures, 
                      'taules' = path_taules, 
                      'informes' = path_informes)
-  
+
+  # Arreglem el nom de l'escola per fer-lo servir per coses internes i traiem accents i espais
+  nom_escola_arreglat = make.names(nom_escola) 
   
   if (!aprofitar){
     # I creem els directoris sobreescrivint si ja existeixen:
@@ -76,10 +88,14 @@ informe_escola = function(nom_escola){
     
     nom_fitxer = noms_fitxers[cl]
     
+    # Importem les dades que farem servir tant pel col·lectiu com per l'individual:
+    
+    dades = importar_i_manipular(file.path(path_llista$dades, nom_fitxer), numero_respostes)
+    
     # Informe col·lectiu
     
     if (!aprofitar){
-      calculs_collectiu(path_llista = path_llista, nom_fitxer = nom_fitxer, numero_respostes = 3)
+      calculs_collectiu(dades, path_llista = path_llista, nom_fitxer = nom_fitxer, numero_respostes = 3)
     }
     
     path_ = file.path(path_llista$informes, paste0("sociograma_", curs_classe[cl], ".tex"))
@@ -98,20 +114,19 @@ informe_escola = function(nom_escola){
     cat(titol_collectiu)
     #cat(introduccio)
     
-    informe_classe(path_llista = path_llista, nom_fitxer = nom_fitxer)
+    informe_classe(path_llista = path_llista)
     
     # Informes individuals (en el mateix fitxer)
     
     if (individuals){
       if (!aprofitar){
-        noms = calculs_individual(path_llista, nom_fitxer, numero_respostes=3)
+        noms = calculs_individual(dades, path_llista, nom_fitxer, numero_respostes=3)
       }
       else {
-        dades = importar_i_manipular(file.path(path_llista$dades, nom_fitxer), 3)
         noms = dades[[3]]
       }
       cat(titol_individual)
-      informe_individual(path_llista = path_llista, nom_fitxer = nom_fitxer, noms)
+      informe_individual(path_llista = path_llista, noms)
     }
     
     cat(final_latex)

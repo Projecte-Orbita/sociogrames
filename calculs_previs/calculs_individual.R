@@ -8,7 +8,7 @@ Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
 config = config::get()
 encoding_ = as.character(config$encoding)
-options(encoding=encoding_)
+options(encoding = encoding_)
 # Imports
 
 gwd = getwd()
@@ -54,7 +54,7 @@ calculs_individual = function(dades, path_llista, nom_fitxer, numero_respostes=3
   
   llista_valoracions = list()
   
-  for (i in 1:nrow(Disrupcio)){
+  for (i in 1:nrow(Disrupcio)) {
     vic.m <- melt(Disrupcio[i,1:5], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Disrupcio[2:5]), path_llista$figures, nom_plot, i, paleta)
     grafic_formatge(vic.m, "de comportament", path_llista$figures, nom_plot, i, paleta)
@@ -78,7 +78,7 @@ calculs_individual = function(dades, path_llista, nom_fitxer, numero_respostes=3
   
   llista_valoracions = list()
   
-  for (i in 1:nrow(Victimitzacio)){
+  for (i in 1:nrow(Victimitzacio)) {
     vic.m <- melt(Victimitzacio[i,1:4], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Victimitzacio[2:4]), path_llista$figures, nom_plot, i, paleta)
     grafic_formatge(vic.m, "de victimització", path_llista$figures, nom_plot, i, paleta)
@@ -103,7 +103,7 @@ calculs_individual = function(dades, path_llista, nom_fitxer, numero_respostes=3
   
   llista_valoracions = list()
   
-  for (i in 1:nrow(Academic)){
+  for (i in 1:nrow(Academic)) {
     vic.m <- melt(Academic[i,], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Academic[2:5]), path_llista$figures, nom_plot, i, paleta)
     grafic_formatge(vic.m, "acadèmiques", path_llista$figures, nom_plot, i, paleta)
@@ -116,15 +116,17 @@ calculs_individual = function(dades, path_llista, nom_fitxer, numero_respostes=3
   # Estat d'ànim
   Estat_anim_ = calcs_estat_anim(mat, noms)
   Estat_anim = Estat_anim_[[1]]
+  color_A = Estat_anim_[[2]]
+  color_B = Estat_anim_[[3]]
   Estat_anim = Estat_anim[,c(6, 3,1,2,4)]
-  Estat_anim[,3:5] = -1*Estat_anim[,3:5]
+  # Estat_anim[,3:5] = -1*Estat_anim[,3:5]
   names(Estat_anim)[1] = "Noms"
   
   nom_plot = "estat_anim"
   
   llista_valoracions = list()
   
-  for (i in 1:nrow(Estat_anim)){
+  for (i in 1:nrow(Estat_anim)) {
     vic.m <- melt(Estat_anim[i,], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Estat_anim[2:5]), path_llista$figures, nom_plot, i, paleta) 
     grafic_formatge(vic.m, "d'estat d'ànim", path_llista$figures, nom_plot, i, paleta)
@@ -137,15 +139,17 @@ calculs_individual = function(dades, path_llista, nom_fitxer, numero_respostes=3
   # Caràcter
   Caracter_ = calcs_caracter(mat, noms)
   Caracter = Caracter_[[1]]
+  color_A = Caracter_[[2]]
+  color_B = Caracter_[[3]]
   Caracter = Caracter[,c(8,1:6)]
   names(Caracter)[1] = "Noms"
-  Caracter[,c(3,5,7)] = - Caracter[,c(3,5,7)]
+  Caracter[,c(3,5,7)] = -Caracter[,c(3,5,7)]
   
   nom_plot = "caracter"
   
   llista_valoracions = list()
   
-  for (i in 1:nrow(Caracter)){
+  for (i in 1:nrow(Caracter)) {
     vic.m <- melt(Caracter[i,], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Caracter[2:7]), path_llista$figures, nom_plot, i, paleta)
     grafic_formatge(vic.m, "de caràcter", path_llista$figures, nom_plot, i, paleta)
@@ -159,6 +163,8 @@ calculs_individual = function(dades, path_llista, nom_fitxer, numero_respostes=3
   
   Estatus_ = calcs_estatus(mat)
   Estatus = Estatus_[[1]]
+  color_A = Estatus_[[2]]
+  color_B = Estatus_[[3]]
   Estatus_bo = cbind.data.frame(noms, Estatus)
   names(Estatus_bo)[1] = "Noms"
   
@@ -166,7 +172,7 @@ calculs_individual = function(dades, path_llista, nom_fitxer, numero_respostes=3
   
   llista_valoracions = list()
   
-  for (i in 1:nrow(Estatus_bo)){
+  for (i in 1:nrow(Estatus_bo)) {
     vic.m <- melt(Estatus_bo[i,], id.vars = "Noms")
     grafic_barres_individual(vic.m, max(Estatus_bo[2:10]), path_llista$figures, nom_plot, i, paleta)
     grafic_formatge(vic.m, "d'estatus", path_llista$figures, nom_plot, i, paleta)
@@ -178,7 +184,7 @@ calculs_individual = function(dades, path_llista, nom_fitxer, numero_respostes=3
   
   # Resum
   
-  for (i in 1:nrow(Estatus_bo)){
+  for (i in 1:nrow(Estatus_bo)) {
     
     nom = noms[i]
     

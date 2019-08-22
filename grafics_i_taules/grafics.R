@@ -289,14 +289,14 @@ grafic_barres_individual = function(dades, numero_maxim, path_, nom_plot, i, pal
   
   # TODO: acabar de trobar les mides òptimes
   
-  titols = list("disrupcio"="1. Escales de comportament percebut", "victimes"="2. Escala de victimització percebuda",
-                "academic"="3. Escala acadèmica percebuda", "estat_anim"="4. Estat d'ànim percebut",
-                "caracter"="5. Caràcter percebut", "estatus"="6. Estatus sociomètric percebut")
+  titols = list("disrupcio"="Escales de comportament percebut", "victimes"="Escala de victimització percebuda",
+                "academic"="Escala acadèmica percebuda", "estat_anim"="Estat d'ànim percebut",
+                "caracter"="Caràcter percebut", "estatus"="Estatus sociomètric percebut")
   
   options(encoding=encoding_)
   nom_output = paste0(nom_plot, "-barres-", i, ".pdf")
   
-  ggplot(dades, aes(x = as.factor(variable), y = value)) +
+  ggplot(dades, aes(x = factor(variable, levels = levels(unique(variable))), y = value)) +
     geom_bar(stat='identity', 
              fill = paleta[1:length(dades$variable)],
              width = .5) + 

@@ -163,15 +163,11 @@ informe_individual = function(path_llista, noms){
     
     if (valoracions == 0){
       cat(paste0("En/na ", nom, " té tots els resultats dins dels valors considerats normals i per tant
-                 no hi ha àrees a valorar."))
+                 no hi ha àrees a destacar."))
     }
     
     cat("\\subsection*{Orientacions}")
     cat("FALTA")
 
   }
-}
-
-if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R
-  informe_individual(path_llista, noms)
 }

@@ -128,13 +128,9 @@ informe_classe = function(path_llista){
   
   # Xarxa amical -> per ara no la posem
   
-  cat("\\section*{Xarxa d'amics}")
+  # cat("\\section*{Xarxa d'amics}")
   
   # peu_xarxa_amical = "Relacions d'amistat a l’aula."
   # afegeix_grafic(path_llista, "xarxa_amical", peu_xarxa_amical)
 
-}
-
-if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R
-  informe_collectiu(path_llista)
 }

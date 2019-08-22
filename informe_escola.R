@@ -10,7 +10,7 @@ config = config::get()  # Importem la configuració
 encoding_ = config$encoding
 individuals = config$individuals  # Per debuguejar més ràpid
 aprofitar = config$aprofitar  # Ídem
-
+numero_respostes = config$numero_respostes
 options(endoding=encoding_)
 
 wd = getwd()

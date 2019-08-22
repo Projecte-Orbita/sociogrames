@@ -10,16 +10,13 @@ options(encoding = encoding_)
 
 valoracions_disrupcio = function(nom, color_A, color_B, Disrupcio){
   
-<<<<<<< HEAD
-  # ratio = Disrupcio[3]/sum(Disrupcio[4:5])  # Obsolet
   
   tipus_max = strsplit(names(which.max(Disrupcio[, 3:5])), " ")[[1]][2]
   # tipus_max pot un dels strings "física", "verbal" o "relacional".
-=======
-  ratio = Disrupcio[3]/sum(Disrupcio[4:5])
+
+  # ratio = Disrupcio[3]/sum(Disrupcio[4:5])  # obsolet
   fisica = Disrupcio[3] > max(Disrupcio[4:5])
->>>>>>> 26bda64cfb330119e699e22c0a3e68c90cb84044
-  
+
   l_temp = list()
   if (color_A > 1){
     l_temp['A_bona'] = "\\item És valorat/da per la major part dels seus companys com a afavoridor/a de relacions socials positives."
@@ -31,32 +28,21 @@ valoracions_disrupcio = function(nom, color_A, color_B, Disrupcio){
   
   if (color_B > 1){
     l_temp['B_dolenta'] = "\\item És valorat/da per la major part dels seus companys com a disruptiu/va."
+    l_temp['tipus_max'] = paste0("\\item La principal disrupció que causa és de tipus ", tipus_max, ".")
   }
   #else if (color_B < -1){
   #  l_temp['B_bona'] = "\\item No és valorat/da per part dels seus companys com a disruptiu/va."
   #}
-  # Tret segons modificacions excel
-  
-<<<<<<< HEAD
+
   #if (ratio > .5){
   #  l_temp['ratio'] = "\\item La major part dels seus companys valoren que exerceix una disrupció explícita (verbal o física)."
   #}
-  
-  if (color_B > 1){  # Segons el comentari de l'excel, si la volem posar sempre només cal canviar aquí per
-                     # un if (T)
-    l_temp['tipus_max'] = paste0("\\item La principal disrupció que causa és de tipus ", tipus_max, ".")
-=======
-  else if (fisica){
+
+  else if (fisica) {
     l_temp['B_fisica'] = "\\item Tot i que no s'obtenen puntuacions significatives en aquesta escala, cal tenir en compte que és valorat/da per alguns dels seus companys com a disruptiu."
   }
   
-  if (ratio > .5){
-    l_temp['ratio'] = "\\item La major part dels seus companys valoren que exerceix una disrupció explícita (verbal o física)."
->>>>>>> 26bda64cfb330119e699e22c0a3e68c90cb84044
-  }
-
-  
-  return(ifelse(length(l_temp)>0, list(l_temp), NA))
+  return(ifelse(length(l_temp) > 0, list(l_temp), NA))
 }
 
 valoracions_victimes = function(nom, color_A, color_B, victimes){
@@ -78,11 +64,11 @@ valoracions_victimes = function(nom, color_A, color_B, victimes){
     l_temp['B_fisica'] = "\\item Tot i que no s'obtenen puntuacions significatives en aquesta escala, cal tenir en compte que és valorat/da per alguns dels seus companys com a víctima."
   }
   
-  if (ratio > .5){
-    l_temp['ratio'] = "\\item La major part dels seus companys valoren que rep una victimització explícita (verbal o física)."
-  }
+  #if (ratio > .5){
+  #  l_temp['ratio'] = "\\item La major part dels seus companys valoren que rep una victimització explícita (verbal o física)."
+  #}
   
-  return(ifelse(length(l_temp)>0, list(l_temp), NA))
+  return(ifelse(length(l_temp) > 0, list(l_temp), NA))
 }
 
 valoracions_academic = function(nom, color_A, color_B){

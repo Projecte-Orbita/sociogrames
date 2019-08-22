@@ -267,9 +267,9 @@ calculs_collectiu = function(dades, path_llista, nom_fitxer, numero_respostes=3)
   
   # Obsoleta però no ho elimineu encara
   
-  amical = False
+  amical = F
   
-  if (amical){
+  if (amical) {
   X_amical_ = calcs_xarxa_relacional(soc, mat, numero_respostes)
   gg = X_amical_[[1]]
   colors = X_amical_[[2]]

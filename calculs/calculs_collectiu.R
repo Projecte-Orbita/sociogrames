@@ -15,7 +15,7 @@ gwd = getwd()
 source(file.path(gwd, 'altres', 'utils.R'), encoding = encoding_)
 source(file.path(gwd, 'grafics_i_taules', 'grafics.R'), encoding = encoding_)
 source(file.path(gwd, 'grafics_i_taules', 'taules.R'), encoding = encoding_)
-source(file.path(gwd, 'calculs_previs', 'calculs_arees.R'), encoding = encoding_)
+source(file.path(gwd, 'calculs', 'calculs_arees.R'), encoding = encoding_)
 
 
 calculs_collectiu = function(dades, path_llista, nom_fitxer, numero_respostes=3){
@@ -44,7 +44,7 @@ calculs_collectiu = function(dades, path_llista, nom_fitxer, numero_respostes=3)
   
   # Ara anem fent els gràfics i els objectes amb els quals escriurem les taules:
   
-  # Prosocialitat:
+  # Prosocialitat i disrupció:
   disrupcio_ = calcs_disrupcio(mat, noms)
   Disrupcio = disrupcio_[[1]]
   color_A = disrupcio_[[2]]
@@ -59,7 +59,9 @@ calculs_collectiu = function(dades, path_llista, nom_fitxer, numero_respostes=3)
                        path_ = path_llista$figures, 
                        nom_grafic =  "disrupcio")  # Gràfic
   
-  grafic_2D(Disrupcio[, c(1, 4, 6)],
+  dis_df = cbind.data.frame(Disrupcio[, 1], rowSums(Disrupcio[, 2:4]), Disrupcio[, 6])
+  names(dis_df) = c("Prosocialitat", "Disrupció", "noms")
+  grafic_2D(dis_df,
             tipus = "comportament",
             path_ = path_llista$figures,
             nom_grafic = "disrupcio_2D")

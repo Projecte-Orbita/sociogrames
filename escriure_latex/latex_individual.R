@@ -8,10 +8,12 @@
 #### Alerta: No funciona tot sol, només com a helper a l'informe escoles ####
 
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
-options(encoding = "UTF-8")
 
-source('texts/texts_individual.R', encoding = "UTF-8")
-source('calculs_previs/calculs_individual.R', encoding = "UTF-8")
+config = config::get()
+encoding_ = config$encoding
+
+wd = getwd()
+source(file.path(wd, 'texts', 'texts_individual.R'), encoding = encoding_)
 
 
 informe_individual = function(path_llista, noms){

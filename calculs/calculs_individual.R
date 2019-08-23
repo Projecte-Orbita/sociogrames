@@ -15,7 +15,7 @@ gwd = getwd()
 source(file.path(gwd, 'altres', 'utils.R') , encoding = encoding_)
 source(file.path(gwd, 'grafics_i_taules', 'grafics.R'), encoding = encoding_)
 source(file.path(gwd, 'grafics_i_taules', 'taules.R'), encoding = encoding_)
-source(file.path(gwd, 'calculs_previs', 'calculs_arees.R'), encoding = encoding_)
+source(file.path(gwd, 'calculs', 'calculs_arees.R'), encoding = encoding_)
 source(file.path(gwd, 'valoracions', 'valoracions.R'), encoding = encoding_)
 require(jsonlite)
 

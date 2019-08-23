@@ -94,11 +94,13 @@ grafic_2D = function(df, tipus, path_, nom_grafic){
   # no se superposin als noms dels nens.
   
   if (tipus == "comportament"){
-    paraules = c("`tries positives`", "`tries negatives`", "Controvers", "Negligit", "Popular", "Rebutjat")
+    paraules = c("`tries positives`", "`tries negatives`", 
+                 "Controvers", "Negligit", "Popular", "Rebutjat")
   }
   
   else if(tipus == "academic"){
-    paraules = c("`tries positives`", "`tries negatives`", "Controvers", "Negligit", "Popular", "Rebutjat")
+    paraules = c("`tries positives`", "`tries negatives`", 
+                 "Controvers", "Negligit", "Popular", "Rebutjat")
   }
   
   else{
@@ -145,19 +147,19 @@ grafic_2D = function(df, tipus, path_, nom_grafic){
     annotate("text", x = 0, y = max_y + 0.1,
              label = paste0("bold(+ ", paraules[1], ")"), parse = T) +
     annotate("text", x = max_x, y = - 0.1,
-             label = paste0("bold(+ ", paraules[2], ")"), parse = T) +
+             label =  paste0("bold(+ ", paraules[2], ")"), parse = T) +
     annotate("text", x = 0, y = - max_y - 0.1,
-             label = paste0("bold(- ", paraules[1], ")"), parse = T) +
+             label =  paste0("bold(- ", paraules[1], ")"), parse = T) +
     annotate("text", x = - max_x, y = - 0.1,
-             label = paste0("bold(- ", paraules[2], ")"), parse = T) +
+             label =  paste0("bold(- ", paraules[2], ")"), parse = T) +
     annotate("text", x = max_x + 0.1, y = max_y + 0.1,
-             label = paste0("italic(", paraules[3], ")"), parse = T) +
+             label =  paste0("italic(", paraules[3], ")"), parse = T) +
     annotate("text", x = -max_x - 0.1, y = -max_y - 0.1,
-             label = paste0("italic(", paraules[4], ")"), parse = T) +
+             label =  paste0("italic(", paraules[4], ")"), parse = T) +
     annotate("text", x = -max_x - 0.1, y = max_y + 0.1,
-             label = paste0("italic(", paraules[5], ")"), parse = T) +
+             label =  paste0("italic(", paraules[5], ")"), parse = T) +
     annotate("text", x = max_x + 0.1, y = - max_y - 0.1,
-             label = paste0("italic(", paraules[6], ")"), parse = T) +
+             label =  paste0("italic(", paraules[6], ")"), parse = T) +
     xlim(c(-max_x - .2, max_x + .2)) + 
     ylim(c(-max_y - .2, max_y + .2)) +
     theme_void() + 

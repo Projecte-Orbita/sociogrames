@@ -187,9 +187,9 @@ grafic_xarxa = function(gg, colors, label.color, vertex.shape, edge.color, parau
        edge.color = edge.color, 
        edge.curved = ifelse(edge.color=="#00008B80", 0, .2),
        edge.arrow.size = 0.55, 
-       label.cex = 0.5,
+       label.cex = 0.5
        #main = ifelse(tipus=="xarxa_academica", "Xarxa Acadèmica", "Xarxa Relacional"),
-       main = paraules[1]
+       #main = paraules[1]
   )
   
   legend(x=0.7, y=-0.9, c(paraules[2],paraules[3], paraules[4]),

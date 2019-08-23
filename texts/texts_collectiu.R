@@ -162,10 +162,10 @@ Aquestes respostes provenen de les preguntes:
 "
 mapa_academic1 = "Interpretació: \\newline
       \\begin{itemize}
-      \\item Popular-r (moltes tries +): Els companys el/la tenen molt en compte dins del grup respecte a la seva alta competència acadèmica.  
-      \\item Rebutjat-r (moltes tries -): Els companys el/la tenen molt en compte dins el grup respecte a la seva baixa competència acadèmica.
-      \\item Negligit-r (poques tries): Els companys el/la tenen poc en compte dins el grup respecte a la seva competència acadèmica.
-      \\item Controvers-r (moltes tries + i -): Els companys el/la tenen molt en compte dins el grup i alguns l'escullen per relacionar-s'hi i altres per excloure'l.
+      \\item Popular-a (moltes tries +): Els companys el/la tenen molt en compte dins del grup respecte a la seva alta competència acadèmica.  
+      \\item Rebutjat-a (moltes tries -): Els companys el/la tenen molt en compte dins el grup respecte a la seva baixa competència acadèmica.
+      \\item Negligit-a (poques tries): Els companys el/la tenen poc en compte dins el grup respecte a la seva competència acadèmica.
+      \\item Controvers-a (moltes tries + i -): Els companys el/la tenen molt en compte dins el grup i alguns l'escullen per relacionar-s'hi i altres per excloure'l.
       \\end{itemize}
       
       " 

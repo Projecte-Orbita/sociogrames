@@ -113,7 +113,7 @@ calcs_estat_anim = function(mat, noms){
 calcs_caracter = function(mat, noms){
   caracter_total = mat[,32] - mat[,33] + mat[,34] - mat[,35] + mat[,36] - mat[,37]
   caracter = as.data.frame(cbind(mat[,32], mat[,33], mat[,34], mat[,35], mat[,36], mat[,37], caracter_total))
-  colnames(caracter) = c("Lider", "Seguidor", "Autònom", "Dependent", 
+  colnames(caracter) = c("Líder", "Seguidor", "Autònom", "Dependent", 
                          "Sociable", "Aïllat", "Global")
   
   caracter_bo_est = as.vector(scale(rowSums(caracter[, c(1,3,5)])))

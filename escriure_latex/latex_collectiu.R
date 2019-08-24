@@ -12,8 +12,8 @@ Sys.setlocale("LC_ALL", "Catalan_Spain.1252")  # FIXME: Només per Windows; per 
 config = config::get()
 encoding_ = config$encoding
 
-gwd = getwd()
-source(file.path(gwd, 'texts', 'texts_collectiu.R'), encoding = encoding_)
+wd = getwd()
+source(file.path(wd, 'texts', 'texts_collectiu.R'), encoding = encoding_)
 
 
 informe_classe = function(path_llista){
@@ -98,7 +98,8 @@ informe_classe = function(path_llista){
   peu_2D_relacional = "Mapa de posicionament social del grup-classe."
   afegeix_grafic(path_llista, "disrupcio_2D", peu_2D_relacional)
   
-  cat(text_mapa_relacional)
+  cat(mapa_relacional1)
+  cat(mapa_relacional2)
   
   # Xarxa relacional
   
@@ -107,6 +108,9 @@ informe_classe = function(path_llista){
   
   peu_xarxa_relacional = "Xarxa de posicionament social del grup-classe."
   afegeix_grafic(path_llista, "xarxa_relacional", peu_xarxa_relacional)
+  
+  cat(xarxa_relacional)
+  cat(xarxa_relacional2)
 
   # gràfic 2D acadèmic
   
@@ -116,25 +120,23 @@ informe_classe = function(path_llista){
   peu_2D_academic = "Mapa de posicionament acadèmic del grup-classe."
   afegeix_grafic(path_llista, "academic_2D", peu_2D_academic)
   
-  cat(text_mapa_academic)
+  cat(mapa_academic1)
+  cat(mapa_academic2)
   
   # Xarxa acadèmica
-  
-  #cat(xarxa_academica)
 
   cat("\\section*{Xarxa social acadèmica}")
   peu_xarxa_academica = "Xarxa de posicionament acadèmic del grup-classe."
   afegeix_grafic(path_llista, "xarxa_academica", peu_xarxa_academica)
   
+  cat(xarxa_academica1)
+  cat(xarxa_academica2)
+  
   # Xarxa amical -> per ara no la posem
   
-  cat("\\section*{Xarxa d'amics}")
+  # cat("\\section*{Xarxa d'amics}")
   
   # peu_xarxa_amical = "Relacions d'amistat a l’aula."
   # afegeix_grafic(path_llista, "xarxa_amical", peu_xarxa_amical)
 
-}
-
-if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R
-  informe_collectiu(path_llista)
 }

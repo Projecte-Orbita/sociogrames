@@ -94,11 +94,13 @@ grafic_2D = function(df, tipus, path_, nom_grafic){
   # no se superposin als noms dels nens.
   
   if (tipus == "comportament"){
-    paraules = c("`tries positives`", "`tries negatives`", "Controvers", "Negligit", "Popular", "Rebutjat")
+    paraules = c("`tries positives`", "`tries negatives`", 
+                 "Controvers", "Negligit", "Popular", "Rebutjat")
   }
   
   else if(tipus == "academic"){
-    paraules = c("`tries positives`", "`tries negatives`", "Controvers", "Negligit", "Popular", "Rebutjat")
+    paraules = c("`tries positives`", "`tries negatives`", 
+                 "Controvers", "Negligit", "Popular", "Rebutjat")
   }
   
   else{
@@ -145,19 +147,19 @@ grafic_2D = function(df, tipus, path_, nom_grafic){
     annotate("text", x = 0, y = max_y + 0.1,
              label = paste0("bold(+ ", paraules[1], ")"), parse = T) +
     annotate("text", x = max_x, y = - 0.1,
-             label = paste0("bold(+ ", paraules[2], ")"), parse = T) +
+             label =  paste0("bold(+ ", paraules[2], ")"), parse = T) +
     annotate("text", x = 0, y = - max_y - 0.1,
-             label = paste0("bold(- ", paraules[1], ")"), parse = T) +
+             label =  paste0("bold(- ", paraules[1], ")"), parse = T) +
     annotate("text", x = - max_x, y = - 0.1,
-             label = paste0("bold(- ", paraules[2], ")"), parse = T) +
+             label =  paste0("bold(- ", paraules[2], ")"), parse = T) +
     annotate("text", x = max_x + 0.1, y = max_y + 0.1,
-             label = paste0("italic(", paraules[3], ")"), parse = T) +
+             label =  paste0("italic(", paraules[3], ")"), parse = T) +
     annotate("text", x = -max_x - 0.1, y = -max_y - 0.1,
-             label = paste0("italic(", paraules[4], ")"), parse = T) +
+             label =  paste0("italic(", paraules[4], ")"), parse = T) +
     annotate("text", x = -max_x - 0.1, y = max_y + 0.1,
-             label = paste0("italic(", paraules[5], ")"), parse = T) +
+             label =  paste0("italic(", paraules[5], ")"), parse = T) +
     annotate("text", x = max_x + 0.1, y = - max_y - 0.1,
-             label = paste0("italic(", paraules[6], ")"), parse = T) +
+             label =  paste0("italic(", paraules[6], ")"), parse = T) +
     xlim(c(-max_x - .2, max_x + .2)) + 
     ylim(c(-max_y - .2, max_y + .2)) +
     theme_void() + 
@@ -185,9 +187,9 @@ grafic_xarxa = function(gg, colors, label.color, vertex.shape, edge.color, parau
        edge.color = edge.color, 
        edge.curved = ifelse(edge.color=="#00008B80", 0, .2),
        edge.arrow.size = 0.55, 
-       label.cex = 0.5,
+       label.cex = 0.5
        #main = ifelse(tipus=="xarxa_academica", "Xarxa Acadèmica", "Xarxa Relacional"),
-       main = paraules[1]
+       #main = paraules[1]
   )
   
   legend(x=0.7, y=-0.9, c(paraules[2],paraules[3], paraules[4]),
@@ -289,14 +291,14 @@ grafic_barres_individual = function(dades, numero_maxim, path_, nom_plot, i, pal
   
   # TODO: acabar de trobar les mides òptimes
   
-  titols = list("disrupcio"="1. Escales de comportament percebut", "victimes"="2. Escala de victimització percebuda",
-                "academic"="3. Escala acadèmica percebuda", "estat_anim"="4. Estat d'ànim percebut",
-                "caracter"="5. Caràcter percebut", "estatus"="6. Estatus sociomètric percebut")
+  titols = list("disrupcio"="Escales de comportament percebut", "victimes"="Escala de victimització percebuda",
+                "academic"="Escala acadèmica percebuda", "estat_anim"="Estat d'ànim percebut",
+                "caracter"="Caràcter percebut", "estatus"="Estatus sociomètric percebut")
   
   options(encoding=encoding_)
   nom_output = paste0(nom_plot, "-barres-", i, ".pdf")
   
-  ggplot(dades, aes(x = as.factor(variable), y = value)) +
+  ggplot(dades, aes(x = factor(variable, levels = levels(unique(variable))), y = value)) +
     geom_bar(stat='identity', 
              fill = paleta[1:length(dades$variable)],
              width = .5) + 

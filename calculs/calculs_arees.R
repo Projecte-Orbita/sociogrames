@@ -95,16 +95,16 @@ calcs_academic = function(mat, noms){
 }
 
 calcs_estat_anim = function(mat, noms){
-  estat_anim_total = -1 * (- mat[,28] - mat[,29] + mat[,30] - mat[,31])
-  estat_anim = as.data.frame(cbind(mat[,28], mat[,29], mat[,30], mat[,31], estat_anim_total))
-  colnames(estat_anim) = c("Dissatisfacció", "Enuig", "Alegria", "Tristor", "Global")
+  estat_anim_total = - mat[,28] - mat[,29] + mat[,30] - mat[,31]
+  estat_anim = as.data.frame(cbind(mat[,30], mat[,28], mat[,29], mat[,31], estat_anim_total))
+  colnames(estat_anim) = c("Alegria", "Dissatisfacció", "Enuig", "Tristor", "Global")
   
   estat_anim_bo_est = scale(mat[,30])
-  estat_anim_dolent_est = as.vector(scale(rowSums(estat_anim[, c(1,2,4)])))
+  estat_anim_dolent_est = as.vector(scale(rowSums(estat_anim[, 2:4])))
   estat_anim_total_est = as.vector(scale(estat_anim_total))
   estat_anim_sino = ifelse(estat_anim_dolent_est > 1 | estat_anim_bo_est > 1 | estat_anim_dolent_est < -1 | estat_anim_bo_est < -1 ,1,0)
-  estat_anim = -estat_anim
-  estat_anim$Alegria = -estat_anim$Alegria
+  #estat_anim = -estat_anim
+  #estat_anim$Alegria = -estat_anim$Alegria
   estat_anim$noms = factor(noms, levels = as.character(noms))
   
   return(list(estat_anim, estat_anim_bo_est, estat_anim_dolent_est))
@@ -113,8 +113,8 @@ calcs_estat_anim = function(mat, noms){
 calcs_caracter = function(mat, noms){
   caracter_total = mat[,32] - mat[,33] + mat[,34] - mat[,35] + mat[,36] - mat[,37]
   caracter = as.data.frame(cbind(mat[,32], mat[,33], mat[,34], mat[,35], mat[,36], mat[,37], caracter_total))
-  colnames(caracter) = c("Lideratge", "No lid.", "Autonomia", "No aut.", 
-                         "Socialització", "No soc.", "Global")
+  colnames(caracter) = c("Líder", "Seguidor", "Autònom", "Dependent", 
+                         "Sociable", "Aïllat", "Global")
   
   caracter_bo_est = as.vector(scale(rowSums(caracter[, c(1,3,5)])))
   caracter_dolent_est = as.vector(scale(rowSums(caracter[, c(2,4,6)])))

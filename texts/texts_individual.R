@@ -336,11 +336,16 @@ escriure_preferencies = function(rels, noms, i, numero_respostes, tipus){
   
   quins_triat = which(rels[, col]==i)
   
-  noms_dins = c(NA)  # És lleugerament diferent per tenir en compte el cas on no hi ha res.
-  for (element in quins_triat){
-    i = 1
-    noms_dins[i] = noms[rels[element, 1]]
-    i = i + 1
+  noms_dins = c()  # És lleugerament diferent per tenir en compte el cas on no hi ha res.
+  if (length(quins_triat) == 0) {
+    noms_dins = c(NA)
+  }
+  else {
+    for (element in quins_triat){
+
+      noms_dins = c(noms_dins, noms[rels[element, 1]])
+
+    }
   }
   
   n = max(numero_respostes, length(noms_dins))
@@ -362,13 +367,18 @@ escriure_preferencies = function(rels, noms, i, numero_respostes, tipus){
     k = k + 1
   }
   
-  quins_triat = which(rels[, col+1]==i)
+  quins_triat = which(rels[, col + 1] == i)
   
-  noms_dins = c(NA)
-  for (element in quins_triat){
-    i = 1
-    noms_dins[i] = noms[rels[element, 1]]
-    i = i + 1
+  noms_dins = c()
+  if (length(quins_triat) == 0) {
+    noms_dins = c(NA)
+  }
+  else {
+    for (element in quins_triat) {
+
+      noms_dins = c(noms_dins, noms[rels[element, 1]])
+
+    }
   }
   
   n = max(numero_respostes, length(noms_dins))

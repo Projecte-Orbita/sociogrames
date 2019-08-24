@@ -51,6 +51,7 @@ Aquestes respostes provenen de les preguntes:
 \\item \\emph{Ajuda els altres quan tenen un problema.}
 \\item \\emph{Col·labora amb els altres.}
 \\item \\emph{Defensa els altres.}
+\\item \\emph{Es defensa del que li fan els altres.}
 \\item \\emph{Molesta als altres.}
 \\item \\emph{No deixa participar als altres.}
 \\item \\emph{Insulta als altres.}
@@ -72,6 +73,7 @@ Aquestes respostes provenen de les preguntes:
 \\item \\emph{Ajuda els altres quan tenen un problema.}
 \\item \\emph{Col·labora amb els altres.}
 \\item \\emph{Defensa els altres.}
+\\item \\emph{Es defensa del que li fan els altres.}
 \\end{itemize}
 \\newpage
 "
@@ -144,8 +146,6 @@ caracter = "
 Mesura la percepció del grup del \\textbf{caràcter}, forma de ser o capacitat de resoldre els problemes de 
 dels alumnes de l’aula. Considera les variables: lideratge (rol de líder o seguidor), autonomia (capacitat de 
 gestionar els problemes o demanar ajuda) i socialització (es comunica sovint amb els altres o no).
-.
-
 "
 
 caracter_post = "
@@ -160,8 +160,29 @@ Aquestes respostes provenen de les preguntes:
 \\end{itemize}
 \\newpage
 "
+mapa_academic1 = "Interpretació: \\newline
+      \\begin{itemize}
+      \\item Popular-a (moltes tries +): Els companys el/la tenen molt en compte dins del grup respecte a la seva alta competència acadèmica.  
+      \\item Rebutjat-a (moltes tries -): Els companys el/la tenen molt en compte dins el grup respecte a la seva baixa competència acadèmica.
+      \\item Negligit-a (poques tries): Els companys el/la tenen poc en compte dins el grup respecte a la seva competència acadèmica.
+      \\item Controvers-a (moltes tries + i -): Els companys el/la tenen molt en compte dins el grup i alguns l'escullen per relacionar-s'hi i altres per excloure'l.
+      \\end{itemize}
+      
+      " 
 
-xarxa_academica = "
+mapa_academic2 = "
+El posicionament en aquest gràfic ve donat per les respostes a les preguntes:
+
+\\begin{itemize}
+\\item \\emph{Treu bones notes.}
+\\item \\emph{No treu bones notes.}
+\\item \\emph{Participa a classe.}
+\\item \\emph{No participa a classe.}
+\\end{itemize}
+\\newpage
+"
+
+xarxa_academica1 = "
 		\\section*{Xarxa relacional acadèmica}
 		
 A continuació presentem la xarxa de relacions acadèmiques entre els nens i nenes, basada en la informació 
@@ -200,13 +221,44 @@ La xarxa consta dels següents elements:
 \\item \\underline{Normal}: la direcció indica la tria des d’un alumne a l’altre
 \\item \\underline{Blava}: indica que els dos alumnes s’han triat de forma recíproca
 \\end{itemize}
-\\item \\textbf{Noms}: mostra el nom de l’alumne i indica amb el color el grau de participació a l’aula:
-\\begin{itemize}
-\\item \\underline{Verd}: participa molt
-\\item \\underline{negre}: neutre 
-\\item \\underline{Vermell}: participa poc
-\\end{itemize}
 \\end{enumerate}
+"
+
+xarxa_academica2 = "
+Les fletxes de la xarxa indiquen en quina direcció s'han respòs la pregunta:
+\\begin{itemize}
+\\item Qui voldries al teu grup per fer un treball?
+\\end{itemize}
+
+Els colors dels nodes reflecteixen les respostes a les preguntes:
+\\begin{itemize}
+\\item Treu bones notes.
+\\item No treu bones notes.
+\\end{itemize}
+
+"
+mapa_relacional1 = "Interpretació: \\newline
+      \\begin{itemize}
+      \\item Popular-r (moltes tries +): Els companys el/la tenen molt en compte dins el grup i l'escullen per relacionar-s'hi. 
+      \\item Rebutjat-r (moltes tries -): Els companys el/la tenen molt en compte dins el grup però l'exclouen.
+      \\item Negligit-r (poques tries): Els companys el/la tenen poc en compte dins el sistema de relacions del grup.
+      \\item Controvers-r (moltes tries + i -): Els companys el/la tenen molt en compte dins el grup tant per relacionar-s'hi com per excloure'l.
+      \\end{itemize}
+      
+      " 
+
+mapa_relacional2 = "
+El posicionament en aquest mapa ve donat per les respostes a les preguntes:
+\\begin{itemize}
+\\item \\emph{Ajuda els altres quan tenen un problema.}
+\\item \\emph{Col·labora amb els altres.}
+\\item \\emph{Defensa els altres.}
+\\item \\emph{Es defensa del que li fan els altres.}
+\\item \\emph{Molesta als altres.}
+\\item \\emph{No deixa participar als altres.}
+\\item \\emph{Insulta als altres.}
+\\item \\emph{Empenta o pega als altres.}
+\\end{itemize}
 "
 
 xarxa_relacional = "
@@ -247,13 +299,27 @@ La xarxa consta dels següents elements:
 \\item \\underline{Normal}: la direcció indica la tria des d’un alumne a l’altre
 \\item \\underline{Blava}: indica que els dos alumnes s’han triat de forma recíproca
 \\end{itemize}
-\\item \\textbf{Noms:} mostra el nom de l’alumne i indica amb el color l'estat dànim percebut pels companys i les companyes:
-\\begin{itemize}
-\\item \\underline{Verd}: estat d'ànim positiu
-\\item \\underline{negre}: neutre
-\\item \\underline{Vermell}: estat d'ànim negatiu
-\\end{itemize}
 \\end{enumerate}
+"
+xarxa_relacional2 = "
+Les fletxes de la xarxa indiquen en quina direcció s'han respòs la pregunta:
+\\begin{itemize}
+\\item Qui voldries al teu grup per jugar al pati?
+\\end{itemize}
+
+Els colors dels nodes reflecteixen les respostes a les preguntes:
+\\begin{itemize}
+\\item Molesta als altres.
+\\item No deixa participar als altres.
+\\item Insulta als altres.
+\\item Empenta o pega als altres.
+\\item Diu rumors dels altres/diu coses dolentes dels altres.
+\\item Quan s'enfada amb algú el fa fora del seu grup d'amics.
+\\item Quan s'enfada amb algú l'evita.
+\\item Li diu als amics que deixaran de ser-ho si no fa el que ell/ella diu.
+
+\\end{itemize}
+
 "
 
 nota_final = "
@@ -270,23 +336,3 @@ importar_i_imprimir_taula = function(path_llista, nom_fitxer){
   cat(taula)
 
 }
-
-text_mapa_relacional = "Interpretació: \\newline
-      \\begin{itemize}
-      \\item Popular-r (moltes tries +): Els companys el/la tenen molt en compte dins el grup i l'escullen per relacionar-s'hi. 
-      \\item Rebutjat-r (moltes tries -): Els companys el/la tenen molt en compte dins el grup però l'exclouen.
-      \\item Negligit-r (poques tries): Els companys el/la tenen poc en compte dins el sistema de relacions del grup.
-      \\item Controvers-r (moltes tries + i -): Els companys el/la tenen molt en compte dins el grup tant per relacionar-s'hi com per excloure'l.
-      \\end{itemize}
-      
-      " 
-
-text_mapa_academic = "Interpretació: \\newline
-      \\begin{itemize}
-      \\item Popular-r (moltes tries +): Els companys el/la tenen molt en compte dins del grup respecte a la seva alta competència acadèmica.  
-      \\item Rebutjat-r (moltes tries -): Els companys el/la tenen molt en compte dins el grup respecte a la seva baixa competència acadèmica.
-      \\item Negligit-r (poques tries): Els companys el/la tenen poc en compte dins el grup respecte a la seva competència acadèmica.
-      \\item Controvers-r (moltes tries + i -): Els companys el/la tenen molt en compte dins el grup i alguns l'escullen per relacionar-s'hi i altres per excloure'l.
-      \\end{itemize}
-      
-      " 

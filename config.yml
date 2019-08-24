@@ -1,5 +1,6 @@
 default:
   encoding: "UTF-8"
   individuals: TRUE
-  aprofitar: TRUE
+  aprofitar: FALSE
+  numero_respostes: 3
   

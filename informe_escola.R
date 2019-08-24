@@ -10,15 +10,15 @@ config = config::get()  # Importem la configuració
 encoding_ = config$encoding
 individuals = config$individuals  # Per debuguejar més ràpid
 aprofitar = config$aprofitar  # Ídem
-
+numero_respostes = config$numero_respostes
 options(endoding=encoding_)
 
 wd = getwd()
 
-source(file.path(wd, 'calculs_previs', 'calculs_collectiu.R'), encoding = encoding_)
-source(file.path(wd, 'calculs_previs', 'calculs_individual.R'), encoding = encoding_)
-source(file.path(wd, 'informe_collectiu.R'), encoding = encoding_)
-source(file.path(wd, 'informe_individual.R'), encoding = encoding_)
+source(file.path(wd, 'calculs', 'calculs_collectiu.R'), encoding = encoding_)
+source(file.path(wd, 'calculs', 'calculs_individual.R'), encoding = encoding_)
+source(file.path(wd, 'escriure_latex', 'latex_collectiu.R'), encoding = encoding_)
+source(file.path(wd, 'escriure_latex', 'latex_individual.R'), encoding = encoding_)
 source(file.path(wd, 'texts', 'texts_escola.R'), encoding = encoding_)
 source(file.path(wd, 'texts', 'texts_collectiu.R'), encoding = encoding_)
 source(file.path(wd, 'texts', 'texts_individual.R'), encoding = encoding_)

@@ -1,7 +1,7 @@
 # Manipulacions de dades de sociogrames
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
-source('utils.R', encoding = "UTF-8")
+source('./altres/utils.R', encoding = "UTF-8")
 
 require(stringr)
 require(readr)

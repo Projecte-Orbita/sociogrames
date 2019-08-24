@@ -31,12 +31,25 @@ informe_individual = function(path_llista, noms){
   
   # Importem els fitxers de valoracions, per només haver-ho de fer una vegada
   
-  vals_disrupcio = fromJSON(readLines(file.path(path_llista$taules, "vals_disrupcio.json")))
-  vals_victimes = fromJSON(readLines(file.path(path_llista$taules, "vals_victimes.json")))
-  vals_academic = fromJSON(readLines(file.path(path_llista$taules, "vals_academic.json")))
-  vals_ea = fromJSON(readLines(file.path(path_llista$taules, "vals_ea.json")))
-  vals_caracter = fromJSON(readLines(file.path(path_llista$taules, "vals_caracter.json")))
-  vals_estatus = fromJSON(readLines(file.path(path_llista$taules, "vals_estatus.json")))
+  valoracions_disrupcio = fromJSON(readLines(file.path(path_llista$taules, "vals_disrupcio.json")))
+  valoracions_victimes = fromJSON(readLines(file.path(path_llista$taules, "vals_victimes.json")))
+  #valoracions_academic = fromJSON(readLines(file.path(path_llista$taules, "vals_academic.json")))
+  valoracions_ea = fromJSON(readLines(file.path(path_llista$taules, "vals_ea.json")))
+  valoracions_caracter = fromJSON(readLines(file.path(path_llista$taules, "vals_caracter.json")))
+  #valoracions_estatus = fromJSON(readLines(file.path(path_llista$taules, "vals_estatus.json")))
+  valoracions_mapa_social = fromJSON(readLines(file.path(path_llista$taules, "vals_mapa_social.json")))
+  valoracions_mapa_academic = fromJSON(readLines(file.path(path_llista$taules, "vals_mapa_academic.json")))
+  
+  # Importem els fitxers d'orientacions també
+  
+  orientacions_disrupcio = fromJSON(readLines(file.path(path_llista$taules, "orientacions_disrupcio.json")))
+  orientacions_victimes = fromJSON(readLines(file.path(path_llista$taules, "orientacions_victimes.json")))
+  #orientacions_academic = fromJSON(readLines(file.path(path_llista$taules, "orientacions_academic.json")))
+  orientacions_ea = fromJSON(readLines(file.path(path_llista$taules, "orientacions_ea.json")))
+  orientacions_caracter = fromJSON(readLines(file.path(path_llista$taules, "orientacions_caracter.json")))
+  #orientacions_estatus = fromJSON(readLines(file.path(path_llista$taules, "orientacions_estatus.json")))
+  orientacions_mapa_social = fromJSON(readLines(file.path(path_llista$taules, "orientacions_mapa_social.json")))
+  orientacions_mapa_academic = fromJSON(readLines(file.path(path_llista$taules, "orientacions_mapa_academic.json")))
   
   for (i in 1:length(noms)){
     
@@ -101,40 +114,40 @@ informe_individual = function(path_llista, noms){
     
     valoracions = 6
     
-    if (!is.na(vals_disrupcio[nom])){
+    if (!is.na(valoracions_disrupcio[nom])){
       cat("\\textbf{Àmbit de comportament}")
       cat("\\begin{itemize}")
-      for (element in vals_disrupcio[nom])
+      for (element in valoracions_disrupcio[nom])
         cat(unlist(element))
       cat("\\end{itemize}")
     }
     else {
       valoracions = valoracions - 1
     }
-    if (!is.na(vals_victimes[nom])){
+    if (!is.na(valoracions_victimes[nom])){
       cat("\\textbf{Àmbit de victimització}")
       cat("\\begin{itemize}")
-      for (element in vals_victimes[nom])
+      for (element in valoracions_victimes[nom])
         cat(unlist(element))
       cat("\\end{itemize}")
     }
     else {
       valoracions = valoracions - 1
     }
-    if (!is.na(vals_academic[nom])){
-      cat("\\textbf{Àmbit acadèmic}")
-      cat("\\begin{itemize}")
-      for (element in vals_academic[nom])
-        cat(unlist(element))
-      cat("\\end{itemize}")
-    }
-    else {
-      valoracions = valoracions - 1
-    }
-    if (!is.na(vals_ea[nom])){
+    # if (!is.na(orientacions_academic[nom])){
+    #   cat("\\textbf{Àmbit acadèmic}")
+    #   cat("\\begin{itemize}")
+    #   for (element in orientacions_academic[nom])
+    #     cat(unlist(element))
+    #   cat("\\end{itemize}")
+    # }
+    # else {
+    #   valoracions = valoracions - 1
+    # }
+    if (!is.na(valoracions_ea[nom])){
       cat("\\textbf{Àmbit d'estat ànimic}")
       cat("\\begin{itemize}")
-      for (element in vals_ea[nom])
+      for (element in valoracions_ea[nom])
         cat(unlist(element))
       cat("\\end{itemize}")
       
@@ -142,20 +155,42 @@ informe_individual = function(path_llista, noms){
     else {
       valoracions = valoracions - 1
     }
-    if (!is.na(vals_caracter[nom])){
+    if (!is.na(valoracions_caracter[nom])){
       cat("\\textbf{Escala de caràcter}")
       cat("\\begin{itemize}")
-      for (element in vals_caracter[nom])
+      for (element in valoracions_caracter[nom])
         cat(unlist(element))
       cat("\\end{itemize}")
     }
     else {
       valoracions = valoracions - 1
     }
-    if (!is.na(vals_estatus[nom])){
-      cat("\\textbf{Xarxa d'estatus social}")
+    # if (!is.na(orientacions_estatus[nom])){
+    #   cat("\\textbf{Xarxa d'estatus social}")
+    #   cat("\\begin{itemize}")
+    #   for (element in orientacions_estatus[nom])
+    #     cat(unlist(element))
+    #   cat("\\end{itemize}")
+    # }
+    # else {
+    #   valoracions = valoracions - 1
+    # }
+    
+    if (!is.na(valoracions_mapa_social[nom])){
+      cat("\\textbf{Xarxa social relacional}")
       cat("\\begin{itemize}")
-      for (element in vals_estatus[nom])
+      for (element in valoracions_mapa_social[nom])
+        cat(unlist(element))
+      cat("\\end{itemize}")
+    }
+    else {
+      valoracions = valoracions - 1
+    }
+    
+    if (!is.na(valoracions_mapa_academic[nom])){
+      cat("\\textbf{Xarxa social acadèmica}")
+      cat("\\begin{itemize}")
+      for (element in valoracions_mapa_academic[nom])
         cat(unlist(element))
       cat("\\end{itemize}")
     }
@@ -169,7 +204,96 @@ informe_individual = function(path_llista, noms){
     }
     
     cat("\\subsection*{Orientacions}")
-    cat("FALTA")
+    
+    nom = noms[i]
+    
+    orientacions = 6
+    
+    if (!is.na(orientacions_disrupcio[nom])){
+      cat("\\textbf{Àmbit de comportament}")
+      cat("\\begin{itemize}")
+      for (element in orientacions_disrupcio[nom])
+        cat(unlist(element))
+      cat("\\end{itemize}")
+    }
+    else {
+      orientacions = orientacions - 1
+    }
+    if (!is.na(orientacions_victimes[nom])){
+      cat("\\textbf{Àmbit de victimització}")
+      cat("\\begin{itemize}")
+      for (element in orientacions_victimes[nom])
+        cat(unlist(element))
+      cat("\\end{itemize}")
+    }
+    else {
+      orientacions = orientacions - 1
+    }
+    # if (!is.na(orientacions_academic[nom])){
+    #   cat("\\textbf{Àmbit acadèmic}")
+    #   cat("\\begin{itemize}")
+    #   for (element in orientacions_academic[nom])
+    #     cat(unlist(element))
+    #   cat("\\end{itemize}")
+    # }
+    # else {
+    #   orientacions = orientacions - 1
+    # }
+    if (!is.na(orientacions_ea[nom])){
+      cat("\\textbf{Àmbit d'estat ànimic}")
+      cat("\\begin{itemize}")
+      for (element in orientacions_ea[nom])
+        cat(unlist(element))
+      cat("\\end{itemize}")
+      
+    }
+    else {
+      orientacions = orientacions - 1
+    }
+    if (!is.na(orientacions_caracter[nom])){
+      cat("\\textbf{Escala de caràcter}")
+      cat("\\begin{itemize}")
+      for (element in orientacions_caracter[nom])
+        cat(unlist(element))
+      cat("\\end{itemize}")
+    }
+    else {
+      orientacions = orientacions - 1
+    }
+    # if (!is.na(orientacions_estatus[nom])){
+    #   cat("\\textbf{Xarxa d'estatus social}")
+    #   cat("\\begin{itemize}")
+    #   for (element in orientacions_estatus[nom])
+    #     cat(unlist(element))
+    #   cat("\\end{itemize}")
+    # }
+    # else {
+    #   orientacions = orientacions - 1
+    # }
+    
+    if (!is.na(valoracions_mapa_social[nom])){
+      cat("\\textbf{Xarxa social relacional}")
+      cat("\\begin{itemize}")
+      for (element in valoracions_mapa_social[nom])
+        cat(unlist(element))
+      cat("\\end{itemize}")
+    }
+    else {
+      orientacions = orientacions - 1
+    }
+    
+    if (!is.na(valoracions_mapa_academic[nom])){
+      cat("\\textbf{Xarxa social acadèmica}")
+      cat("\\begin{itemize}")
+      for (element in valoracions_mapa_academic[nom])
+        cat(unlist(element))
+      cat("\\end{itemize}")
+    }
+    
+    if (orientacions == 0){
+      cat(paste0("En/na ", nom, " té tots els resultats dins dels valors considerats normals i per tant
+                 no hi ha àrees a destacar."))
+    }
 
   }
 }

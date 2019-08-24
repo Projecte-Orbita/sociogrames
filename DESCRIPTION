@@ -21,4 +21,5 @@ Imports:
   ggpubr (>= 0.1.6),
   igraph (>= 1.2.1),
   plotly (>= 4.7.1)
+Collate: altres/manipulacions_dades.R altres/utils.R calculs/calculs_arees.R calculs/calculs_collectiu.R calculs/calculs_individual.R escriure_latex/latex_collectiu.R escriure_latex/latex_individual.R grafics_i_taules/grafics.R grafics_i_taules/taules.R informe_escola.R texts/texts_collectiu.R texts/texts_escola.R texts/texts_individual.R valoracions/valoracions.R
 RoxygenNote: 6.1.1

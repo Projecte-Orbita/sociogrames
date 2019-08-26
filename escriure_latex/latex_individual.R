@@ -271,10 +271,10 @@ informe_individual = function(path_llista, noms){
     #   orientacions = orientacions - 1
     # }
     
-    if (!is.na(valoracions_mapa_social[nom])){
+    if (!is.na(orientacions_mapa_social[nom])){
       cat("\\textbf{Xarxa social relacional}")
       cat("\\begin{itemize}")
-      for (element in valoracions_mapa_social[nom])
+      for (element in orientacions_mapa_social[nom])
         cat(unlist(element))
       cat("\\end{itemize}")
     }
@@ -282,18 +282,130 @@ informe_individual = function(path_llista, noms){
       orientacions = orientacions - 1
     }
     
-    if (!is.na(valoracions_mapa_academic[nom])){
+    if (!is.na(orientacions_mapa_academic[nom])){
       cat("\\textbf{Xarxa social acadèmica}")
       cat("\\begin{itemize}")
-      for (element in valoracions_mapa_academic[nom])
+      for (element in orientacions_mapa_academic[nom])
         cat(unlist(element))
       cat("\\end{itemize}")
     }
+    
+    # Orientacions globals
     
     if (orientacions == 0){
       cat(paste0("En/na ", nom, " té tots els resultats dins dels valors considerats normals i per tant
                  no hi ha àrees a destacar."))
     }
-
-  }
+    
+    bones = 0
+    bones2 = 0
+    arees_bones = c()
+    
+    
+    if ("A_bona" %in% names(valoracions_disrupcio[nom][[1]])) {
+      bones = bones + 1
+      arees_bones = c(arees_bones, "prosocialitat")
+    }
+    
+    if ("A_bona" %in% names(valoracions_ea[nom][[1]])) {
+      bones = bones + 1
+      arees_bones = c(arees_bones, "estat d'ànim")
+    }
+    
+    if ("lider" %in% names(valoracions_caracter[nom][[1]])) {
+      bones = bones + 1
+      arees_bones = c(arees_bones, "lideratge")
+    } 
+    if ("autonom" %in% names(valoracions_caracter[nom][[1]])) {
+      bones = bones + 1
+      arees_bones = c(arees_bones, "autonomia") 
+        }
+     if ("sociable" %in% names(valoracions_caracter[nom][[1]])) {
+       bones = bones + 1
+       arees_bones = c(arees_bones, "sociabilitat")
+    }
+    if ("popular" %in% names(valoracions_mapa_social[nom][[1]])) {
+      bones2 = bones2 + 1
+    }
+    if ("popular" %in% names(valoracions_mapa_academic[nom][[1]])) {
+      bones2 = bones2 + 1
+    }
+    # if (exists(valoracions_mapa_social[nom]["popular"])) {
+    #   bones = bones + 1
+    # }
+    # 
+    # if (exists(valoracions_mapa_academic[nom]["popular"])) {
+    #   bones = bones + 1
+    # }
+    
+    dolentes = 0
+    dolentes2 = 0
+    arees_dolentes = c()
+    if ("B_dolenta" %in% names(valoracions_disrupcio[nom][[1]])) {
+      dolentes = dolentes + 1
+      arees_dolentes = c(arees_dolentes, "disrupció")
+    }
+    
+    # if (exists(valoracions_victimes[nom]["B_dolenta"])) {
+    #   dolentes = dolentes + 1
+    #   arees_dolentes = c(arees_dolentes, "victimització")
+    # }
+    
+    if ("B_dolenta" %in% names(valoracions_ea[nom][[1]])) {
+      dolentes = dolentes + 1
+      arees_dolentes = c(arees_dolentes, "estat d'ànim")
+    }
+    
+    if ("seguidor" %in% names(valoracions_caracter[nom][[1]])) {
+      dolentes = dolentes + 1
+      arees_dolentes = c(arees_dolentes, "seguidor")
+    } 
+    if ("dependent" %in% names(valoracions_caracter[nom][[1]])) {
+      dolentes = dolentes + 1
+      arees_dolentes = c(arees_dolentes, "dependència") 
+    }
+    if ("aillat" %in% names(valoracions_caracter[nom][[1]])) {
+      dolentes = dolentes + 1
+      arees_dolentes = c(arees_dolentes, "aïllament")
+    }
+    
+    if ("rebutjat" %in% names(valoracions_mapa_social[nom][[1]])) {
+      dolentes2 = dolentes2 + 1
+    }
+    if ("negligit" %in% names(valoracions_mapa_social[nom][[1]])) {
+      dolentes2 = dolentes2 + 1
+    }
+    if ("controvers" %in% names(valoracions_mapa_social[nom][[1]])) {
+      dolentes2 = dolentes2 + 1
+    }
+    if ("rebutjat" %in% names(valoracions_mapa_academic[nom][[1]])) {
+      dolentes2 = dolentes2 + 1
+    }
+    if ("negligit" %in% names(valoracions_mapa_academic[nom][[1]])) {
+      dolentes2 = dolentes2 + 1
+    }
+    if ("controvers" %in% names(valoracions_mapa_academic[nom][[1]])) {
+      dolentes2 = dolentes2 + 1
+    }
+    
+    arees_bones_text = paste(arees_bones, collapse = ", ")
+    arees_dolentes_text = paste(arees_dolentes, collapse = ", ")
+    
+    if (bones > 0 & dolentes == 0){
+      cat(paste0("Segons les respostes dels seus companys, el/la ", nom, " mostra trets relacionals i/o acadèmics que afavoreixen la seva adaptació. En concret, valoren com a significativa la seva habilitat en ", arees_bones_text, ". Recomanem doncs tenir en compte aquestes aptituds, facilitant-li oportunitats per desenvolupar-les i utilitzar-les per generar un impacte positiu en el grup."))
+    }
+    
+    if (bones > 0 & dolentes > 0){
+      cat(paste0("Segons les respostes dels seus companys, el/la ", nom, " mostra trets relacionals i/o acadèmics que afavoreixen la seva adaptació. En concret, valoren com a significativa la seva habilitat en  ", arees_bones_text, ". Recomanem doncs tenir en compte aquestes aptituds, facilitant-li oportunitats per desenvolupar-les i utilitzar-les per generar un impacte positiu en el grup. 
+El fet que el/la ", nom, " mostri aquests trets positius és un factor de protecció sobre la seva autoestima i també li suposa una font de recursos que facilita compensar els aspectes desadaptatius que també s'han constatat."))
+    }
+    
+    if (bones == 0 & dolentes > 0){
+      cat(paste0("Segons les respostes dels seus companys, el/la ", nom, " mostra trets relacionals i/o acadèmics que dificulten la seva adaptació. En concret, valoren com a significativament baixa la seva habilitat en ", arees_bones_text, ". Recomanem doncs tenir en compte aquestes limitacions, facilitant-li oportunitats per compensar-les i evitar que li interferixin negativament en el seu dia a dia."))
+    }
+    if (bones == 0 &  bones2 == 0 & dolentes == 0 & dolentes2 == 0){
+    cat(paste0("No hi ha orientacions pel/per la ", nom, "."))
+    }
+      
+      }
 }

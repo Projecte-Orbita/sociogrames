@@ -89,14 +89,14 @@ informe_classe = function(path_llista){
   importar_i_imprimir_taula(path_llista, "caracter")
   
   
-  cat("\\section*{Xarxes}")
+  cat("\\section*{Mapes i xarxes}")
   
   # gràfic 2D relacional
   
   cat("\\section*{Mapa social relacional}")
   
   peu_2D_relacional = "Mapa de posicionament social del grup-classe."
-  afegeix_grafic(path_llista, "disrupcio_2D", peu_2D_relacional)
+  afegeix_grafic(path_llista, "relacional_2D", peu_2D_relacional)
   
   cat(mapa_relacional1)
   cat(mapa_relacional2)
@@ -106,7 +106,7 @@ informe_classe = function(path_llista){
   #cat(xarxa_relacional)
   cat("\\subsection*{Xarxa d'estatus social}")
   
-  peu_xarxa_relacional = "Xarxa de posicionament social del grup-classe."
+  peu_xarxa_relacional = "Xarxa de posicionament social del grup-classe. \\emph{Nota: la mida dels nodes ve donada pel número de tries ajustades segons l'algorisme \"PageRank\".}"
   afegeix_grafic(path_llista, "xarxa_relacional", peu_xarxa_relacional)
   
   cat(xarxa_relacional)
@@ -126,7 +126,7 @@ informe_classe = function(path_llista){
   # Xarxa acadèmica
 
   cat("\\section*{Xarxa social acadèmica}")
-  peu_xarxa_academica = "Xarxa de posicionament acadèmic del grup-classe."
+  peu_xarxa_academica = "Xarxa de posicionament acadèmic del grup-classe. \\emph{Nota: la mida dels nodes ve donada pel número de tries ajustades segons l'algorisme \"PageRank\".}"
   afegeix_grafic(path_llista, "xarxa_academica", peu_xarxa_academica)
   
   cat(xarxa_academica1)

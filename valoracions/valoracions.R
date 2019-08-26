@@ -46,7 +46,6 @@ valoracions_disrupcio = function(nom, color_A, color_B, Disrupcio){
 
 valoracions_victimes = function(nom, color_A, color_B, victimes){
   
-  ratio = victimes[4]/sum(victimes[2:3])
   fisica = victimes[2] > max(victimes[3:4])
   
   l_temp = list()
@@ -54,18 +53,9 @@ valoracions_victimes = function(nom, color_A, color_B, victimes){
     l_temp['B_dolenta'] = "\\item És considerat/da per la major part dels seus companys com a víctima de rebuig i/o exclusió."
   }
   
-  #else if (color_B < -1){
-  #  l_temp['B_bona'] = "\\item No és considerat/da per la major part dels seus companys com a víctima de rebuig i/o exclusió."
-  #}
-  # Tret segons excel de modificacions Sociogramav2
-  
   else if (fisica) {
     l_temp['B_fisica'] = "\\item Tot i que no s'obtenen puntuacions significatives en aquesta escala, cal tenir en compte que és valorat/da per alguns dels seus companys com a víctima."
   }
-  
-  #if (ratio > .5){
-  #  l_temp['ratio'] = "\\item La major part dels seus companys valoren que rep una victimització explícita (verbal o física)."
-  #}
   
   return(ifelse(length(l_temp) > 0, list(l_temp), NA))
 }
@@ -160,22 +150,20 @@ valoracions_caracter = function(nom, color_A, color_B, caracter){
 #   return(ifelse(length(l_temp) > 0, list(l_temp), NA))
 # }
 
-valoracions_mapa_social = function(nom, color_A, color_B, disrupcio){
-
-  #disrupcio[, -1] = scale(disrupcio[, -1])
+valoracions_mapa_social = function(nom, color_A, color_B, socialitat) {
   
   l_temp = list()
-  if (disrupcio[1] > 1){
-    l_temp['popular'] = "Els companys el/la tenen molt en compte dins el grup i l'escullen per relacionar-s'hi."
+  if (socialitat[1] > 1){
+    l_temp['popular'] = "\\item Els companys el/la tenen molt en compte dins el grup i l'escullen per relacionar-s'hi."
   }
-  if (disrupcio[2] > 1){
-    l_temp['rebutjat'] = "Els companys el/la tenen poc en compte dins el sistema de relacions del grup."
+  if (socialitat[2] > 1){
+    l_temp['rebutjat'] = "\\item Els companys el/la tenen poc en compte dins el sistema de relacions del grup."
   }
-  if (disrupcio[6] > 1){
-    l_temp['controvers'] = "Els companys el/la tenen molt en compte dins el grup i alguns l'escullen per relacionar-s'hi i altres per excloure'l."
+  if (socialitat[6] < -1){
+    l_temp['negligit'] = "\\item Els companys el/la tenen poc en compte dins el sistema de relacions del grup."
   }
-  if (disrupcio[6] < -1){
-    l_temp['negligit'] = "Els companys el/la tenen molt en compte dins el grup però l'exclouen."
+  if (socialitat[6] > 1){
+    l_temp['controvers'] = "\\item Els companys el/la tenen molt en compte dins el grup i alguns l'escullen per relacionar-s'hi i altres per excloure'l."
   }
   
   return(ifelse(length(l_temp) > 0, list(l_temp), NA))
@@ -185,16 +173,16 @@ valoracions_mapa_academic = function(nom, color_A, color_B, academic){
   
   l_temp = list()
   if (academic[1] > 1){
-    l_temp['popular'] = "Els companys el/la tenen molt en compte dins del grup respecte a la seva alta competència acadèmica."
+    l_temp['popular'] = "\\item Els companys el/la tenen molt en compte dins del grup respecte a la seva alta competència acadèmica."
   }
   if (academic[2] > 1){
-    l_temp['rebutjat'] = "Els companys el/la tenen poc en compte dins el grup respecte a la seva competència acadèmica."
-  }
-  if (academic[5] > 1){
-    l_temp['controvers'] = "Els companys el/la tenen molt en compte dins el grup i alguns el valoren amb baixa i altres amb alta competència acadèmica."
+    l_temp['rebutjat'] = "\\item Els companys el/la tenen molt en compte dins el grup respecte a la seva baixa competència acadèmica."
   }
   if (academic[5] < -1){
-    l_temp['negligit'] = "Els companys el/la tenen molt en compte dins el grup respecte a la seva baixa competència acadèmica."
+    l_temp['negligit'] = "\\item Els companys el/la tenen poc en compte dins el grup respecte a la seva competència acadèmica."
+  }
+  if (academic[5] > 1){
+    l_temp['controvers'] = "\\item Els companys el/la tenen molt en compte dins el grup i alguns el valoren amb baixa i altres amb alta competència acadèmica."
   }
   
   return(ifelse(length(l_temp) > 0, list(l_temp), NA))

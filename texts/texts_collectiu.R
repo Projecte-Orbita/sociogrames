@@ -174,10 +174,8 @@ mapa_academic2 = "
 El posicionament en aquest gràfic ve donat per les respostes a les preguntes:
 
 \\begin{itemize}
-\\item \\emph{Treu bones notes.}
-\\item \\emph{No treu bones notes.}
-\\item \\emph{Participa a classe.}
-\\item \\emph{No participa a classe.}
+\\item \\emph{Amb qui faries un treball.}
+\\item \\emph{Amb qui no faries un treball.}
 \\end{itemize}
 \\newpage
 "
@@ -237,27 +235,21 @@ Els colors dels nodes reflecteixen les respostes a les preguntes:
 \\end{itemize}
 
 "
-mapa_relacional1 = "Interpretació: \\newline
+mapa_relacional1 = 
+"Interpretació: \\newline
       \\begin{itemize}
       \\item Popular-r (moltes tries +): Els companys el/la tenen molt en compte dins el grup i l'escullen per relacionar-s'hi. 
       \\item Rebutjat-r (moltes tries -): Els companys el/la tenen molt en compte dins el grup però l'exclouen.
       \\item Negligit-r (poques tries): Els companys el/la tenen poc en compte dins el sistema de relacions del grup.
       \\item Controvers-r (moltes tries + i -): Els companys el/la tenen molt en compte dins el grup tant per relacionar-s'hi com per excloure'l.
       \\end{itemize}
-      
       " 
 
 mapa_relacional2 = "
 El posicionament en aquest mapa ve donat per les respostes a les preguntes:
 \\begin{itemize}
-\\item \\emph{Ajuda els altres quan tenen un problema.}
-\\item \\emph{Col·labora amb els altres.}
-\\item \\emph{Defensa els altres.}
-\\item \\emph{Es defensa del que li fan els altres.}
-\\item \\emph{Molesta als altres.}
-\\item \\emph{No deixa participar als altres.}
-\\item \\emph{Insulta als altres.}
-\\item \\emph{Empenta o pega als altres.}
+\\item \\emph{Amb qui jugaries al pati.}
+\\item \\emph{Amb qui no jugaries al pati.}
 \\end{itemize}
 "
 

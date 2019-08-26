@@ -37,10 +37,10 @@ informe_escola = function(nom_escola){
   wd <- getwd();
   
   # Creem ara els paths que anirem fent servir:
-  path_dades = file.path(wd, 'temp/dades')
-  path_figures = file.path(wd, "temp/figures/")
-  path_taules = file.path(wd, "temp/taules/")
-  path_informes = file.path(wd, "temp/informes/")
+  path_dades = file.path(wd, "temp", "dades")
+  path_figures = file.path(wd, "temp", "figures")
+  path_taules = file.path(wd, "temp", "taules")
+  path_informes = file.path(wd, "temp", "informes")
   
   # Ajuntem tots els paths en un "diccionari" per tenir-los una mica ordenats i poder-hi accedir fàcilment.
   path_llista = list('dades' = path_dades, 

@@ -109,7 +109,7 @@ calculs_individual = function(dades, path_llista, nom_fitxer, numero_respostes=3
   Academic = Academic_[[1]]
   color_A = Academic_[[2]]
   color_B = Academic_[[3]]
-  Academic = Academic[,c(5,1:4)]
+  Academic = Academic[,c(6,1:4)]
   names(Academic)[1] = "Noms"
   Academic[,4:5] = -1*Academic[,4:5]
 
@@ -195,9 +195,14 @@ calculs_individual = function(dades, path_llista, nom_fitxer, numero_respostes=3
   llista_valoracions = list()
   llista_orientacions = list()
   
+  # L'eix Controvers-negligit és una combinació dels anteriors; el calculem:
+  Disrupcio$total = rowSums(Disrupcio[, 3:5])/3
+  Disrupcio$con_neg = sqrt(Disrupcio$Prosocialitat^2+Disrupcio$total^2)
+  
+  # Escalem:
   sdisrupcio = scale(Disrupcio[, -1])
   
-  for (i in 1:nrow(Caracter)) {
+  for (i in 1:nrow(Disrupcio)) {
     llista_valoracions[noms[i]] = valoracions_mapa_social(noms[i], color_A[i], color_B[i], sdisrupcio[i, ])
     llista_orientacions[noms[i]] = orientacions_mapa_social(noms[i], color_A[i], color_B[i], sdisrupcio[i, ])
   }
@@ -215,7 +220,13 @@ calculs_individual = function(dades, path_llista, nom_fitxer, numero_respostes=3
   llista_valoracions = list()
   llista_orientacions = list()
   
+  # L'eix Controvers-negligit és una combinació dels anteriors; el calculem:
+  
+  Academic$con_neg = sqrt((Academic[, 2]+Academic[, 4])^2+(Academic[, 3]+Academic[, 5])^2)
+  
+  # Escalem:
   sacademic = scale(Academic[, -1])
+  
   for (i in 1:nrow(sacademic)) {
     llista_valoracions[noms[i]] = valoracions_mapa_academic(noms[i], color_A[i], color_B[i], sacademic[i, ])
     llista_orientacions[noms[i]] = orientacions_mapa_academic(noms[i], color_A[i], color_B[i], sacademic[i, ])

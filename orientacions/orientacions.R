@@ -124,10 +124,6 @@ orientacions_caracter = function(nom, color_A, color_B, caracter){
 
 orientacions_mapa_social = function(nom, color_A, color_B, disrupcio){
   
-  disrupcio$con_neg = sqrt(disrupcio[1]^2+disrupcio[2]^2)
-  
-  #disrupcio[, -1] = scale(disrupcio[, -1])
-  
   l_temp = list()
   if (disrupcio[1] > 1){
     l_temp['popular'] = paste0("\\item El/la ", nom, " té una influència positiva dins el grup que pot ser utilitzada pel mestre per tal d'afavorir una millor dinàmica social en els grups en què participi.")
@@ -135,10 +131,10 @@ orientacions_mapa_social = function(nom, color_A, color_B, disrupcio){
   if (disrupcio[2] > 1){
     l_temp['rebutjat'] = paste0("\\item El/la ", nom, " està rebent una gran quantitat d'atenció negativa i cal que el mestre observi si té els recursos relacionals suficients i dilueixi la seva importància dins el grup i/o li ofereixi oportunitats per rebre atenció positiva.")
   }
-  if (disrupcio$con_neg > 1){
+  if (disrupcio[6] > 1){
     l_temp['controvers'] = paste0("\\item El/la ", nom, " té una influència acadèmica positiva dins el grup que pot ser utilitzada pel mestre per d'afavorir una millor dinàmica de treball en els grups en què participi. Cal tenir també en compte que mostri una bona adaptació social i no centri l'atenció exclusivament per la seva competència escolar")
   }
-  if (disrupcio$con_neg < -1){
+  if (disrupcio[6] < -1){
     l_temp['negligit'] = paste0("\\item El/la ", nom, " genera relacions polars entre els seus companys. Cal aprofitar les habilitats de relació que el porten a establir vincles amb el grup per fomentar relacions positives i reduïr les relacions negatives que estableix amb altres companys.")
   }
 
@@ -146,13 +142,7 @@ orientacions_mapa_social = function(nom, color_A, color_B, disrupcio){
 }
 
 orientacions_mapa_academic = function(nom, color_A, color_B, academic){
-  
-  # L'eix Controvers-negligit és una combinació dels anteriors; el calculem:
-  
-  academic$con_neg = sqrt(academic[1]^2+academic[2]^2)
-  
-  #academic[, -1] = scale(academic[, -1] )
-  
+
   l_temp = list()
   if (academic[1] > 1){
     l_temp['popular'] = paste0("El/la ", nom, " té una influència acadèmica positiva dins el grup que pot ser utilitzada pel mestre per d'afavorir una millor dinàmica de treball en els grups en què participi. Cal tenir també en compte que mostri una bona adaptació social i no centri l'atenció exclusivament per la seva competència escolar.")
@@ -160,10 +150,10 @@ orientacions_mapa_academic = function(nom, color_A, color_B, academic){
   if (academic[2] > 1){
     l_temp['rebutjat'] = paste0("El/la ", nom, " està rebent una gran quantitat d'atenció negativa respecte a la seva baixa competència acadèmica i cal que el mestre observi si té els recursos suficients (tècniques d'estudi, planificació i organització, hàbits de treball...) i se li ofereixi reforç positiu en les situacions d'èxit escolar.")
   }
-  if (academic$con_neg > 1){
+  if (academic[5] > 1){
     l_temp['controvers'] = paste0("El/la ", nom, " genera opinions polars entre els seus companys respecte a la seva competència acadèmica. Cal aprofitar les habilitats de relació que el porten a establir contextos positius de treball per fomentar-los i reduïr les l'impacte que tenen situacions acadèmiques negatives.")
   }
-  if (academic$con_neg < -1){
+  if (academic[5] < -1){
     l_temp['negligit'] = paste0("El/la ", nom, " està rebent molt poca atenció per part del grup respecte a la seva competència acadèmica i cal que es promoguin situacions que permetin al grup constatar les seves habilitats escolars.")
   }
   

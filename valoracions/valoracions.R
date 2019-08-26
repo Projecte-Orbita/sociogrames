@@ -161,11 +161,7 @@ valoracions_caracter = function(nom, color_A, color_B, caracter){
 # }
 
 valoracions_mapa_social = function(nom, color_A, color_B, disrupcio){
-  
-  # L'eix Controvers-negligit és una combinació dels anteriors; el calculem:
-  
-  disrupcio$con_neg = sqrt(disrupcio[1]^2+disrupcio[2]^2)
-  
+
   #disrupcio[, -1] = scale(disrupcio[, -1])
   
   l_temp = list()
@@ -175,10 +171,10 @@ valoracions_mapa_social = function(nom, color_A, color_B, disrupcio){
   if (disrupcio[2] > 1){
     l_temp['rebutjat'] = "Els companys el/la tenen poc en compte dins el sistema de relacions del grup."
   }
-  if (disrupcio$con_neg > 1){
+  if (disrupcio[6] > 1){
     l_temp['controvers'] = "Els companys el/la tenen molt en compte dins el grup i alguns l'escullen per relacionar-s'hi i altres per excloure'l."
   }
-  if (disrupcio$con_neg < -1){
+  if (disrupcio[6] < -1){
     l_temp['negligit'] = "Els companys el/la tenen molt en compte dins el grup però l'exclouen."
   }
   
@@ -187,12 +183,6 @@ valoracions_mapa_social = function(nom, color_A, color_B, disrupcio){
 
 valoracions_mapa_academic = function(nom, color_A, color_B, academic){
   
-  # L'eix Controvers-negligit és una combinació dels anteriors; el calculem:
-  
-  academic$con_neg = sqrt(academic[1]^2+academic[2]^2)
-  
-  #academic[, -1] = scale(academic[, -1] )
-  
   l_temp = list()
   if (academic[1] > 1){
     l_temp['popular'] = "Els companys el/la tenen molt en compte dins del grup respecte a la seva alta competència acadèmica."
@@ -200,10 +190,10 @@ valoracions_mapa_academic = function(nom, color_A, color_B, academic){
   if (academic[2] > 1){
     l_temp['rebutjat'] = "Els companys el/la tenen poc en compte dins el grup respecte a la seva competència acadèmica."
   }
-  if (academic$con_neg > 1){
+  if (academic[5] > 1){
     l_temp['controvers'] = "Els companys el/la tenen molt en compte dins el grup i alguns el valoren amb baixa i altres amb alta competència acadèmica."
   }
-  if (academic$con_neg < -1){
+  if (academic[5] < -1){
     l_temp['negligit'] = "Els companys el/la tenen molt en compte dins el grup respecte a la seva baixa competència acadèmica."
   }
   

@@ -11,11 +11,11 @@ encoding_ = config$encoding
 
 # Imports
  
-gwd = getwd()
-source(file.path(gwd, 'altres', 'utils.R'), encoding = encoding_)
-source(file.path(gwd, 'grafics_i_taules', 'grafics.R'), encoding = encoding_)
-source(file.path(gwd, 'grafics_i_taules', 'taules.R'), encoding = encoding_)
-source(file.path(gwd, 'calculs', 'calculs_arees.R'), encoding = encoding_)
+wd = getwd()
+source(file.path(wd, 'R', 'altres', 'utils.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'grafics_i_taules', 'grafics.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'grafics_i_taules', 'taules.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'calculs', 'calculs_arees.R'), encoding = encoding_)
 
 
 calculs_collectiu = function(dades, path_llista, nom_fitxer, numero_respostes=3){
@@ -58,13 +58,6 @@ calculs_collectiu = function(dades, path_llista, nom_fitxer, numero_respostes=3)
                        noms = noms, 
                        path_ = path_llista$figures, 
                        nom_grafic =  "disrupcio")  # Gràfic
-  
-  dis_df = cbind.data.frame(Disrupcio[, 1], rowSums(Disrupcio[, 2:4]), Disrupcio[, 6])
-  names(dis_df) = c("Prosocialitat", "Disrupció", "noms")
-  grafic_2D(dis_df,
-            tipus = "comportament",
-            path_ = path_llista$figures,
-            nom_grafic = "disrupcio_2D")
   
   Disrupcio = Disrupcio[,c(6,1:5)]
   names(Disrupcio)[1] = "Noms"
@@ -126,13 +119,6 @@ calculs_collectiu = function(dades, path_llista, nom_fitxer, numero_respostes=3)
                         noms = noms, 
                         path_ = path_llista$figures, 
                         nom_grafic = "academic")
-  
-  temp_df = cbind.data.frame(rowSums(Academic[,1:2]), rowSums(Academic[,3:4]), Academic[,6])
-  names(temp_df)[3] = "noms"
-  grafic_2D(temp_df,
-            tipus = "academic",
-            path_ = path_llista$figures,
-            nom_grafic = "academic_2D")
   
   Academic[,3] = - Academic[,3]
   Academic[,4] = - Academic[,4]
@@ -212,6 +198,26 @@ calculs_collectiu = function(dades, path_llista, nom_fitxer, numero_respostes=3)
                titol_peu = titol_caracter,
                peu_taula = peu_caracter)
   
+  # Gràfics 2D
+  
+
+  # Relacional
+  
+  rel_df = cbind.data.frame(mat[, 1], mat[, 2], noms)
+  
+  grafic_2D(rel_df,
+            tipus = "relacional",
+            path_ = path_llista$figures,
+            nom_grafic = "relacional_2D")
+  
+  # Acadèmic
+  
+  aca_df = cbind.data.frame(mat[, 3], mat[, 4], noms)
+  grafic_2D(aca_df,
+            tipus = "academic",
+            path_ = path_llista$figures,
+            nom_grafic = "academic_2D")
+  
   # Xarxes
   soc$noms = unlist(lapply(noms, function(x) rep(x, numero_respostes)), use.names = F)
   
@@ -234,7 +240,7 @@ calculs_collectiu = function(dades, path_llista, nom_fitxer, numero_respostes=3)
   edge.color = X_Academic_[[5]]
   
   paraules = c(nom_curs,  "Bones notes","Notes mitjanes", "Males notes",
-               "Poc popular","Normal", "Molt popular")
+               "Menys tries","", "Més tries")
   Encoding(paraules) = "UTF-8-BOM"
   grafic_xarxa(gg = gg, 
                colors = colors, 
@@ -254,7 +260,7 @@ calculs_collectiu = function(dades, path_llista, nom_fitxer, numero_respostes=3)
   edge.color = X_relacional_[[5]]
   
   paraules = c(nom_curs, "Poc disruptiu","Disrupcio mitjana", "Molt disruptiu",
-               "Poc popular","Normal", "Molt popular")
+               "Menys tries","", "Més tries*")
   Encoding(paraules) = "UTF-8-BOM"
   grafic_xarxa(gg = gg, 
                colors = colors, 

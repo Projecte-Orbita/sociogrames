@@ -93,7 +93,7 @@ grafic_2D = function(df, tipus, path_, nom_grafic){
   # TODO: afegir títols en els eixos oblics i afegir una funció que faci que les paraules (controvers, popular, etc.) 
   # no se superposin als noms dels nens.
   
-  if (tipus == "comportament"){
+  if (tipus == "relacional"){
     paraules = c("`tries positives`", "`tries negatives`", 
                  "Controvers", "Negligit", "Popular", "Rebutjat")
   }

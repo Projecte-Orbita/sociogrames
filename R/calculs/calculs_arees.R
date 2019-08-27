@@ -10,8 +10,9 @@ require(reshape2)
 require(igraph)
 require(rlist)
 
-gwd = getwd()
-source(file.path(gwd, 'altres', 'utils.R'), encoding = encoding_)
+wd = getwd()
+source(file.path(wd, 'R', 'altres', 'utils.R'), encoding = encoding_)
+# TODO: això s'utilitza?
 
 # TODO: ajuntar les diferents àrees: són bastant diferents entre elles i no veig la manera d'intentar ajuntar-les
 # sense fer una funció del tot impràctica; però segurament es pugui fer si es repensa tot una mica.
@@ -73,24 +74,22 @@ calcs_victimitzacio = function(mat, noms){
 }
 
 calcs_academic = function(mat, noms){
-  
-  # Ara mateix no s'utilitza
-  
+
   academic_total = mat[,38] + mat[,40] - mat[,39] - mat[,41]
   academic = as.data.frame(cbind(mat[,38], mat[,40], mat[,39], mat[,41], academic_total))
   colnames(academic) = c("Bones notes", "Participa", "Males notes", "No participa", "Puntuació global")
   academic_est = scale(academic)
-  
+
   academic_bo_est = scale(rowSums(academic[, 1:2]))
   academic_dolent_est = scale(rowSums(academic[, 3:4]))
   academic_total_est = scale(academic_total)
   academic_sino = ifelse(academic_total_est < -1 | academic_total_est > 1,1,0)
-  
+
   academic[,3] = - academic[,3]
   academic[,4] = - academic[,4]
-  
+
   academic$noms = factor(noms, levels = as.character(noms))
-  
+
   return(list(academic, academic_bo_est, academic_dolent_est))
 }
 
@@ -111,6 +110,10 @@ calcs_estat_anim = function(mat, noms){
 }
 
 calcs_caracter = function(mat, noms){
+  
+  # Caràcter és una mica especial perquè també volem el resultat de cada una de les 
+  # subescales per separat, ja que ho farem servir en les interpretacions i les valoracions.
+  
   caracter_total = mat[,32] - mat[,33] + mat[,34] - mat[,35] + mat[,36] - mat[,37]
   caracter = as.data.frame(cbind(mat[,32], mat[,33], mat[,34], mat[,35], mat[,36], mat[,37], caracter_total))
   colnames(caracter) = c("Líder", "Seguidor", "Autònom", "Dependent", 
@@ -118,6 +121,8 @@ calcs_caracter = function(mat, noms){
   
   caracter_bo_est = as.vector(scale(rowSums(caracter[, c(1,3,5)])))
   caracter_dolent_est = as.vector(scale(rowSums(caracter[, c(2,4,6)])))
+  lider_est = as.vector(scale(mat[, 32]))
+  
   caracter_sino = ifelse(caracter_dolent_est > 1 | caracter_bo_est > 1 | caracter_dolent_est < -1 | caracter_bo_est < -1,1,0)
   caracter[,2] = -caracter[,2]
   caracter[,4] = -caracter[,4]

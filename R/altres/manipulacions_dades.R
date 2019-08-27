@@ -1,7 +1,8 @@
 # Manipulacions de dades de sociogrames
 Sys.setlocale("LC_ALL", "Catalan_Spain.1252")
 
-source('./altres/utils.R', encoding = "UTF-8")
+wd = getwd()
+source(file.path(wd, 'R', 'altres', 'utils.R'), encoding = "UTF-8")
 
 require(stringr)
 require(readr)
@@ -116,7 +117,7 @@ pretractar_excels <-function(path, nom_carpeta,limit=10){
 
 
 if (!interactive()) {  # equivalent a l'"if __name__==__main__ en R
-  path_ = 'dades/proves_excel_sociograma.xlsx'
-  carpeta = 'temp/dades'
-  pretractar_excels(path_, carpeta)
+  #path_ = 'dades/proves_excel_sociograma.xlsx'
+  #carpeta = 'temp/dades'
+  #pretractar_excels(path_, carpeta)
 }

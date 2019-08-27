@@ -12,12 +12,12 @@ options(encoding = encoding_)
 # Imports
 
 wd = getwd()
-source(file.path(wd, 'altres', 'utils.R') , encoding = encoding_)
-source(file.path(wd, 'grafics_i_taules', 'grafics.R'), encoding = encoding_)
-source(file.path(wd, 'grafics_i_taules', 'taules.R'), encoding = encoding_)
-source(file.path(wd, 'calculs', 'calculs_arees.R'), encoding = encoding_)
-source(file.path(wd, 'valoracions', 'valoracions.R'), encoding = encoding_)
-source(file.path(wd, 'orientacions', 'orientacions.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'altres', 'utils.R') , encoding = encoding_)
+source(file.path(wd, 'R', 'grafics_i_taules', 'grafics.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'grafics_i_taules', 'taules.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'calculs', 'calculs_arees.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'valoracions', 'valoracions.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'orientacions', 'orientacions.R'), encoding = encoding_)
 require(jsonlite)
 
 ######## Manipulacions inicials ###########

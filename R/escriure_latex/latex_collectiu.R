@@ -13,7 +13,7 @@ config = config::get()
 encoding_ = config$encoding
 
 wd = getwd()
-source(file.path(wd, 'texts', 'texts_collectiu.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'texts', 'texts_collectiu.R'), encoding = encoding_)
 
 
 informe_classe = function(path_llista){

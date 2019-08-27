@@ -15,15 +15,15 @@ options(endoding=encoding_)
 
 wd = getwd()
 
-source(file.path(wd, 'calculs', 'calculs_collectiu.R'), encoding = encoding_)
-source(file.path(wd, 'calculs', 'calculs_individual.R'), encoding = encoding_)
-source(file.path(wd, 'escriure_latex', 'latex_collectiu.R'), encoding = encoding_)
-source(file.path(wd, 'escriure_latex', 'latex_individual.R'), encoding = encoding_)
-source(file.path(wd, 'texts', 'texts_escola.R'), encoding = encoding_)
-source(file.path(wd, 'texts', 'texts_collectiu.R'), encoding = encoding_)
-source(file.path(wd, 'texts', 'texts_individual.R'), encoding = encoding_)
-source(file.path(wd, 'altres', 'utils.R'), encoding = encoding_)
-source(file.path(wd, 'altres', 'manipulacions_dades.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'calculs', 'calculs_collectiu.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'calculs', 'calculs_individual.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'escriure_latex', 'latex_collectiu.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'escriure_latex', 'latex_individual.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'texts', 'texts_escola.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'texts', 'texts_collectiu.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'texts', 'texts_individual.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'altres', 'utils.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'altres', 'manipulacions_dades.R'), encoding = encoding_)
 
 informe_escola = function(nom_escola){
   

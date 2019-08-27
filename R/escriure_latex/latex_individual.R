@@ -13,7 +13,7 @@ config = config::get()
 encoding_ = config$encoding
 
 wd = getwd()
-source(file.path(wd, 'texts', 'texts_individual.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'texts', 'texts_individual.R'), encoding = encoding_)
 
 
 informe_individual = function(path_llista, noms){

@@ -12,10 +12,10 @@ encoding_ = config$encoding
 # Imports
  
 wd = getwd()
-source(file.path(wd, 'altres', 'utils.R'), encoding = encoding_)
-source(file.path(wd, 'grafics_i_taules', 'grafics.R'), encoding = encoding_)
-source(file.path(wd, 'grafics_i_taules', 'taules.R'), encoding = encoding_)
-source(file.path(wd, 'calculs', 'calculs_arees.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'altres', 'utils.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'grafics_i_taules', 'grafics.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'grafics_i_taules', 'taules.R'), encoding = encoding_)
+source(file.path(wd, 'R', 'calculs', 'calculs_arees.R'), encoding = encoding_)
 
 
 calculs_collectiu = function(dades, path_llista, nom_fitxer, numero_respostes=3){

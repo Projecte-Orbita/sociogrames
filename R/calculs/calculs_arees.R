@@ -10,8 +10,9 @@ require(reshape2)
 require(igraph)
 require(rlist)
 
-gwd = getwd()
-source(file.path(gwd, 'altres', 'utils.R'), encoding = encoding_)
+wd = getwd()
+source(file.path(wd, 'R', 'altres', 'utils.R'), encoding = encoding_)
+# TODO: això s'utilitza?
 
 # TODO: ajuntar les diferents àrees: són bastant diferents entre elles i no veig la manera d'intentar ajuntar-les
 # sense fer una funció del tot impràctica; però segurament es pugui fer si es repensa tot una mica.

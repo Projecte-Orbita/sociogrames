@@ -11,4 +11,4 @@ sourceDir <- function(path, trace = TRUE, ...) {
   }
 }
 
-sourceDir("SociogramesAtom")
+sourceDir("R")
